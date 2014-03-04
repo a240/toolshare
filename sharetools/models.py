@@ -13,14 +13,14 @@ class Shed(models.Model):
 	dateCreated = models.DateTimeField(auto_now_add=True)
 
 
-class UserProfile(models.Model):
+class UserToolShareProfile(models.Model):
 	user = models.OneToOneField(User, unique=True)
 	shed = models.OneToOneField(Shed)
 	zipcode = models.IntegerField()
 
 
 def makeUserProfile(user, shed, zipcode):
-	profile = UserProfile()
+	profile = UserToolShareProfile()
 	profile.user = user
 	profile.shed = shed
 	profile.zipcode = zipcode
