@@ -17,6 +17,30 @@ class UserToolShareProfile(models.Model):
 	user = models.OneToOneField(User, unique=True)
 	shed = models.OneToOneField(Shed)
 	zipcode = models.IntegerField()
+	
+class Tool(models.Model):
+
+	name = models.CharField(max_length=80, unique=True)
+	description = models.CharField(max_length=300)
+	owner = models.OneToOneField(UserToolShareProfile, unique=True)	
+	type = models.CharField(max_length=80)
+	available =  models.BooleanField()
+	status = models.CharField(max_length=300)
+	borrower = models.OneToOneField(UserToolShareProfile, related_name="borrowing_user")
+	currShed = models.OneToOneField(Shed)
+	expectedAvailabilityDate = models.DateTimeField()
+	dateLoaned = models.DateTimeField()
+
+def makeTool(owner, name, description, type):
+
+	tool = Tool()
+	tool.tool_owner = owner
+	tool.name = name
+	tool.description = description
+	tool.type = type
+	tool.currShed = tool.owner.shed
+	
+	return tool
 
 
 def makeUserProfile(user, shed, zipcode):
