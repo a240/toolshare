@@ -1,3 +1,8 @@
+# models.py 
+# Contains the models for the sharetools app
+# @authors Phillip Lopez, 
+
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -7,16 +12,22 @@ class Shed(models.Model):
 	owner = models.ForeignKey(User)
 	zipcode = models.IntegerField(default=0)
 	name = models.CharField(max_length=80, unique=True)
-	isCommunity = models.BooleanField(editable=False)
+	isCommunity = models.BooleanField(default=False)
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
+	
+	def __str__(self):
+		return self.name
 
 
 class UserToolShareProfile(models.Model):
 	user = models.OneToOneField(User, unique=True)
 	shed = models.OneToOneField(Shed)
 	zipcode = models.IntegerField()
+	
+	def __str__(self):
+		return self.user.username
 	
 class Tool(models.Model):
 
@@ -26,10 +37,13 @@ class Tool(models.Model):
 	type = models.CharField(max_length=80)
 	available =  models.BooleanField()
 	status = models.CharField(max_length=300)
-	borrower = models.OneToOneField(UserToolShareProfile, related_name="borrowing_user")
+	borrower = models.OneToOneField(UserToolShareProfile, related_name="borrowing_user",blank=True, null=True)
 	currShed = models.OneToOneField(Shed)
-	expectedAvailabilityDate = models.DateTimeField()
-	dateLoaned = models.DateTimeField()
+	expectedAvailabilityDate = models.DateTimeField(blank=True, null=True)
+	dateLoaned = models.DateTimeField(blank=True,null=True)
+	
+	def __str__(self):
+		return self.type + " : " + self.name
 
 def makeTool(owner, name, description, type):
 
