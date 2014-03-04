@@ -25,11 +25,11 @@ def makeUserProfile(user, shed, zipcode):
 	profile.shed = shed
 	profile.zipcode = zipcode
 	return profile
+	
 
 def makeShed(owner, zipcode, name):
 	shed = Shed()
 	shed.owner = owner
 	shed.zipcode = zipcode
 	shed.name = name
-
 	return shed
