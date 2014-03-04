@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Shed(models.Model):
-	owner = models.ForeignKey(User)
 	zipcode = models.IntegerField(default=0)
 	name = models.CharField(max_length=80, unique=True)
 	isCommunity = models.BooleanField(editable=False)
@@ -12,15 +11,20 @@ class Shed(models.Model):
 	isPrivate = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
 
+	def __str__(self):
+		return name + " | " + zipcode + " | " + owner
+
 
 class UserToolShareProfile(models.Model):
 	user = models.OneToOneField(User, unique=True)
 	shed = models.OneToOneField(Shed)
 	zipcode = models.IntegerField()
+
+	def __str__(self):
+		return user.username + ' | ' + zipcode
 	
 class Tool(models.Model):
-
-	name = models.CharField(max_length=80, unique=True)
+	name = models.CharField(max_length=80)
 	description = models.CharField(max_length=300)
 	owner = models.OneToOneField(UserToolShareProfile, unique=True)	
 	type = models.CharField(max_length=80)
@@ -31,15 +35,16 @@ class Tool(models.Model):
 	expectedAvailabilityDate = models.DateTimeField()
 	dateLoaned = models.DateTimeField()
 
-def makeTool(owner, name, description, type):
+	def __str__(self):
+		return 
 
+def makeTool(owner, name, description, type):
 	tool = Tool()
 	tool.tool_owner = owner
 	tool.name = name
 	tool.description = description
 	tool.type = type
-	tool.currShed = tool.owner.shed
-	
+	tool.currShed = tool.owner.shed	
 	return tool
 
 
