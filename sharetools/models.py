@@ -1,7 +1,6 @@
 # models.py 
 # Contains the models for the sharetools app
-# @authors Phillip Lopez, 
-
+# @authors Phillip Lopez, David Samuelson
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -19,7 +18,6 @@ class UserProfile(models.Model):
 class Shed(models.Model):
 	owner = models.OneToOneField(User)
 	zipcode = models.IntegerField(default=0)
-	isCommunity = models.BooleanField(default=True)
 	name = models.CharField(max_length=80, unique=True)
 	isCommunity = models.BooleanField(default=False)
 	isActive = models.BooleanField(default=True)
@@ -57,17 +55,12 @@ class Tool(models.Model):
 			)
 		)
 
-	currentShed = models.OneToOneField(Shed)
+	owner = models.OneToOneField(User)
 	type = models.CharField(max_length=80, choices=TOOL_CHOICES)
 	description = models.CharField(max_length=300, blank=True)
-	owner = models.OneToOneField(User)
+	currentShed = models.OneToOneField(Shed)
 	available =  models.BooleanField()
-	status = models.CharField(max_length=300)
-	borrower = models.OneToOneField(UserToolShareProfile, related_name="borrowing_user",blank=True, null=True)
-	currShed = models.OneToOneField(Shed)
-	expectedAvailabilityDate = models.DateTimeField(blank=True, null=True)
-	dateLoaned = models.DateTimeField(blank=True,null=True)
-	
+
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type
 
@@ -93,7 +86,7 @@ def makeTool(owner, name, description, type):
 
 
 def makeUserProfile(user, shed, zipcode):
-	profile = UserToolShareProfile()
+	profile = UserProfile()
 	profile.user = user
 	profile.shed = shed
 	profile.zipcode = zipcode
