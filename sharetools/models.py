@@ -1,3 +1,8 @@
+# models.py 
+# Contains the models for the sharetools app
+# @authors Phillip Lopez, 
+
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -15,14 +20,25 @@ class Shed(models.Model):
 	owner = models.OneToOneField(User)
 	name = models.CharField(max_length=80)
 	zipcode = models.IntegerField(default=0)
+<<<<<<< HEAD
 	isCommunity = models.BooleanField(default=True)
+=======
+	name = models.CharField(max_length=80, unique=True)
+	isCommunity = models.BooleanField(default=False)
+>>>>>>> FETCH_HEAD
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
+	
+	def __str__(self):
+		return self.name
 
 	def __str__(self):
 		return self.owner.username + "'s " + self.name
 
+	
+	def __str__(self):
+		return self.user.username
 	
 class Tool(models.Model):
 	TOOL_CHOICES = (
@@ -57,6 +73,17 @@ class Tool(models.Model):
 	description = models.CharField(max_length=300, blank=True)
 	owner = models.OneToOneField(User)
 	available =  models.BooleanField()
+<<<<<<< HEAD
+=======
+	status = models.CharField(max_length=300)
+	borrower = models.OneToOneField(UserToolShareProfile, related_name="borrowing_user",blank=True, null=True)
+	currShed = models.OneToOneField(Shed)
+	expectedAvailabilityDate = models.DateTimeField(blank=True, null=True)
+	dateLoaned = models.DateTimeField(blank=True,null=True)
+	
+	def __str__(self):
+		return self.type + " : " + self.name
+>>>>>>> FETCH_HEAD
 
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type
