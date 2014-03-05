@@ -7,11 +7,17 @@ from django.views import generic
 from sharetools.models import Shed, Tool
 
 def index(request):
-	template = loader.get_template('index.html')
-	context = RequestContext(request, {
+	if request.user.is_authenticated():
+		template = loader.get_template('base_index.html')
+		context = RequestContext(request, {
+		})
+		return HttpResponse(template.render(context))
+	else:
+		template = loader.get_template('landing.html')
+		context = RequestContext(request, {
+		})
+		return HttpResponse(template.render(context))
 
-	})
-	return HttpResponse(template.render(context))
 
 def shed(request, shed_id):
 	shed = get_object_or_404(Shed, pk=shed_id)
