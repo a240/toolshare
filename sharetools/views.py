@@ -1,8 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
-from django.views import generic
 
 from sharetools.models import Shed, Tool
 
@@ -18,6 +17,14 @@ def index(request):
 		})
 		return HttpResponse(template.render(context))
 
+def register(request):
+	if request.user.is_authenticated():
+		return redirect('index')
+	else:
+		template = loader.get_template('base_register.html')
+		context = RequestContext(request, {
+		})
+		return HttpResponse(template.render(context))
 
 def shed(request, shed_id):
 	shed = get_object_or_404(Shed, pk=shed_id)
