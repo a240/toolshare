@@ -5,8 +5,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	zipcode = models.CharField(max_length=5)
@@ -17,7 +15,7 @@ class UserProfile(models.Model):
 
 class Shed(models.Model):
 	owner = models.OneToOneField(User)
-	zipcode = models.IntegerField(default=0)
+	zipcode = models.CharField(max_length=5)
 	name = models.CharField(max_length=80, unique=True)
 	isCommunity = models.BooleanField(default=False)
 	isActive = models.BooleanField(default=True)
@@ -30,27 +28,27 @@ class Shed(models.Model):
 class Tool(models.Model):
 	TOOL_CHOICES = (
 			('Drills', (
-					('hammerDrill', 'Hammer Drill'),
-					('pressDrill', 'Press Drill'),
-					('airDrill', 'Air Drill'),
-					('percussionDrill', 'Percussion Drill'),
-					('powerDirll', 'Power Drill'),
+					('Hammer Drill', 'Hammer Drill'),
+					('Press Drill', 'Press Drill'),
+					('Air Drill', 'Air Drill'),
+					('Percussion Drill', 'Percussion Drill'),
+					('Power Drill', 'Power Drill'),
 				)
 			),
 			('Screwdriver', (
-					('slottedScrewdriver', 'Slotted Screwdriver'),
-					('flaredScrewdriver', 'Flared Screwdriver'),
+					('Slotted Screwdriver', 'Slotted Screwdriver'),
+					('Flared Screwdriver', 'Flared Screwdriver'),
 				)
 			),
 			('Wrenches', (
-					('torqueWrench', 'Torque Wrench'),
-					('pipeWrench', 'Pipe Wrench'),
-					('strapWrench', 'Strap Wrench'),
+					('Torque Wrench', 'Torque Wrench'),
+					('Pipe Wrench', 'Pipe Wrench'),
+					('Strap Wrench', 'Strap Wrench'),
 				)
 			),
 			('Hammer', (
-					('clawHammer', 'Claw Hammer'),
-					('powerHammer', 'Power Hammer'),
+					('Claw Hammer', 'Claw Hammer'),
+					('Power Hammer', 'Power Hammer'),
 				)
 			)
 		)
@@ -81,7 +79,7 @@ def makeTool(owner, name, description, type):
 	tool.name = name
 	tool.description = description
 	tool.type = type
-	tool.currShed = tool.owner.shed	
+	tool.currShed = tool.owner.shed
 	return tool
 
 
