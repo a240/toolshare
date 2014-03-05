@@ -3,5 +3,44 @@
 {% block title %}Shed{% endblock %}
 
 {% block content %}
-	<p>SHED</p>
+<div class="jumbotron">
+	<div class="container">
+		<h1>{{ shed.name }}</h1>
+	</div>
+</div>
+<div class="container">
+	{% if tools %}
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+						<th>Owner</th>
+						<th>Availability</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for tool in tools %}
+					<tr>
+						<td>{{ tool.type }}</td>
+						<td>{{ tool.description|truncatechars:20 }}</td>
+						<td>{{ tool.owner.username }}</td>
+						<td>{{ tool.available }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% else %}
+	<div class="row">
+		<p class="text-center">No tools in this shed :(</p>
+	</div>
+	{% endif %}
+	<div class="row">
+		<img src="http://maps.googleapis.com/maps/api/staticmap?center={{ shed.zipcode }}&zoom=13&size=400x400&sensor=false" />
+	</div>
+</div>
 {% endblock %}
