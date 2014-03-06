@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
-from sharetools.models import Asset, Location
+from sharetools.models import Asset, Location, UserProfile, User
 from sharetools.forms import LoginForm, UserForm, UserProfileForm 
 
 def index_view(request):
@@ -65,6 +65,19 @@ def register_view(request):
 		context = RequestContext(request, {})
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
+
+def profile_view(request, user_id):
+	this_user = get_object_or_404(User, username__iexact=user_id)
+	user_profile = this_user.userprofile
+	
+	template = loader.get_template('base_profile.html')
+	context = RequestContext(request, {
+		'userProfile': user_profile
+	})
+	
+	return HttpResponse(template.render(context))
+	
+	
 
 def shed_view(request, shed_id):
 	shedLocation = get_object_or_404(Location, pk=shed_id)
