@@ -1,9 +1,11 @@
 from django.contrib import admin
-from sharetools.models import Shed, Tool, UserProfile, ShareContract
+from sharetools.models import Location, Asset, UserProfile, ShareContract, Address, Asset_Type
 
 # Register your models here.
 
-admin.site.register(Shed)
-admin.site.register(Tool)
+admin.site.register(Address)
+admin.site.register(Location)
+admin.site.register(Asset_Type)
+admin.site.register(Asset)
 admin.site.register(UserProfile)
 admin.site.register(ShareContract)

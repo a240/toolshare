@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
-{% block title %}TS - {{ shed.name }}{% endblock %}
+{% block title %}TS - {{ location.name }}{% endblock %}
 
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
-		<h1>{{ shed.name }}</h1>
+		<h1>{{ location.name }}</h1>
 	</div>
 </div>
 <div class="container">
-	{% if tools %}
+	{% if assets %}
 	<div class="row">
 		<div class="table-responsive">
 			<table class="table table-striped">
@@ -22,12 +22,12 @@
 					</tr>
 				</thead>
 				<tbody>
-				{% for tool in tools %}
+				{% for asset in assets %}
 					<tr>
-						<td>{{ tool.type }}</td>
-						<td>{{ tool.description|truncatechars:20 }}</td>
-						<td>{{ tool.owner.username }}</td>
-						<td>{{ tool.available }}</td>
+						<td>{{ asset.type }}</td>
+						<td>{{ asset.description|truncatechars:20 }}</td>
+						<td>{{ asset.owner.username }}</td>
+						<td>{{ asset.available }}</td>
 					</tr>
 				{% endfor %}
 				</tbody>
@@ -40,7 +40,7 @@
 	</div>
 	{% endif %}
 	<div class="row">
-		<img src="http://maps.googleapis.com/maps/api/staticmap?center={{ shed.zipcode }}&zoom=13&size=400x400&sensor=false" />
+		<img src="http://maps.googleapis.com/maps/api/staticmap?center={{ location.address.zipcode }}&zoom=13&size=400x400&sensor=false" />
 	</div>
 </div>
 {% endblock %}
