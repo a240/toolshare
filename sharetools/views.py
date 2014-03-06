@@ -5,6 +5,7 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
 from sharetools.models import Asset, Location
+from sharetools.forms import LoginForm, UserForm, UserProfileForm 
 
 def index_view(request):
 	if request.user.is_authenticated():
@@ -23,18 +24,17 @@ def login_view(request):
 		return redirect('index')
 	else:
 		if request.method == 'POST':
-			username = request.POST['username']
-			password = request.POST['password']
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				if user.is_active:
-					login(request, user)
-					return redirect('index')
-
-			error = "Login Failed"
-
+			form = LoginForm(request.POST)
+			if form.is_valid():
+				username = form.cleaned_data['username']
+				password = form.cleaned_data['password']
+				user = authenticate(username=username, password=password)
+				if user is not None:
+					if user.is_active:
+						login(request, user)
+						return redirect('index')
 			context = RequestContext(request, {
-				'login_error': error
+				'login_error': "The username and email you gave us did not match up"
 			})
 		else:
 			context = RequestContext(request, {})
@@ -50,9 +50,18 @@ def register_view(request):
 	if request.user.is_authenticated():
 		return redirect('index')
 	else:
-		if request.method == 'POST':
-			pass
-			# register logic
+		# if request.method == 'POST':
+		# 	user_form = UserForm(request.POST, prefix='user')
+		# 	profile_form = UserProfileForm(request.POST, prefix='profile')
+		# 	if user_form.is_valid() and profile_form.is_valid():
+		# 		user = user_form.save(commit=False)
+		# 		if User.objects.filter(username=user.username, email=user.email).exists()
+		# 			profile_form.user = user
+		# 			profile_form.save()
+
+		# 	context = RequestContext(request, {})
+		# else:
+			# context = RequestContext(request, {})
 		context = RequestContext(request, {})
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
