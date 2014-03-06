@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     
     url(r'^admin/', include(admin.site.urls)),
 	url(r'^register/$', views.register_view, name='register'),
+	url(r'^login/$', views.login_view, name='login'),
 	url(r'^logout/$', views.logout_view, name='logout'),
 	url(r'^shed/(\d+)$', views.shed_view, name='shed'),
 	url(r'^tool/(\d+)$', views.tool_view, name='tool'),

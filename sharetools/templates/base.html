@@ -25,34 +25,41 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="{% url 'sharetools.views.index_view' %}">
                     <i class="fa fa-archive"></i>  <span class="light">Tool</span> Share
                 </a>
             </div>
             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                 <ul class="nav navbar-nav">
+                    {% if user.is_authenticated %}
                     <li>
-                        <a href="/messages"><i class="fa fa-envelope-o"></i> Messages</a>
+                        <a href=""><i class="fa fa-envelope-o"></i> Messages</a>
                     </li>
                     <li>
-                        <a href="/tools"><i class="fa fa-gavel"></i> My Tools</a>
+                        <a href=""><i class="fa fa-gavel"></i> My Tools</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="/profile" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Profile</a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="{% url 'sharetools.views.logout_view' %}">Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{% url 'sharetools.views.register_view' %}">Sign up</a>
                     </li>
                     <li>
-                        <a href="/profile"><i class="fa fa-user"></i> Profile</a>
+                        <a href="{% url 'sharetools.views.login_view' %}">Login</a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
     {% block content %}{% endblock %}
-
-    <footer>
-      <div class="container">
-        <p>&copy; Tool Share 2014</p>
-      </div>
-    </footer>
-
 
     {% block scripts %}
     <script src="{% static "js/jquery.min.js" %}"></script>

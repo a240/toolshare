@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
@@ -18,13 +18,43 @@ def index_view(request):
 		})
 		return HttpResponse(template.render(context))
 
+def login_view(request):
+	if request.user.is_authenticated():
+		return redirect('index')
+	else:
+		if request.method == 'POST':
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				if user.is_active:
+					login(request, user)
+					return redirect('index')
+
+			error = "Login Failed"
+
+			context = RequestContext(request, {
+				'login_error': error
+			})
+		else:
+			context = RequestContext(request, {})
+
+		template = loader.get_template('base_login.html')
+		return HttpResponse(template.render(context))
+
+def logout_view(request):
+	logout(request)
+	return redirect('index')
+
 def register_view(request):
 	if request.user.is_authenticated():
-		return redirect('index_view')
+		return redirect('index')
 	else:
+		if request.method == 'POST':
+			pass
+			# register logic
+		context = RequestContext(request, {})
 		template = loader.get_template('base_register.html')
-		context = RequestContext(request, {
-		})
 		return HttpResponse(template.render(context))
 
 def shed_view(request, shed_id):
@@ -40,6 +70,3 @@ def shed_view(request, shed_id):
 def tool_view(request, id):
 	return HttpResponse("Tool page." + id)
 
-def logout_view(request):
-	logout(request)
-	return redirect('index_view')
