@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}TS - {{ location.name }}{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>{{ location.name }}</h1>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>User Name:</th>
+						<th>First Name</th>
+						<th>Last Name</th>
+						<th>Email</th>
+						<th>Zip Code</th>					
+					</tr>
+				</thead>
+				<tbody>
+		
+					<tr>
+						<td>{{ userProfile.user.username }}</td>
+						<td>{{ userProfile.user.first_name }}</td>
+						<td>{{ userProfile.user.last_name }}</td>
+						<td>{{ userProfile.user.email }}</td>
+						<td>{{ userProfile.zipcode }}</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
