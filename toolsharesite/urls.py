@@ -15,5 +15,6 @@ urlpatterns = patterns('',
 	url(r'^logout/$', views.logout_view, name='logout'),
 	url(r'^shed/(\d+)$', views.shed_view, name='shed'),
 	url(r'^tool/(\d+)$', views.tool_view, name='tool'),
+	url(r'^profile/(\D+)$', views.profile_view, name='tool'),
     url(r'^$', views.index_view, name='index'),
 )
