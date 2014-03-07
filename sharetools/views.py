@@ -5,7 +5,7 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
 from sharetools.models import Asset, Location, UserProfile, User
-from sharetools.forms import LoginForm, UserForm, UserProfileForm 
+from sharetools.forms import LoginForm, UserForm 
 
 def index_view(request):
 	if request.user.is_authenticated():
@@ -29,10 +29,10 @@ def login_view(request):
 				username = form.cleaned_data['username']
 				password = form.cleaned_data['password']
 				user = authenticate(username=username, password=password)
-				if user is not None:
-					if user.is_active:
-						login(request, user)
-						return redirect('index')
+				if user is not None and user.is_active:
+					login(request, user)
+					return redirect('index')
+
 			context = RequestContext(request, {
 				'login_error': "The username and email you gave us did not match up"
 			})
@@ -50,19 +50,20 @@ def register_view(request):
 	if request.user.is_authenticated():
 		return redirect('index')
 	else:
-		# if request.method == 'POST':
-		# 	user_form = UserForm(request.POST, prefix='user')
-		# 	profile_form = UserProfileForm(request.POST, prefix='profile')
-		# 	if user_form.is_valid() and profile_form.is_valid():
-		# 		user = user_form.save(commit=False)
-		# 		if User.objects.filter(username=user.username, email=user.email).exists()
-		# 			profile_form.user = user
-		# 			profile_form.save()
+		if request.method == 'POST':
+			user_form = UserForm(request.POST)
+			# @TODO Check if the user already exist and post good errors
+			if user_form.is_valid():
+				user = user_from.save(commit=false)
+				# if User.objects.filter(username=user.username, email.user.email).exists():
+				profile = UserProfile()
+				profile.user = user
+				profile.save()
+				return redirect('login')
 
-		# 	context = RequestContext(request, {})
-		# else:
-			# context = RequestContext(request, {})
-		context = RequestContext(request, {})
+		context = RequestContext(request, {
+			'form': UserForm()
+		})
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
 
