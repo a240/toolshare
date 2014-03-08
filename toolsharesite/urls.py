@@ -17,5 +17,6 @@ urlpatterns = patterns('',
 		url(r'^tool/(\d+)$', views.tool_view, name='tool'),
 		url(r'^profile/(\w+)$', views.profile_view, name='prof'),
 		url(r'^edit_profile/$', views.edit_profile_view, name='profedit'),
+		url(r'^myassets/$', views.myassets_view, name='mytools'),
 		url(r'^$', views.index_view, name='index'),
 )

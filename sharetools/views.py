@@ -68,6 +68,7 @@ def register_view(request):
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
 
+# Lets anyone view the profile/username/ user's info
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
@@ -80,7 +81,7 @@ def profile_view(request, user_id):
 	return HttpResponse(template.render(context))
 
 # Allows users to modify their profile
-# Uses UserEditForm
+# Uses UserEditForm, redirects user to their profile view upon success
 # @Phil
 def edit_profile_view(request):
 	if request.method == 'POST':
@@ -103,6 +104,13 @@ def edit_profile_view(request):
 		'form':form,
 	})
 	
+def myassets_view(request):
+	assets = Asset.objects.filter(owner=request.user)
+	template = loader.get_template('base_myassets.html')
+	context = RequestContext(request, {
+		'assets': assets,
+	})
+	return HttpResponse(template.render(context))
 
 def shed_view(request, shed_id):
 	shedLocation = get_object_or_404(Location, pk=shed_id)
