@@ -1,3 +1,5 @@
+import hashlib
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, get_object_or_404, redirect
@@ -68,14 +70,21 @@ def register_view(request):
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
 
+def my_profile_view(request):
+	return profile_view(request, request.user.username)
+
 # Lets anyone view the profile/username/ user's info
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
-	
+	m = hashlib.md5()
+	m.update(request.user.email)
+	hashedEmail = m.digest()
+	avatarURL = 'http://www.gravatar.com/avatar/' + hashedEmail + '?d=identicon'
 	template = loader.get_template('base_profile.html')
 	context = RequestContext(request, {
-		'userProfile': user_profile
+		'userProfile': user_profile,
+		'avatarURL': hashedEmail,
 	})
 	
 	return HttpResponse(template.render(context))
