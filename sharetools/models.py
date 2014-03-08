@@ -40,11 +40,11 @@ class Asset_Type(models.Model):
 		return self.name
 	
 class Asset(models.Model):
-	owner = models.OneToOneField(User)
+	owner = models.ForeignKey(User, related_name = 'user')
 	name = models.CharField(max_length=80)
 	description = models.CharField(max_length=300, blank=True)
-	type = models.OneToOneField(Asset_Type)
-	location = models.OneToOneField(Location)
+	type = models.ForeignKey(Asset_Type, related_name = 'type')
+	location = models.ForeignKey(Location, related_name = 'location')
 
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type.name
@@ -52,9 +52,9 @@ class Asset(models.Model):
 class ShareContract(models.Model):
 	returnDate = models.DateTimeField()
 	loanDate = models.DateTimeField()
-	lender = models.OneToOneField(User, related_name='lender')
-	borrower = models.OneToOneField(User, related_name='borrower')
-	asset = models.OneToOneField(Asset, related_name='asset')
+	lender = models.ForeignKey(User, related_name='lender')
+	borrower = models.ForeignKey(User, related_name='borrower')
+	asset = models.ForeignKey(Asset, related_name='asset')
 
 	def __str__(self):
-		return self.lender + ' lent ' + self.borrower + ' on ' + loanDate
+		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()
