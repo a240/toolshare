@@ -36,11 +36,18 @@ class UserForm(forms.ModelForm):
 		else:
 			raise forms.ValidationError('Email is already in use')
 
-class UserProfileForm(forms.ModelForm):
+class UserEditForm(forms.ModelForm):
+	zipcode = forms.CharField(max_length = 5)
+	
 	class Meta:
-		model = UserProfile
-		exclude = ['user']
-
+		model = User
+		fields = ('first_name', 'last_name', 'zipcode', 'email', 'password')
+		widgets = {
+			'email': forms.EmailInput(),
+			'password': forms.PasswordInput(),
+		}
+		
+		
 class LoginForm(forms.Form):
 	username = forms.CharField()
 	password = forms.CharField()
