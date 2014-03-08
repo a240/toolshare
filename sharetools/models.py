@@ -41,11 +41,11 @@ class Asset_Type(models.Model):
 		return self.name
 	
 class Asset(models.Model):
-	owner = models.ForeignKey(User)
+	owner = models.ForeignKey(User, related_name = 'user')
 	name = models.CharField(max_length=80)
 	description = models.CharField(max_length=300, blank=True)
-	type = models.ForeignKey(Asset_Type)
-	location = models.ForeignKey(Location)
+	type = models.ForeignKey(Asset_Type, related_name = 'type')
+	location = models.ForeignKey(Location, related_name = 'location')
 
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type.name
@@ -58,4 +58,4 @@ class ShareContract(models.Model):
 	asset = models.ForeignKey(Asset, related_name='asset')
 
 	def __str__(self):
-		return self.lender + ' lent ' + self.borrower + ' on ' + loanDate
+		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()

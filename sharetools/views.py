@@ -1,11 +1,12 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
+from django.contrib.auth.hashers import make_password
 
 from sharetools.models import Asset, Location, UserProfile, User
-from sharetools.forms import LoginForm, UserForm 
+from sharetools.forms import LoginForm, UserForm, UserEditForm 
 
 def index_view(request):
 	if request.user.is_authenticated():
@@ -67,6 +68,7 @@ def register_view(request):
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
 
+# Lets anyone view the profile/username/ user's info
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
@@ -77,7 +79,30 @@ def profile_view(request, user_id):
 	})
 	
 	return HttpResponse(template.render(context))
-	
+
+# Allows users to modify their profile
+# Uses UserEditForm, redirects user to their profile view upon success
+# @Phil
+def edit_profile_view(request):
+	if request.method == 'POST':
+		form = UserEditForm(request.POST, instance=request.user)
+		if form.is_valid():
+			request.user.userprofile.zipcode = form.cleaned_data['zipcode']
+			request.user.password = make_password(form.cleaned_data['password'],'pbkdf2_sha256')
+			request.user.userprofile.save()
+			form.save()
+			return HttpResponseRedirect('/profile/'+request.user.username)
+	else:
+		form = UserEditForm(initial = {
+			'first_name': request.user.first_name,
+			'last_name': request.user.last_name,
+			'zipcode': request.user.userprofile.zipcode,
+			'email': request.user.email
+		})
+		
+	return render(request, 'base_editProfile.html', {
+		'form':form,
+	})
 
 def shed_view(request, shed_id):
 	shedLocation = get_object_or_404(Location, pk=shed_id)
