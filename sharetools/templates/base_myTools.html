@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}TS - My Tools{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>My Tools</h1>
+	</div>
+</div>
+<div class="container">
+	{% if assets %}
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+						<th>Owner</th>
+						<th>Availability</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for asset in assets %}
+					<tr>
+						<td>{{ asset.type }}</td>
+						<td>{{ asset.description|truncatechars:20 }}</td>
+						<td>{{ asset.owner.username }}</td>
+						<td>{{ asset.available }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% else %}
+	<div class="well well-lg">
+		<p class="text-center">You have no tools :(</p>
+	</div>
+	{% endif %}
+</div>
+{% endblock %}

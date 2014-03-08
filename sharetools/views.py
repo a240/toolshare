@@ -54,7 +54,7 @@ def register_view(request):
 			user_form = UserForm(request.POST)
 			# @TODO Check if the user already exist and post good errors
 			if user_form.is_valid():
-				user = user_from.save(commit=false)
+				user = user_from.save()
 				# if User.objects.filter(username=user.username, email.user.email).exists():
 				profile = UserProfile()
 				profile.user = user
@@ -78,7 +78,6 @@ def profile_view(request, user_id):
 	
 	return HttpResponse(template.render(context))
 	
-	
 
 def shed_view(request, shed_id):
 	shedLocation = get_object_or_404(Location, pk=shed_id)
@@ -86,6 +85,23 @@ def shed_view(request, shed_id):
 	template = loader.get_template('base_shed.html')
 	context = RequestContext(request, {
 		'location': shedLocation,
+		'assets': assets,
+	})
+	return HttpResponse(template.render(context))
+
+def my_sheds_view(request):
+	shedLocations = Location.objects.filter(owner=request.user)
+	template = loader.get_template('base_mySheds.html')
+	context = RequestContext(request, {
+		'shedLocations': shedLocations,
+	})
+	return HttpResponse(template.render(context))
+
+
+def my_tools_view(request):
+	assets = Asset.objects.filter(owner=request.user)
+	template = loader.get_template('base_myTools.html')
+	context = RequestContext(request, {
 		'assets': assets,
 	})
 	return HttpResponse(template.render(context))
