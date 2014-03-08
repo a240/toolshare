@@ -22,13 +22,14 @@ class Address(models.Model):
 		return self.street + ', ' + self.city + ', ' + self.country
 
 class Location(models.Model):
-	owner = models.OneToOneField(User)
+	owner = models.ForeignKey(User)
 	name = models.CharField(max_length=80, unique=True)
-	address = models.OneToOneField(Address)
+	description = models.CharField(max_length=1000)
+	address = models.ForeignKey(Address)
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
-	
+
 	def __str__(self):
 		return self.name
 
@@ -40,11 +41,11 @@ class Asset_Type(models.Model):
 		return self.name
 	
 class Asset(models.Model):
-	owner = models.OneToOneField(User)
+	owner = models.ForeignKey(User)
 	name = models.CharField(max_length=80)
 	description = models.CharField(max_length=300, blank=True)
-	type = models.OneToOneField(Asset_Type)
-	location = models.OneToOneField(Location)
+	type = models.ForeignKey(Asset_Type)
+	location = models.ForeignKey(Location)
 
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type.name
@@ -52,9 +53,9 @@ class Asset(models.Model):
 class ShareContract(models.Model):
 	returnDate = models.DateTimeField()
 	loanDate = models.DateTimeField()
-	lender = models.OneToOneField(User, related_name='lender')
-	borrower = models.OneToOneField(User, related_name='borrower')
-	asset = models.OneToOneField(Asset, related_name='asset')
+	lender = models.ForeignKey(User, related_name='lender')
+	borrower = models.ForeignKey(User, related_name='borrower')
+	asset = models.ForeignKey(Asset, related_name='asset')
 
 	def __str__(self):
 		return self.lender + ' lent ' + self.borrower + ' on ' + loanDate
