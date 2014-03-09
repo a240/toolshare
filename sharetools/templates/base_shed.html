@@ -7,42 +7,62 @@
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
-		<h1>{{ location.name }}</h1>
+		<h1>
+			{% if location.isPrivate %}
+			<i class="fa fa-lock"></i>
+			{% endif %}
+			{{ location.name }}
+		</h1>
 	</div>
 </div>
 <div class="container">
-	{% if assets %}
-	<div class="row">
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Type</th>
-						<th>Description</th>
-						<th>Owner</th>
-						<th>Availability</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for asset in assets %}
-					<tr>
-						<td>{{ asset.type }}</td>
-						<td>{{ asset.description|truncatechars:20 }}</td>
-						<td>{{ asset.owner.username }}</td>
-						<td>{{ asset.available }}</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
+	<div class="col-lg-8">
+		{% if assets %}
+		<div class="row">
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Type</th>
+							<th>Description</th>
+							<th>Owner</th>
+							<th>Availability</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for asset in assets %}
+						<tr>
+							<td>{{ asset.type }}</td>
+							<td>{{ asset.description|truncatechars:20 }}</td>
+							<td>{{ asset.owner.username }}</td>
+							<td>{{ asset.available }}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
+		{% else %}
+		<div class="well well-lg">
+			<h3 class="text-center text-muted">This shed has no tools :(</h3>
+		</div>
+		{% endif %}
 	</div>
-	{% else %}
-	<div class="row">
-		<span class="text-center">No tools in this shed :(</span>
-	</div>
-	{% endif %}
-	<div class="row">
-		<img src="http://maps.googleapis.com/maps/api/staticmap?center={{ location.address.zipcode }}&zoom=13&size=400x400&sensor=false" />
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">About</h3>
+			</div>
+			<div class="panel-body">
+				<p>{{ location.description }}</p>
+				<hr>
+				<img class="img-responsive" src="http://maps.googleapis.com/maps/api/staticmap?center={{ location.address.zipcode }}&zoom=13&size=400x400&sensor=false" />
+				<p><strong>Location: </strong>{{ location.city }}, {{ location.state }}</p>
+			</div>
+			<div class="panel-footer">
+				Created by <a href="{% url 'sharetools.views.profile_view' location.owner %}">{{ location.owner.username }}</a>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock %}
