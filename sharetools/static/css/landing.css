@@ -145,10 +145,12 @@ a:focus {
 
 .brand-heading {
     font-size: 40px;
+    text-shadow: 2px 2px 3px #000; /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
 }
 
 .intro-text {
     font-size: 18px;
+    text-shadow: 2px 2px 3px #000; /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
 }
 
 @media(min-width:767px) {
@@ -171,10 +173,10 @@ a:focus {
     height: 70px;
     margin-top: 15px;
     padding: 7px 16px;
-    border: 2px solid #fff;
+    border: 2px solid #e30;
     border-radius: 35px;
     font-size: 40px;
-    color: #fff;
+    color: #e30;
     background: 0 0;
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
@@ -247,7 +249,7 @@ a:focus {
 .download-section {
     width: 100%;
     padding: 50px 0;
-    color: #fff;
+    color: #000;
     background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
     background-color: #000;
     -webkit-background-size: cover;
@@ -349,7 +351,7 @@ img::-moz-selection {
 
 body {
     webkit-tap-highlight-color: rgba(255,255,255,.2);
-    background-color: #fff;
+    background-color: #BDBFB6;
 }
 
 #about {
