@@ -6,8 +6,10 @@
 <div class="jumbotron">
 	<div class="container">
 		<img class="col-sm-4 img-circle" src="{{ avatarURL }}">
-		<h1>{{ user.username }}</h1>
-		<p>{{ user.first_name }} {{ user.last_name }}</p>
+		<div class="col-sm-8">
+			<h1>{{ user.username }}</h1>
+			<p>{{ user.first_name }} {{ user.last_name }}</p>
+		</div>
 	</div>
 </div>
 {% endblock %}
