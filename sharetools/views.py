@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
-from sharetools.forms import LoginForm, UserForm, UserEditForm, MakeToolForm
+from sharetools.forms import LoginForm, UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm
 
 
 def index_view(request):
@@ -143,6 +143,30 @@ def my_sheds_view(request):
 	})
 	return HttpResponse(template.render(context))
 
+def shed_create_view(request):
+	if not request.user.is_authenticated():
+		return redirect('landing')
+	else:
+		if request.method == 'POST':
+			add_form = AddressForm(request.POST)
+			sform = ShedForm(request.POST)
+			if add_form.is_valid() and sform.is_valid():
+				address = add_form.save()
+				shed = sform.save(commit=False)
+				shed.address = address
+				shed.owner = request.user
+				shed.save()
+				messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
+				return redirect('/sheds')
+			else:
+				messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
+				return redirect('/sheds/create/')
+		context = RequestContext(request, {
+			'form': ShedForm(),
+			'add_form': AddressForm()
+		})
+		template = loader.get_template('base_shed_create.html')
+		return HttpResponse(template.render(context))
 
 def my_tools_view(request):
 	assets = Asset.objects.filter(owner=request.user)

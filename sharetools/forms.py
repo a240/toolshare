@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from sharetools.models import UserProfile, Asset, Location
+from sharetools.models import UserProfile, Asset, Location, Address
 
 class UserForm(forms.ModelForm):
 	class Meta:
@@ -36,6 +36,37 @@ class UserForm(forms.ModelForm):
 			return email
 		else:
 			raise forms.ValidationError('Email is already in use')
+
+class ShedForm(forms.ModelForm):
+	class Meta:
+		model = Location
+		fields = {'name', 'description'}
+
+	def clean_name(self):
+		locname = self.cleaned_data['name']
+		try:
+			Location.objects.get(name=locname)
+		except ObjectDoesNotExist:
+			return locname
+		else:
+			raise forms.ValidationError('Location name is already taken')
+
+	def save(self, commit=True):
+		loc = super(ShedForm, self).save(commit=False)
+		if commit:
+			loc.save()
+		return loc
+
+class AddressForm(forms.ModelForm):
+	class Meta:
+		model = Address
+		fields = {'street', 'city', 'country', 'zipcode'}
+
+	def save(self, commit=True):
+		add = super(AddressForm, self).save(commit=False)
+		if commit:
+			add.save()
+		return add
 
 class UserEditForm(forms.ModelForm):
 	zipcode = forms.CharField(max_length = 5)
