@@ -57,7 +57,7 @@ def register_view(request):
 			user_form = UserForm(request.POST)
 			# @TODO Check if the user already exist and post good errors
 			if user_form.is_valid():
-				user = user_from.save()
+				user = user_form.save()
 				# if User.objects.filter(username=user.username, email.user.email).exists():
 				profile = UserProfile()
 				profile.user = user
