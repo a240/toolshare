@@ -5,6 +5,12 @@
 {% block title %}TS - Edit Profile{% endblock %}
 
 {% block content %}
+<div class="head">
+	<div class="container">
+		<h1>Edit Profile -  {{user_name}} </h1>
+	</div>
+</div>
+
 <div class="container">
   <div class="row">
 	<form action="{% url 'sharetools.views.edit_profile_view' %}" method="post">{% csrf_token %}
