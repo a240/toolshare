@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
 from sharetools.models import Asset, Location, UserProfile, User
-from sharetools.forms import LoginForm, UserForm, UserEditForm
+from sharetools.forms import LoginForm, UserForm, UserEditForm, MakeToolForm
 
 
 def index_view(request):
@@ -114,11 +114,16 @@ def edit_profile_view(request):
             'last_name': request.user.last_name,
             'zipcode': request.user.userprofile.zipcode,
             'email': request.user.email
-        })
+		})
 
-    return render(request, 'base_editProfile.html', {
-        'form': form,
+        
+    template = loader.get_template('base_editProfile.html')
+    context = RequestContext(request, {
+        'user_name' : request.user.username,
+        'form' : form
     })
+    return HttpResponse(template.render(context))
+
 
 
 def shed_view(request, shed_id):
@@ -149,6 +154,23 @@ def my_tools_view(request):
     })
     return HttpResponse(template.render(context))
 
+#Generates a new tool, owner = requesting user
+#ToDo: Only present Locations user 
+#      is part of in locations form
+#@Phil
+def make_tool_view(request):
+	if request.method == 'POST':
+		form = MakeToolForm(request.POST, user=request.user)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/tools/')
+			
+	else:
+		form = MakeToolForm(user=request.user)
+		
+	return render(request, 'base_makeTool.html', {
+		'form':form,
+	})
 
 def tool_view(request, id):
     return HttpResponse("Tool page." + id)
