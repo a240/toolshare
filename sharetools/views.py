@@ -104,7 +104,7 @@ def edit_profile_view(request):
 			request.user.password = make_password(form.cleaned_data['password'], 'pbkdf2_sha256')
 			request.user.userprofile.save()
 			form.save()
-			return HttpResponseRedirect('/profile/' + request.user.username)
+			return my_profile_view(request)
 	else:
 		form = UserEditForm(initial={
 			'first_name': request.user.first_name,
@@ -154,10 +154,9 @@ def shed_create_view(request):
 				shed.owner = request.user
 				shed.save()
 				messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
-				return redirect('/sheds')
+				return redirect('mySheds')
 			else:
 				messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
-				return redirect('/sheds/create/')
 		context = RequestContext(request, {
 			'form': ShedForm(),
 			'add_form': AddressForm()
@@ -183,7 +182,7 @@ def make_tool_view(request):
 		form = MakeToolForm(request.POST, user=request.user)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/tools/')
+			return HttpResponseRedirect('myTools')
 
 	else:
 		form = MakeToolForm(user=request.user)
