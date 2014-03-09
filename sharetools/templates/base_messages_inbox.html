@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}TS - My Messages{% endblock %}
+{% block title %}TS - Message Center{% endblock %}
 
 {% block content %}
 <div class="jumbotron">
@@ -11,11 +11,38 @@
 <body>
     <a type="button" class="btn btn-primary" href="">New Message</a>
     <br>
-    {% if user_messages %}
-        {% for msg in user_messages %}
 
-        {% endfor %}
+    {% if user_requests %}
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Tool requests</div>
+      <!-- Table -->
+      <table class="table">
+          <tr>
+          {% for rq in user_requests %}
+              <td>{{ rq.borrower }}</td>
+              <td>{{ rq.asset.name }}</td>
+          {% endfor %}
+          </tr>
+      </table>
+    </div>
+    <br>
     {% endif %}
-    Insert Messages Here
+    {% if user_messages %}
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Messages</div>
+
+          <!-- Table -->
+          <table class="table">
+            <tr>
+            {% for msg in user_messages %}
+
+            {% endfor %}
+            </tr>
+          </table>
+        </div>
+    {% endif %}
+
 </body>
 {% endblock %}

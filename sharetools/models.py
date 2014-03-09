@@ -1,6 +1,6 @@
 # models.py 
 # Contains the models for the sharetools app
-# @authors Phillip Lopez, David Samuelson
+# @authors Phillip Lopez, David Samuelson, Mike Albert
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -56,6 +56,7 @@ class ShareContract(models.Model):
 	lender = models.ForeignKey(User, related_name='lender')
 	borrower = models.ForeignKey(User, related_name='borrower')
 	asset = models.ForeignKey(Asset, related_name='asset')
+	isApproved = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()
