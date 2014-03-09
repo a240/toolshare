@@ -153,10 +153,6 @@ a:focus {
     text-shadow: 2px 2px 3px #000; /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
 }
 
-.intro-textshadow {
-  text-shadow: 2px 2px 3px #000; /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
-}
-
 @media(min-width:767px) {
     .intro {
         height: 100%;
