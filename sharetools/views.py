@@ -153,3 +153,9 @@ def my_tools_view(request):
 def tool_view(request, id):
     return HttpResponse("Tool page." + id)
 
+def messages_view(request):
+    template = loader.get_template('base_messages.html')
+    context = RequestContext(request, {
+        #args like: 'shedLocations': shedLocations,
+    })
+    return HttpResponse(template.render(context))

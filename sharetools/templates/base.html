@@ -33,7 +33,7 @@
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
                     <li>
-                        <a href=""><i class="fa fa-envelope-o"></i></a>
+                        <a href="{% url 'sharetools.views.messages_view' %}"><i class="fa fa-envelope-o"></i></a>
                     </li>
                     <li>
                         <a href="{% url 'sharetools.views.my_sheds_view' %}"><i class="fa fa-home"></i> Sheds</a>
