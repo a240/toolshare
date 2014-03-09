@@ -84,16 +84,15 @@ def my_profile_view(request):
 def profile_view(request, user_id):
     this_user = get_object_or_404(User, username__iexact=user_id)
     user_profile = this_user.userprofile
-    m = hashlib.md5()
-    m.update(request.user.email)
-    hashedEmail = m.digest()
-    avatarURL = 'http://www.gravatar.com/avatar/' + hashedEmail + '?d=identicon'
+    # m = hashlib.md5()
+    # m.update(request.user.email)
+    # hashedEmail = m.digest()
+    # avatarURL = 'http://www.gravatar.com/avatar/' + hashedEmail + '?d=identicon'
     template = loader.get_template('base_profile.html')
     context = RequestContext(request, {
         'userProfile': user_profile,
-        'avatarURL': hashedEmail,
+    #     'avatarURL': hashedEmail,
     })
-
     return HttpResponse(template.render(context))
 
 
