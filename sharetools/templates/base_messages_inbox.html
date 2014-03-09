@@ -11,6 +11,11 @@
 <body>
     <a type="button" class="btn btn-primary" href="">New Message</a>
     <br>
+    {% if user_messages %}
+        {% for msg in user_messages %}
+
+        {% endfor %}
+    {% endif %}
     Insert Messages Here
 </body>
 {% endblock %}
