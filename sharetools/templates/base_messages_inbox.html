@@ -4,45 +4,37 @@
 
 {% block content %}
 <div class="jumbotron">
-	<div class="container">
-		<h1>My Messages</h1>
-	</div>
+    <div class="container" align="left">
+        <h1>My Messages</h1>
+    </div>
 </div>
 <body>
-    <a type="button" class="btn btn-primary" href="">New Message</a>
-    <br>
+<a type="button" class="btn btn-primary" href="">New Message</a>
+<br><br>
+{% if user_messages %}
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Messages</div>
 
-    {% if user_requests %}
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">Tool requests</div>
-      <!-- Table -->
-      <table class="table">
-          <tr>
-          {% for rq in user_requests %}
-              <td>{{ rq.borrower }}</td>
-              <td>{{ rq.asset.name }}</td>
-          {% endfor %}
-          </tr>
-      </table>
-    </div>
-    <br>
-    {% endif %}
-    {% if user_messages %}
-        <div class="panel panel-default">
-          <!-- Default panel contents -->
-          <div class="panel-heading">Messages</div>
-
-          <!-- Table -->
-          <table class="table">
-            <tr>
+    <!-- List -->
+    <ul class="list-group">
+        <tr>
             {% for msg in user_messages %}
-
+            <li class="list-group-item">
+                {% if not msg.read %}
+                <span class="badge">Unread</span>
+                <b>
+                {% endif %}
+                {{ msg.subject }}
+                {% if not msg.read %}
+                </b>
+                {% endif %}
+            </li>
             {% endfor %}
-            </tr>
-          </table>
-        </div>
-    {% endif %}
+        </tr>
+    </ul>
+</div>
+{% endif %}
 
 </body>
 {% endblock %}

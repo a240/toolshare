@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}TS - Share Center{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container" align="left">
+		<h1>My Shares</h1>
+	</div>
+</div>
+<body>
+    {% if user_requests %}
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Tool requests</div>
+      <!-- Table -->
+      <table class="table">
+          <tr>
+          {% for rq in user_requests %}
+              <td >{{ rq.borrower }}</td>
+              <!--
+              <td>{{ rq.asset.name }}</td>
+              -->
+              <td align="center">{{ rq.loanDate }}</td>
+              <td align="right">
+                  <div class="btn-group">
+                      <a type="button" class="btn btn-success" href="">Accept</a>
+                      <a type="button" class="btn btn-danger" href="">Deny</a>
+                  </div>
+              </td>
+          {% endfor %}
+          </tr>
+      </table>
+    </div>
+    <br>
+    {% endif %}
+    {% if user_current %}
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Currently Lent</div>
+      <!-- Table -->
+      <table class="table">
+          <tr>
+          {% for rq in user_current %}
+              <td >{{ rq.borrower }}</td>
+              <!--
+              <td>{{ rq.asset.name }}</td>
+              -->
+              <td align="center">{{ rq.loanDate }}</td>
+          {% endfor %}
+          </tr>
+      </table>
+    </div>
+    <br>
+    {% endif %}
+    {% if user_former %}
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Currently Lent</div>
+      <!-- Table -->
+      <table class="table">
+          <tr>
+          {% for rq in user_former %}
+              <td >{{ rq.borrower }}</td>
+              <!--
+              <td>{{ rq.asset.name }}</td>
+              -->
+              <td align="center">{{ rq.loanDate }}</td>
+          {% endfor %}
+          </tr>
+      </table>
+    </div>
+    <br>
+    {% endif %}
+</body>
+{% endblock %}

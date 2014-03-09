@@ -22,5 +22,6 @@ urlpatterns = patterns('',
 	url(r'^profile/edit$', views.edit_profile_view, name='editProfile'),
 	url(r'^profile/(\w+)$', views.profile_view, name='profile'),
     url(r'^messages/', views.messages_view, name='messages'),
+	url(r'^shares/', views.shares_view, name='shares'),
     url(r'^$', views.index_view, name='index'),
 )

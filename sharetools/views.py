@@ -8,7 +8,7 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
 from sharetools.forms import LoginForm, UserForm, UserEditForm, MakeToolForm
 
 
@@ -178,6 +178,16 @@ def tool_view(request, vid):
 
 def messages_view(request):
 	template = loader.get_template('base_messages_inbox.html')
+	messages = Message.objects.filter(msg_to=request.user)
+	if messages.count() != 0:
+		args = {'user_messages': messages}
+	else:
+		args = {}
+	context = RequestContext(request, args)
+	return HttpResponse(template.render(context))
+
+def shares_view(request):
+	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, isApproved=False)
 	if requests.count() != 0:
 		args = {'user_requests': requests}
