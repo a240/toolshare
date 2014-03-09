@@ -2,6 +2,8 @@
 
 {% block title %}TS - {{ location.name }}{% endblock %}
 
+{% block styles}
+
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
@@ -36,7 +38,7 @@
 	</div>
 	{% else %}
 	<div class="row">
-		<p class="text-center">No tools in this shed :(</p>
+		<span class="text-center">No tools in this shed :(</span>
 	</div>
 	{% endif %}
 	<div class="row">

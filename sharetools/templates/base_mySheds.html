@@ -2,6 +2,11 @@
 
 {% block title %}TS - My Sheds{% endblock %}
 
+{% block css %}
+{{ block.super }}
+
+{% endblock %}
+
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
@@ -25,9 +30,11 @@
 	{% endfor %}
 	{% else %}
 		<div class="well well-lg">
-            <a type="button" class="btn btn-primary" href="/sheds/create/">New Shed</a>
 			<p class="text-center">You have no sheds :(</p>
 		</div>
 	{% endif %}
+    <div class="row">
+			<a type="button" class="btn btn-primary" href="/sheds/create/">New Shed</a>
+	</div>
 </div>
 {% endblock %}
