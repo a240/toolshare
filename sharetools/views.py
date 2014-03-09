@@ -143,26 +143,37 @@ def my_sheds_view(request):
 def shed_create_view(request):
 	if not request.user.is_authenticated():
 		return redirect('landing')
+	if request.method == 'POST':
+		add_form = AddressForm(request.POST)
+		sform = ShedForm(request.POST)
+		if add_form.is_valid() and sform.is_valid():
+			address = add_form.save()
+			shed = sform.save(commit=False)
+			shed.address = address
+			shed.owner = request.user
+			shed.save()
+			messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
+			return redirect('/sheds')
+		else:
+			messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
+			return redirect('/sheds/create/')
+	context = RequestContext(request, {
+		'form': ShedForm(),
+		'add_form': AddressForm()
+	})
+	template = loader.get_template('base_shed_create.html')
+	return HttpResponse(template.render(context))
+
+def shed_delete_view(request, shed_id):
+	shed = get_object_or_404(Location, pk=shed_id)
+	if not request.user.is_authenticated():
+		return redirect('landing')
+	elif shed.owner == request.user:
+		shed.delete()
+		messages.add_message(request, messages.SUCCESS, 'Shed Successfully Deleted.', extra_tags='alert-success')
 	else:
-		if request.method == 'POST':
-			add_form = AddressForm(request.POST)
-			sform = ShedForm(request.POST)
-			if add_form.is_valid() and sform.is_valid():
-				address = add_form.save()
-				shed = sform.save(commit=False)
-				shed.address = address
-				shed.owner = request.user
-				shed.save()
-				messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
-				return redirect('mySheds')
-			else:
-				messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
-		context = RequestContext(request, {
-			'form': ShedForm(),
-			'add_form': AddressForm()
-		})
-		template = loader.get_template('base_shed_create.html')
-		return HttpResponse(template.render(context))
+		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+	return redirect('mySheds')
 
 def my_tools_view(request):
 	assets = Asset.objects.filter(owner=request.user)
