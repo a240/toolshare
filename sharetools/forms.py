@@ -60,7 +60,7 @@ class ShedForm(forms.ModelForm):
 class AddressForm(forms.ModelForm):
 	class Meta:
 		model = Address
-		fields = {'street', 'city', 'country', 'zipcode'}
+		fields = {'street', 'city', 'state', 'country', 'zipcode'}
 
 	def save(self, commit=True):
 		add = super(AddressForm, self).save(commit=False)

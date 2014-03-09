@@ -15,6 +15,7 @@ class UserProfile(models.Model):
 class Address(models.Model):
 	street = models.CharField(max_length=80)
 	city = models.CharField(max_length=80)
+	state = models.CharField(max_length=80)
 	country = models.CharField(max_length=80)
 	zipcode = models.CharField(max_length=5)
 
