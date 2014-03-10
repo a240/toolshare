@@ -226,9 +226,26 @@ def tool_view(request, tool_id):
 	template = loader.get_template('base_tool.html')
 	return (HttpResponse(template.render(context)))
 
-
+#deletes at tool with the requested tool_id 
+#tool must be available
+#requester must be owner
+#@Phil
 def tool_delete_view(request, tool_id):
-	return (HttpResponse('Tool delete ' + tool_id))
+	tool = get_object_or_404(Asset, pk=tool_id)
+	shareCheck = ShareContract.objects.filter(asset__id__iexact=tool_id)
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('landing'))
+	#if tool is currently borrowed (state 1) : 
+	elif (shareCheck):
+		#pass
+		#if shareContract.status == 1
+		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.', extra_tags='alert-warning')
+	elif tool.owner == request.user:
+		tool.delete()
+		messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
+	else:
+		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+	return HttpResponseRedirect(reverse('myTools'))
 
 
 def tool_edit_view(request, tool_id):
