@@ -174,7 +174,8 @@ def shed_delete_view(request, shed_id):
 	else:
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
 	return redirect('mySheds')
-
+    
+	
 def my_tools_view(request):
 	assets = Asset.objects.filter(owner=request.user)
 	template = loader.get_template('base_myTools.html')
@@ -193,7 +194,7 @@ def make_tool_view(request):
 		form = MakeToolForm(request.POST, user=request.user)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('myTools')
+			return HttpResponseRedirect(reverse('myTools'))
 
 	else:
 		form = MakeToolForm(user=request.user)
@@ -203,9 +204,26 @@ def make_tool_view(request):
 	})
 
 
-def tool_view(request, vid):
-	return HttpResponse("Tool page." + vid)
+def tool_view(request, tool_id):
+	asset = get_object_or_404(Asset, pk=tool_id)
+	sharedset = ShareContract.objects.filter(asset__id__iexact=tool_id)
+	shared = None
+	if(sharedset):
+		shared = sharedset[0]
+	context = RequestContext(request, {
+		'user': request.user,
+		'asset': asset,
+		'shared':shared
+	})
+	
+	template = loader.get_template('base_tool.html')
+	return(HttpResponse(template.render(context)))
 
+def tool_delete_view(request, tool_id):
+	return(HttpResponse('Tool delete ' + tool_id))
+	
+def tool_edit_view(request, tool_id):
+	return(HttpResponse('Tool edit ' + tool_id))
 
 def messages_view(request):
 	template = loader.get_template('base_messages_inbox.html')
@@ -216,6 +234,9 @@ def messages_view(request):
 		args = {}
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
+	
+def make_contract_view(request, tool_id):
+	return HttpResponse("Requesting to share " + tool_id)
 
 def shares_view(request):
 	template = loader.get_template('base_shares.html')
