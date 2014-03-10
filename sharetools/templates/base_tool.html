@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}TS - Tool{% endblock %}
+
+{% block css %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>Tool Overview</h1>
+	</div>
+</div>
+<div class="container">
+
+    <br>
+
+    <div class="row panel panel-default">
+        <div class = "panel-heading">
+		<h1> 	{{ asset.name }} - a {{asset.type.name}} owned by
+				<a href="{% url 'profile' user.username %}">
+				{{ asset.owner }}
+				</a>
+        </h1></div>
+        <div class="panel-body">
+			
+            <p>{{ asset.description }}</p>
+		<div class="panel-footer">
+            <div class="btn-group">
+
+                <a href="{% url 'shed' asset.id %}">
+                    <button type="button" class="btn btn-primary">Visit Shed</button>
+                </a>
+				
+				{% if asset.owner == user %}
+				<a href="{% url 'toolEdit' asset.location.id %}">
+                    <button type="button" class="btn btn-primary">Edit Tool</button>
+                </a>
+				
+				<a href="{% url 'toolDeletion' asset.id %}">
+                    <button type="button" class="btn btn-danger">Delete Tool</button>
+                </a>
+                {% endif %}
+            </div>
+		</div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
