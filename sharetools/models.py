@@ -55,18 +55,18 @@ class ShareContract(models.Model):
 	PENDING = 0
 	ACCEPTED = 1
 	DENIED = 2
-	FUFILLED = 3
+	FULFILLED = 3
 	STATUS_CHOICES = (
 		(PENDING, 'Pending'),
 		(ACCEPTED, 'Accepted'),
 		(DENIED, 'Denied'),
-		(FUFILLED, 'Fufilled'),
+		(FULFILLED, 'Fulfilled'),
 	)
 	returnDate = models.DateTimeField()
 	loanDate = models.DateTimeField()
 	lender = models.ForeignKey(User, related_name='lender')
 	borrower = models.ForeignKey(User, related_name='borrower')
-	status = models.IntegerField(choices=STATUS_CHOICES)
+	status = models.IntegerField(choices=STATUS_CHOICES, default=PENDING)
 	asset = models.ForeignKey(Asset, related_name='asset')
 
 	def __str__(self):

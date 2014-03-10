@@ -18,9 +18,7 @@
         <tr>
             {% for rq in user_requests %}
             <td>{{ rq.borrower }}</td>
-            <!--
             <td>{{ rq.asset.name }}</td>
-            -->
             <td align="center">{{ rq.loanDate }}</td>
             <td align="right">
                 <div class="btn-group">
@@ -54,6 +52,23 @@
 </div>
 <br>
 {% endif %}
+{% if user_mypending %}
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">My Pending Requests</div>
+    <!-- Table -->
+    <table class="table">
+        <tr>
+            {% for rq in user_mypending %}
+            <td>{{ rq.borrower }}</td>
+            <td>{{ rq.asset.name }}</td>
+            <td>{{ rq.loanDate }}</td>
+            {% endfor %}
+        </tr>
+    </table>
+</div>
+<br>
+{% endif %}
 {% if user_current %}
 <div class="panel panel-default">
     <!-- Default panel contents -->
@@ -63,10 +78,11 @@
         <tr>
             {% for rq in user_current %}
             <td>{{ rq.borrower }}</td>
-            <!--
             <td>{{ rq.asset.name }}</td>
-            -->
-            <td align="center">{{ rq.loanDate }}</td>
+            <td>{{ rq.loanDate }}</td>
+            <td align="right">
+                <a type="button" class="btn btn-primary" href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
+            </td>
             {% endfor %}
         </tr>
     </table>
@@ -82,10 +98,9 @@
         <tr>
             {% for rq in user_former %}
             <td>{{ rq.borrower }}</td>
-            <!--
             <td>{{ rq.asset.name }}</td>
-            -->
-            <td align="center">{{ rq.loanDate }}</td>
+            <td>{{ rq.loanDate }}</td>
+            <td>{{ rq.returnDate }}</td>
             {% endfor %}
         </tr>
     </table>

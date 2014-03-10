@@ -40,7 +40,7 @@ def login_view(request):
 					return redirect('index')
 
 			context = RequestContext(request, {
-				'login_error': "The username and email you gave us did not match up"
+			'login_error': "The username and email you gave us did not match up"
 			})
 		else:
 			context = RequestContext(request, {})
@@ -61,7 +61,7 @@ def register_view(request):
 		if request.method == 'POST':
 			user_form = UserForm(request.POST)
 			if user_form.is_valid():
-				user = user_form.save()
+				user = user_form.save(Commit=False)
 				profile = UserProfile()
 				profile.user = user
 				profile.save()
@@ -70,7 +70,7 @@ def register_view(request):
 				messages.add_message(request, messages.WARNING, 'Form Submission Error.', extra_tags='alert-warning')
 				return redirect('register')
 		context = RequestContext(request, {
-			'form': UserForm()
+		'form': UserForm()
 		})
 		template = loader.get_template('base_register.html')
 		return HttpResponse(template.render(context))
@@ -84,15 +84,16 @@ def my_profile_view(request):
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
-	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(this_user.email.lower().encode('utf-8')).hexdigest() + '?'
+	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(
+		this_user.email.lower().encode('utf-8')).hexdigest() + '?'
 	gravatar_url += urllib.parse.urlencode({
-			'd': 'identicon',
-			's': 350,
-		})
+	'd': 'identicon',
+	's': 350,
+	})
 	template = loader.get_template('base_profile.html')
 	context = RequestContext(request, {
-		'userProfile': user_profile,
-		'avatarURL': gravatar_url,
+	'userProfile': user_profile,
+	'avatarURL': gravatar_url,
 	})
 	return HttpResponse(template.render(context))
 
@@ -111,16 +112,16 @@ def edit_profile_view(request):
 			return my_profile_view(request)
 	else:
 		form = UserEditForm(initial={
-			'first_name': request.user.first_name,
-			'last_name': request.user.last_name,
-			'zipcode': request.user.userprofile.zipcode,
-			'email': request.user.email
+		'first_name': request.user.first_name,
+		'last_name': request.user.last_name,
+		'zipcode': request.user.userprofile.zipcode,
+		'email': request.user.email
 		})
 
 	template = loader.get_template('base_editProfile.html')
 	context = RequestContext(request, {
-		'user_name': request.user.username,
-		'form': form
+	'user_name': request.user.username,
+	'form': form
 	})
 	return HttpResponse(template.render(context))
 
@@ -130,8 +131,8 @@ def shed_view(request, shed_id):
 	assets = Asset.objects.filter(location=shedLocation)
 	template = loader.get_template('base_shed.html')
 	context = RequestContext(request, {
-		'location': shedLocation,
-		'assets': assets,
+	'location': shedLocation,
+	'assets': assets,
 	})
 	return HttpResponse(template.render(context))
 
@@ -140,9 +141,10 @@ def my_sheds_view(request):
 	shedLocations = Location.objects.filter(owner=request.user)
 	template = loader.get_template('base_mySheds.html')
 	context = RequestContext(request, {
-		'shedLocations': shedLocations,
+	'shedLocations': shedLocations,
 	})
 	return HttpResponse(template.render(context))
+
 
 def shed_create_view(request):
 	if not request.user.is_authenticated():
@@ -162,11 +164,12 @@ def shed_create_view(request):
 			messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
 			return redirect('/sheds/create/')
 	context = RequestContext(request, {
-		'shed_form': ShedForm(),
-		'address_form': AddressForm()
+	'shed_form': ShedForm(),
+	'address_form': AddressForm()
 	})
 	template = loader.get_template('base_shed_create.html')
 	return HttpResponse(template.render(context))
+
 
 def shed_delete_view(request, shed_id):
 	shed = get_object_or_404(Location, pk=shed_id)
@@ -178,13 +181,13 @@ def shed_delete_view(request, shed_id):
 	else:
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
 	return redirect('mySheds')
-    
-	
+
+
 def my_tools_view(request):
 	assets = Asset.objects.filter(owner=request.user)
 	template = loader.get_template('base_myTools.html')
 	context = RequestContext(request, {
-		'assets': assets,
+	'assets': assets,
 	})
 	return HttpResponse(template.render(context))
 
@@ -204,7 +207,7 @@ def make_tool_view(request):
 		form = MakeToolForm(user=request.user)
 
 	return render(request, 'base_makeTool.html', {
-		'form': form,
+	'form': form,
 	})
 
 
@@ -212,22 +215,25 @@ def tool_view(request, tool_id):
 	asset = get_object_or_404(Asset, pk=tool_id)
 	sharedset = ShareContract.objects.filter(asset__id__iexact=tool_id)
 	shared = None
-	if(sharedset):
+	if (sharedset):
 		shared = sharedset[0]
 	context = RequestContext(request, {
-		'user': request.user,
-		'asset': asset,
-		'shared':shared
+	'user': request.user,
+	'asset': asset,
+	'shared': shared
 	})
-	
+
 	template = loader.get_template('base_tool.html')
-	return(HttpResponse(template.render(context)))
+	return (HttpResponse(template.render(context)))
+
 
 def tool_delete_view(request, tool_id):
-	return(HttpResponse('Tool delete ' + tool_id))
-	
+	return (HttpResponse('Tool delete ' + tool_id))
+
+
 def tool_edit_view(request, tool_id):
-	return(HttpResponse('Tool edit ' + tool_id))
+	return (HttpResponse('Tool edit ' + tool_id))
+
 
 def messages_view(request):
 	template = loader.get_template('base_messages_inbox.html')
@@ -238,16 +244,41 @@ def messages_view(request):
 		args = {}
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
-	
+
+
 def make_contract_view(request, tool_id):
 	return HttpResponse("Requesting to share " + tool_id)
+
 
 def shares_view(request):
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
+	myrequests = ShareContract.objects.filter(
+		borrower=request.user,
+		status=(ShareContract.ACCEPTED or ShareContract.DENIED or ShareContract.PENDING)
+	)
+	current = ShareContract.objects.filter(lender=request.user, status=ShareContract.ACCEPTED)
+	former = ShareContract.objects.filter(lender=request.user, status=ShareContract.FULFILLED)
+	args = {}
 	if requests.count() != 0:
-		args = {'user_requests': requests}
-	else:
-		args = {}
+		args['user_requests'] = requests
+	if myrequests.count() !=0:
+		args['user_mypending'] = myrequests
+	if current.count() !=0:
+		args['user_current'] = current
+	if former.count() != 0:
+		args['user_former'] = former
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
+
+def shares_return_view(request, sc_id):
+	if not request.user.is_authenticated():
+		return redirect('landing')
+	sc = ShareContract.objects.filter(id=sc_id)[0]
+	if sc.lender == request.user:
+		sc.status = ShareContract.FULFILLED
+		sc.save()
+		messages.add_message(request, messages.SUCCESS, 'Tool returned Successfully.', extra_tags='alert-success')
+	else:
+		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+	return redirect('shares')
