@@ -84,7 +84,11 @@ def my_profile_view(request):
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
-	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(this_user.email.lower()).hexdigest() + '?d=identicon&s=350'
+	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(this_user.email.lower()).hexdigest() + '?'
+	gravatar_url += urllib.urlencode({
+			'd': 'identicon',
+			's': 350,
+		})
 	template = loader.get_template('base_profile.html')
 	context = RequestContext(request, {
 		'userProfile': user_profile,
