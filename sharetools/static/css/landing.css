@@ -59,6 +59,7 @@ a:focus {
     margin-bottom: 0;
     border-bottom: 1px solid rgba(0,0,0,0.5);
     text-transform: uppercase;
+    text-shadow: 2px 2px 3px #000; /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: rgba(0,0,0,0.4);
 }

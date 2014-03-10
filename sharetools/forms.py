@@ -19,24 +19,6 @@ class UserForm(forms.ModelForm):
 			user.save()
 		return user
 
-	def clean_username(self):
-		username = self.cleaned_data['username']
-		try:
-			User.objects.get(username=username)
-		except ObjectDoesNotExist:
-			return username
-		else:
-			raise forms.ValidationError('Username is already taken')
-
-	def clean_email(self):
-		email = self.cleaned_data['email']
-		try:
-			User.objects.get(email=email)
-		except ObjectDoesNotExist:
-			return email
-		else:
-			raise forms.ValidationError('Email is already in use')
-
 class ShedForm(forms.ModelForm):
 	class Meta:
 		model = Location
