@@ -193,7 +193,7 @@ def make_tool_view(request):
 		form = MakeToolForm(request.POST, user=request.user)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('myTools')
+			return HttpResponseRedirect(reverse('myTools'))
 
 	else:
 		form = MakeToolForm(user=request.user)
