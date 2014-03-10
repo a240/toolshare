@@ -207,7 +207,9 @@ def make_tool_view(request):
 def tool_view(request, tool_id):
 	asset = get_object_or_404(Asset, pk=tool_id)
 	sharedset = ShareContract.objects.filter(asset__id__iexact=tool_id)
-	shared = sharedset[0]
+	shared = None
+	if(sharedset):
+		shared = sharedset[0]
 	context = RequestContext(request, {
 		'user': request.user,
 		'asset': asset,
