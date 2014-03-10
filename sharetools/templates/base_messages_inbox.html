@@ -8,53 +8,53 @@
         <h1>My Messages</h1>
     </div>
 </div>
-<body>
-<a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
-<!-- Modal -->
-<div class="modal fade" id="NewMessageModal" tabindex="-1" role="dialog" aria-labelledby="myMessageModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">New Message</h4>
-            </div>
-            <div class="modal-body">
-                Reason for Denial
-                <input type="text" class="form-control">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" href="">Send Denial</button>
+<div class="container">
+    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
+    <!-- Modal -->
+    <div class="modal fade" id="NewMessageModal" tabindex="-1" role="dialog" aria-labelledby="myMessageModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">New Message</h4>
+                </div>
+                <div class="modal-body">
+                    Reason for Denial
+                    <input type="text" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" href="">Send Denial</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<br><br>
-{% if user_messages %}
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Messages</div>
+    <br><br>
+    {% if user_messages %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Messages</div>
 
-    <!-- List -->
-    <ul class="list-group">
-        <tr>
-            {% for msg in user_messages %}
-            <li class="list-group-item">
-                {% if not msg.read %}
-                <span class="badge">Unread</span>
-                <b>
-                    {% endif %}
-                    {{ msg.subject }}
+        <!-- List -->
+        <ul class="list-group">
+            <tr>
+                {% for msg in user_messages %}
+                <li class="list-group-item">
                     {% if not msg.read %}
-                </b>
-                {% endif %}
-            </li>
+                    <span class="badge">Unread</span>
+                    <b>
+                        {% endif %}
+                        {{ msg.subject }}
+                        {% if not msg.read %}
+                    </b>
+                    {% endif %}
+                </li>
 
-            {% endfor %}
-        </tr>
-    </ul>
+                {% endfor %}
+            </tr>
+        </ul>
+    </div>
 </div>
 {% endif %}
-</body>
 {% endblock %}

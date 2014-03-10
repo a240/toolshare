@@ -3,109 +3,110 @@
 {% block title %}TS - Share Center{% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-    <div class="container" align="left">
-        <h1>My Shares</h1>
+
+    <div class="jumbotron">
+        <div class="container" align="left">
+            <h1>My Shares</h1>
+        </div>
     </div>
-</div>
-<body>
-{% if user_requests %}
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Tool requests</div>
-    <!-- Table -->
-    <table class="table">
-        <tr>
-            {% for rq in user_requests %}
-            <td>{{ rq.borrower }}</td>
-            <td>{{ rq.asset.name }}</td>
-            <td align="center">{{ rq.loanDate }}</td>
-            <td align="right">
-                <div class="btn-group">
-                    <a type="button" class="btn btn-success" href="">Accept</a>
-                    <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Deny</a>
-                </div>
-            </td>
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Request Denial</h4>
-                        </div>
-                        <div class="modal-body">
-                            Reason for Denial
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" href="">Send Denial</button>
+<div class="container">
+    {% if user_requests %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Tool requests</div>
+        <!-- Table -->
+        <table class="table">
+            <tr>
+                {% for rq in user_requests %}
+                <td>{{ rq.borrower }}</td>
+                <td>{{ rq.asset.name }}</td>
+                <td align="center">{{ rq.loanDate }}</td>
+                <td align="right">
+                    <div class="btn-group">
+                        <a type="button" class="btn btn-success" href="">Accept</a>
+                        <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Deny</a>
+                    </div>
+                </td>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Request Denial</h4>
+                            </div>
+                            <div class="modal-body">
+                                Reason for Denial
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" href="">Send Denial</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {% endfor %}
-        </tr>
-    </table>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br>
+    {% endif %}
+    {% if user_mypending %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">My Pending Requests</div>
+        <!-- Table -->
+        <table class="table">
+            <tr>
+                {% for rq in user_mypending %}
+                <td>{{ rq.borrower }}</td>
+                <td>{{ rq.asset.name }}</td>
+                <td>{{ rq.loanDate }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br>
+    {% endif %}
+    {% if user_current %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Currently Lent</div>
+        <!-- Table -->
+        <table class="table">
+            <tr>
+                {% for rq in user_current %}
+                <td>{{ rq.borrower }}</td>
+                <td>{{ rq.asset.name }}</td>
+                <td>{{ rq.loanDate }}</td>
+                <td align="right">
+                    <a type="button" class="btn btn-primary" href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br>
+    {% endif %}
+    {% if user_former %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Previously Lent</div>
+        <!-- Table -->
+        <table class="table">
+            <tr>
+                {% for rq in user_former %}
+                <td>{{ rq.borrower }}</td>
+                <td>{{ rq.asset.name }}</td>
+                <td>{{ rq.loanDate }}</td>
+                <td>{{ rq.returnDate }}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br>
+    {% endif %}
 </div>
-<br>
-{% endif %}
-{% if user_mypending %}
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">My Pending Requests</div>
-    <!-- Table -->
-    <table class="table">
-        <tr>
-            {% for rq in user_mypending %}
-            <td>{{ rq.borrower }}</td>
-            <td>{{ rq.asset.name }}</td>
-            <td>{{ rq.loanDate }}</td>
-            {% endfor %}
-        </tr>
-    </table>
-</div>
-<br>
-{% endif %}
-{% if user_current %}
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Currently Lent</div>
-    <!-- Table -->
-    <table class="table">
-        <tr>
-            {% for rq in user_current %}
-            <td>{{ rq.borrower }}</td>
-            <td>{{ rq.asset.name }}</td>
-            <td>{{ rq.loanDate }}</td>
-            <td align="right">
-                <a type="button" class="btn btn-primary" href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
-            </td>
-            {% endfor %}
-        </tr>
-    </table>
-</div>
-<br>
-{% endif %}
-{% if user_former %}
-<div class="panel panel-default">
-    <!-- Default panel contents -->
-    <div class="panel-heading">Previously Lent</div>
-    <!-- Table -->
-    <table class="table">
-        <tr>
-            {% for rq in user_former %}
-            <td>{{ rq.borrower }}</td>
-            <td>{{ rq.asset.name }}</td>
-            <td>{{ rq.loanDate }}</td>
-            <td>{{ rq.returnDate }}</td>
-            {% endfor %}
-        </tr>
-    </table>
-</div>
-<br>
-{% endif %}
-</body>
 {% endblock %}
