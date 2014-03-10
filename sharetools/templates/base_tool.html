@@ -24,9 +24,34 @@
 				{{ asset.owner }}
 				</a>
         </h1></div>
-        <div class="panel-body">
+		
+        <ul class = "list-group">
+		
+			<li class="list-group-item">
+			<h4>Availability:</h4>
+			{% if shared %}
 			
-            <p>{{ asset.description }}</p>
+			<font color="red">Currently borrowed by 
+		
+			<a href="{% url 'profile' shared.borrower.username %}">
+			{{shared.borrower.username}}
+			</a>
+		
+			until {{shared.returnDate}}
+			</font>			
+	
+			{% else %}
+			
+			<font color="green">This {{asset.type}} is available now
+			</font>
+			
+			{% endif %}
+			</li>
+			<li class="list-group-item"><h4>Type:</h4><b>{{ asset.type.name }}</b> - {{asset.type.description}}</li>
+            <li class="list-group-item"><h4>Description:</h4>{{ asset.description }}</li>
+
+		</ul>
+		
 		<div class="panel-footer">
             <div class="btn-group">
 
@@ -42,7 +67,17 @@
 				<a href="{% url 'toolDeletion' asset.id %}">
                     <button type="button" class="btn btn-danger">Delete Tool</button>
                 </a>
-                {% endif %}
+
+				{% else %}
+				
+				{% if not shared %}
+				<a href="{% url 'newcontract' asset.id %}">
+                <button type="button" class="btn btn-primary">Borrow</button>
+                </a>
+				{% endif %}
+				
+				{% endif %}
+				
             </div>
 		</div>
         </div>

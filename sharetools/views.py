@@ -206,10 +206,12 @@ def make_tool_view(request):
 
 def tool_view(request, tool_id):
 	asset = get_object_or_404(Asset, pk=tool_id)
-
+	sharedset = ShareContract.objects.filter(asset__id__iexact=tool_id)
+	shared = sharedset[0]
 	context = RequestContext(request, {
 		'user': request.user,
-		'asset': asset
+		'asset': asset,
+		'shared':shared
 	})
 	
 	template = loader.get_template('base_tool.html')
@@ -230,6 +232,9 @@ def messages_view(request):
 		args = {}
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
+	
+def make_contract_view(request, tool_id):
+	return HttpResponse("Requesting to share " + tool_id)
 
 def shares_view(request):
 	template = loader.get_template('base_shares.html')
