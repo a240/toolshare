@@ -1,4 +1,4 @@
-import urllib, hashlib
+import urllib, urllib.parse, hashlib
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
@@ -85,7 +85,7 @@ def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
 	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(this_user.email.lower().encode('utf-8')).hexdigest() + '?'
-	gravatar_url += urllib.urlencode({
+	gravatar_url += urllib.parse.urlencode({
 			'd': 'identicon',
 			's': 350,
 		})
