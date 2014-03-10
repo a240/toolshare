@@ -9,7 +9,27 @@
     </div>
 </div>
 <body>
-<a type="button" class="btn btn-primary" href="">New Message</a>
+<a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
+<!-- Modal -->
+<div class="modal fade" id="NewMessageModal" tabindex="-1" role="dialog" aria-labelledby="myMessageModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">New Message</h4>
+            </div>
+            <div class="modal-body">
+                Reason for Denial
+                <input type="text" class="form-control">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" href="">Send Denial</button>
+            </div>
+        </div>
+    </div>
+</div>
 <br><br>
 {% if user_messages %}
 <div class="panel panel-default">
@@ -24,9 +44,9 @@
                 {% if not msg.read %}
                 <span class="badge">Unread</span>
                 <b>
-                {% endif %}
-                {{ msg.subject }}
-                {% if not msg.read %}
+                    {% endif %}
+                    {{ msg.subject }}
+                    {% if not msg.read %}
                 </b>
                 {% endif %}
             </li>
@@ -36,6 +56,5 @@
     </ul>
 </div>
 {% endif %}
-
 </body>
 {% endblock %}
