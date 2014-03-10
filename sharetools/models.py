@@ -40,7 +40,7 @@ class Asset_Type(models.Model):
 
 	def __str__(self):
 		return self.name
-	
+
 class Asset(models.Model):
 	owner = models.ForeignKey(User, related_name = 'user')
 	name = models.CharField(max_length=80)
@@ -52,11 +52,21 @@ class Asset(models.Model):
 		return self.owner.username + '\'s ' + self.type.name
 
 class ShareContract(models.Model):
+	PENDING = 0
+	ACCEPTED = 1
+	DENIED = 2
+	FUFILLED = 3
+	STATUS_CHOICES = (
+		(PENDING, 'Pending'),
+		(ACCEPTED, 'Accepted'),
+		(DENIED, 'Denied'),
+		(FUFILLED, 'Fufilled'),
+	)
 	returnDate = models.DateTimeField()
 	loanDate = models.DateTimeField()
 	lender = models.ForeignKey(User, related_name='lender')
 	borrower = models.ForeignKey(User, related_name='borrower')
-	isApproved = models.BooleanField(default=False)
+	status = models.IntegerField(choices=STATUS_CHOICES)
 	asset = models.ForeignKey(Asset, related_name='asset')
 
 	def __str__(self):

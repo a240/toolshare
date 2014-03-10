@@ -244,7 +244,7 @@ def make_contract_view(request, tool_id):
 
 def shares_view(request):
 	template = loader.get_template('base_shares.html')
-	requests = ShareContract.objects.filter(lender=request.user, isApproved=False)
+	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
 	if requests.count() != 0:
 		args = {'user_requests': requests}
 	else:
