@@ -11,8 +11,8 @@
   <div class="column">
     <form method="post" action="{% url 'sharetools.views.shed_create_view' %}">
       {% csrf_token %}
-      {{ form | bootstrap }}
-      {{ add_form | bootstrap }}
+      {{ shed_form | bootstrap }}
+      {{ address_form | bootstrap }}
       <input type="submit" value="Save" class="btn btn-primary btn-block btn-lg">
     </form>
   </div>

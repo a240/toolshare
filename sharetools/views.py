@@ -1,4 +1,4 @@
-import urllib, hashlib
+import urllib, urllib.parse, hashlib
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
@@ -84,8 +84,8 @@ def my_profile_view(request):
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
-	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(this_user.email.lower()).hexdigest() + '?'
-	gravatar_url += urllib.urlencode({
+	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(this_user.email.lower().encode('utf-8')).hexdigest() + '?'
+	gravatar_url += urllib.parse.urlencode({
 			'd': 'identicon',
 			's': 350,
 		})
@@ -162,8 +162,8 @@ def shed_create_view(request):
 			messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
 			return redirect('/sheds/create/')
 	context = RequestContext(request, {
-		'form': ShedForm(),
-		'add_form': AddressForm()
+		'shed_form': ShedForm(),
+		'address_form': AddressForm()
 	})
 	template = loader.get_template('base_shed_create.html')
 	return HttpResponse(template.render(context))
