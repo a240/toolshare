@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from sharetools.models import UserProfile, Asset, Location, Address
+from sharetools.models import UserProfile, Asset, Location, Address, Message
 
 class UserForm(forms.ModelForm):
 	class Meta:
@@ -22,7 +22,7 @@ class UserForm(forms.ModelForm):
 class ShedForm(forms.ModelForm):
 	class Meta:
 		model = Location
-		fields = {'name', 'description'}
+		fields = ('name', 'description')
 
 	def clean_name(self):
 		locname = self.cleaned_data['name']
@@ -42,7 +42,7 @@ class ShedForm(forms.ModelForm):
 class AddressForm(forms.ModelForm):
 	class Meta:
 		model = Address
-		fields = {'street', 'city', 'state', 'country', 'zipcode'}
+		fields = ('street', 'city', 'state', 'country', 'zipcode')
 
 	def save(self, commit=True):
 		add = super(AddressForm, self).save(commit=False)
