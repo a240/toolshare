@@ -3,6 +3,7 @@
 # @authors Phillip Lopez, David Samuelson, Mike Albert
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
@@ -48,8 +49,14 @@ class Asset(models.Model):
 	type = models.ForeignKey(Asset_Type, related_name = 'type')
 	location = models.ForeignKey(Location, related_name = 'location')
 
+	def __unicode__(self):
+		return self.name
+
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type.name
+
+	def get_absolute_url(self):
+		return reverse('sharetools.views.tool_view', args=[str(self.id)])
 
 class ShareContract(models.Model):
 	PENDING = 0

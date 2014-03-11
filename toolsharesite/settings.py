@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'haystack',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sharetools',
@@ -86,3 +87,14 @@ STATIC_URL = '/static/'
 # STATICFILE_DIRS = (
 #     "/sharetools/static",
 # )
+
+# Haystack connections
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname('whoosh/index.py'), 'whoosh_index'),
+    },
+    'simple': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}

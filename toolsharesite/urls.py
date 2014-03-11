@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
 	#User/Profile  -----------------------------------------------------------
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^search/', include('haystack.urls'), name='search'),
 	url(r'^register/$', views.register_view, name='register'),
 	url(r'^login/$', views.login_view, name='login'),
 	url(r'^logout/$', views.logout_view, name='logout'),

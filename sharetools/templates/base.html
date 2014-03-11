@@ -33,6 +33,9 @@
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
                     <li>
+                        <a href="{% url 'haystack_search' %}"><i class="fa fa-search"></i></a>
+                    </li>
+                    <li>
                         <a href="{% url 'sharetools.views.messages_view' %}"><i class="fa fa-envelope-o"></i></a>
                     </li>
                     <li>
