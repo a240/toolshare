@@ -69,7 +69,7 @@ def register_view(request):
 		if request.method == 'POST':
 			user_form = UserForm(request.POST)
 			if user_form.is_valid():
-				user = user_form.save(Commit=False)
+				user = user_form.save()
 				profile = UserProfile()
 				profile.user = user
 				profile.save()
