@@ -212,8 +212,8 @@ def messages_view(request):
 	template = loader.get_template('base_messages_inbox.html')
 	messages = Message.objects.filter(msg_to=request.user)
 	if messages.count() != 0:
-		args = {'user_messages': messages,
-		        'form': MessageForm}
+		args = {'user_messages': messages}
+		        #'form': MessageForm}
 	else:
 		args = {}
 	context = RequestContext(request, args)
