@@ -46,7 +46,7 @@
         <table class="table">
             {% for rq in user_mypending %}
             <tr>
-                <td>{{ rq.borrower }}</td>
+                <td>{{ rq.lender }}</td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 {% if rq.status == 0 %}
