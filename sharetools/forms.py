@@ -54,9 +54,9 @@ class UserEditForm(forms.ModelForm):
 		}
 
 class MakeToolForm(forms.ModelForm):
-	location = forms.ModelChoiceField(queryset=Location.objects.all().order_by('name'))
-	
-	#model.owner = request.user
+
+	#location = forms.ModelChoiceField(queryset=Location.objects.filter(owner=self._user).order_by('name'))
+
 	class Meta:
 		model = Asset
 		fields = ('name','description','type','location')
@@ -64,6 +64,7 @@ class MakeToolForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		self._user=kwargs.pop('user')
 		super(MakeToolForm,self).__init__(*args,**kwargs)
+		self.fields['location'].queryset = Location.objects.filter(owner=self._user)
 		
 	def save(self,commit=True):
 		inst = super(MakeToolForm,self).save(commit=False)
