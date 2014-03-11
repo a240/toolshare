@@ -22,7 +22,7 @@
 						<th>Type</th>
 						<th>Description</th>
 						<th>Owner</th>
-						<th>Availability</th>
+						<th>Name</th>
                         <th>View</th>
 					</tr>
 				</thead>
@@ -32,8 +32,11 @@
 						<td>{{ asset.type }}</td>
 						<td>{{ asset.description|truncatechars:20 }}</td>
 						<td>{{ asset.owner.username }}</td>
-						<td>{{ asset.available }}</td>
-                        <td><a href="{% url 'tool' asset.id %}"<button type="button" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-wrench"></span></button></a></td>
+						<td>{{ asset.name }}</td>
+                        <td><a href="{% url 'tool' asset.id %}"<button type="button" class="btn btn-primary btn-block">
+							<span class="glyphicon glyphicon-wrench"></span></button>
+							</a>
+						</td>
 					</tr>
 				{% endfor %}
 				</tbody>

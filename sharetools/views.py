@@ -1,3 +1,6 @@
+# models.py  - Contains the views for sharetools
+# @author David Samuelson, Phillip Lopez, Matthew Anderson, Mike Albert
+
 import urllib, urllib.parse, hashlib
 
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,7 +15,8 @@ from django.contrib.auth.hashers import make_password
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm
 
-
+#index_view
+#The main landing page
 def index_view(request):
 	if request.user.is_authenticated():
 		template = loader.get_template('base_index.html')
@@ -24,6 +28,10 @@ def index_view(request):
 		context = RequestContext(request, {
 		})
 		return HttpResponse(template.render(context))
+
+#########################################################
+#          Category: USER PROFILE Manipulation          #
+######################################################### 
 
 
 def login_view(request):
@@ -48,7 +56,6 @@ def login_view(request):
 
 		template = loader.get_template('base_login.html')
 		return HttpResponse(template.render(context))
-
 
 def logout_view(request):
 	logout(request)
@@ -77,11 +84,14 @@ def register_view(request):
 		return HttpResponse(template.render(context))
 
 
+# my_profile_view
+# displays the requesting users profile
 def my_profile_view(request):
 	return profile_view(request, request.user.username)
 
 
-# Lets anyone view the profile/username/ user's info
+# profile_view
+# displays the profile
 def profile_view(request, user_id):
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
@@ -126,6 +136,9 @@ def edit_profile_view(request):
 	})
 	return HttpResponse(template.render(context))
 
+#########################################################
+#             Category: SHED Manipulation               #
+######################################################### 
 
 def shed_view(request, shed_id):
 	shedLocation = get_object_or_404(Location, pk=shed_id)
@@ -187,74 +200,9 @@ def shed_delete_view(request, shed_id):
 	return redirect('mySheds')
 
 
-def my_tools_view(request):
-	assets = Asset.objects.filter(owner=request.user)	
-	template = loader.get_template('base_myTools.html')
-	context = RequestContext(request, {
-	'assets': assets,
-	})
-	return HttpResponse(template.render(context))
-
-
-#Generates a new tool, owner = requesting user
-#ToDo: Only present Locations user 
-#      is part of in locations form
-#@Phil
-def make_tool_view(request):
-	if request.method == 'POST':
-		form = MakeToolForm(request.POST, user=request.user)
-		if form.is_valid():
-			messages.add_message(request, messages.SUCCESS, 'Tool Created Successfully.', extra_tags='alert-success')
-			form.save()
-			return HttpResponseRedirect(reverse('myTools'))
-
-	else:
-		form = MakeToolForm(user=request.user)
-
-	return render(request, 'base_makeTool.html', {
-	'form': form,
-	})
-
-
-def tool_view(request, tool_id):
-	asset = get_object_or_404(Asset, pk=tool_id)
-	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
-	shared = None
-	if (sharedset):
-		shared = sharedset[0]
-	context = RequestContext(request, {
-	'user': request.user,
-	'asset': asset,
-	'shared': shared
-	})
-
-	template = loader.get_template('base_tool.html')
-	return (HttpResponse(template.render(context)))
-
-
-#deletes at tool with the requested tool_id 
-#tool must be available
-#requester must be owner
-#@Phil
-def tool_delete_view(request, tool_id):
-	tool = get_object_or_404(Asset, pk=tool_id)
-	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('landing'))
-	#if tool is currently borrowed (state 1) : 
-	elif (shareCheck):
-		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
-		                     extra_tags='alert-warning')
-	elif tool.owner == request.user:
-		tool.delete()
-		messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
-	else:
-		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
-	return HttpResponseRedirect(reverse('myTools'))
-
-
-def tool_edit_view(request, tool_id):
-	return (HttpResponse('Tool edit ' + tool_id))
+#########################################################
+#            Category: SHARE Manipulation               #
+######################################################### 
 
 
 def messages_view(request):
@@ -319,7 +267,6 @@ def shares_return_view(request, sc_id):
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
 	return redirect('shares')
 
-
 def tool_review_view(request, rq_id, request_code):
 	if not request.user.is_authenticated():
 		return redirect('landing')
@@ -333,3 +280,78 @@ def tool_review_view(request, rq_id, request_code):
 		rq.status = ShareContract.ACCEPTED
 	rq.save()
 	return redirect('shares')
+
+#########################################################
+#             Category: Tool Manipulation               #
+######################################################### 
+
+def my_tools_view(request):
+	assets = Asset.objects.filter(owner=request.user)	
+	template = loader.get_template('base_myTools.html')
+	context = RequestContext(request, {
+	'assets': assets,
+	})
+	return HttpResponse(template.render(context))
+
+
+#Generates a new tool, owner = requesting user
+#ToDo: Only present Locations user 
+#      is part of in locations form
+#@Phil
+def make_tool_view(request):
+	if request.method == 'POST':
+		form = MakeToolForm(request.POST, user=request.user)
+		if form.is_valid():
+			messages.add_message(request, messages.SUCCESS, 'Tool Created Successfully.', extra_tags='alert-success')
+			form.save()
+			return HttpResponseRedirect(reverse('myTools'))
+
+	else:
+		form = MakeToolForm(user=request.user)
+
+	return render(request, 'base_makeTool.html', {
+	'form': form,
+	})
+
+
+def tool_view(request, tool_id):
+	asset = get_object_or_404(Asset, pk=tool_id)
+	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
+	shared = None
+	if (sharedset):
+		shared = sharedset[0]
+	context = RequestContext(request, {
+	'user': request.user,
+	'asset': asset,
+	'shared': shared
+	})
+
+	template = loader.get_template('base_tool.html')
+	return (HttpResponse(template.render(context)))
+
+
+
+def tool_delete_view(request, tool_id):
+	tool = get_object_or_404(Asset, pk=tool_id)
+	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('landing'))
+	#if tool is currently borrowed (state 1) : 
+	elif (shareCheck):
+		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
+		                     extra_tags='alert-warning')
+	elif tool.owner == request.user:
+		tool.delete()
+		shareCheck = ShareContract.objects.filter(asset=tool_id)
+		for share in shareCheck:
+			share.delete()
+		messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
+	else:
+		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+	return HttpResponseRedirect(reverse('myTools'))
+
+#tool_edit_view
+#Allows a user to change their tools shed location
+#Planned: R2
+def tool_edit_view(request, tool_id):
+	return (HttpResponse('Tool edit ' + tool_id))
