@@ -8,4 +8,24 @@
 		<h1>The Hub</h1>
 	</div>
 </div>
+<div class="container">
+	<h2>Recent Tools</h2>
+	<hr>
+	{% for asset in assets %}
+	{% include 'includes/assetBlock.html' %}
+	{% empty %}
+	<div class="well well-lg">
+		<h3 class="text-center text-muted">There are no recent tools :(</h3>
+	</div>
+	{% endfor %}
+	<h2>Recent Sheds</h2>
+	<hr>
+	{% for location in locations %}
+	{% include 'includes/locationBlock.html' %}
+	{% empty %}
+	<div class="well well-lg">
+		<h3 class="text-center text-muted">There are no recent sheds :(</h3>
+	</div>
+	{% endfor %}
+</div>
 {% endblock %}
