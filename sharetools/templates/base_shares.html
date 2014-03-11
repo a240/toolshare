@@ -35,11 +35,12 @@
         {% endif %}
     </div>
     <br>
-    {% if user_mypending %}
+
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">My Pending Requests</div>
         <!-- Table -->
+        {% if user_mypending %}
         <table class="table">
             {% for rq in user_mypending %}
             <tr>
@@ -58,14 +59,14 @@
             </tr>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
     <br>
-    {% endif %}
-    {% if user_current %}
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">Currently Lent</div>
         <!-- Table -->
+        {% if user_current %}
         <table class="table">
             {% for rq in user_current %}
             <tr>
@@ -79,14 +80,14 @@
             </tr>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
     <br>
-    {% endif %}
-    {% if user_former %}
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">Previously Lent</div>
         <!-- Table -->
+        {% if user_former %}
         <table class="table">
             {% for rq in user_former %}
             <tr>
@@ -97,8 +98,8 @@
             </tr>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
     <br>
-    {% endif %}
 </div>
 {% endblock %}
