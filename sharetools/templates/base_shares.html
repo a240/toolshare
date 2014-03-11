@@ -16,8 +16,8 @@
         <div class="panel-heading">Tool requests</div>
         <!-- Table -->
         <table class="table">
+            {% for rq in user_requests %}
             <tr>
-                {% for rq in user_requests %}
                 <td>{{ rq.borrower }}</td>
                 <td>{{ rq.asset.name }}</td>
                 <td align="center">{{ rq.loanDate }}</td>
@@ -47,8 +47,8 @@
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </tr>
+            {% endfor %}
         </table>
     </div>
     <br>
@@ -59,13 +59,13 @@
         <div class="panel-heading">My Pending Requests</div>
         <!-- Table -->
         <table class="table">
+            {% for rq in user_mypending %}
             <tr>
-                {% for rq in user_mypending %}
                 <td>{{ rq.borrower }}</td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
-                {% endfor %}
             </tr>
+            {% endfor %}
         </table>
     </div>
     <br>
@@ -76,16 +76,16 @@
         <div class="panel-heading">Currently Lent</div>
         <!-- Table -->
         <table class="table">
+            {% for rq in user_current %}
             <tr>
-                {% for rq in user_current %}
                 <td>{{ rq.borrower }}</td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
                     <a type="button" class="btn btn-primary" href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
                 </td>
-                {% endfor %}
             </tr>
+            {% endfor %}
         </table>
     </div>
     <br>
@@ -96,14 +96,14 @@
         <div class="panel-heading">Previously Lent</div>
         <!-- Table -->
         <table class="table">
+            {% for rq in user_former %}
             <tr>
-                {% for rq in user_former %}
                 <td>{{ rq.borrower }}</td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 <td>{{ rq.returnDate }}</td>
-                {% endfor %}
             </tr>
+            {% endfor %}
         </table>
     </div>
     <br>
