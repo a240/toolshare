@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
-from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm
 
 
 def index_view(request):
@@ -188,7 +188,7 @@ def shed_delete_view(request, shed_id):
 
 
 def my_tools_view(request):
-	assets = Asset.objects.filter(owner=request.user)
+	assets = Asset.objects.filter(owner=request.user)	
 	template = loader.get_template('base_myTools.html')
 	context = RequestContext(request, {
 	'assets': assets,
@@ -204,6 +204,7 @@ def make_tool_view(request):
 	if request.method == 'POST':
 		form = MakeToolForm(request.POST, user=request.user)
 		if form.is_valid():
+			messages.add_message(request, messages.SUCCESS, 'Tool Created Successfully.', extra_tags='alert-success')
 			form.save()
 			return HttpResponseRedirect(reverse('myTools'))
 
@@ -268,8 +269,23 @@ def messages_view(request):
 	return HttpResponse(template.render(context))
 
 
-def make_contract_view(request, tool_id):
-	return HttpResponse("Requesting to share " + tool_id)
+def make_share_view(request, tool_id):
+	curr_asset = get_object_or_404(Asset, pk=tool_id)
+	if request.method == 'POST':
+		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
+		if form.is_valid():
+			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.', extra_tags='alert-success')
+			form.save()
+			return redirect('shares')
+
+	else:
+		form = MakeShareForm(user=request.user,asset=curr_asset)
+
+	return render(request, 'base_makeShare.html', {
+	'form': form,
+	'tool_id': tool_id
+	})
+
 
 
 def shares_view(request):

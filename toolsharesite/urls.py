@@ -29,6 +29,6 @@ urlpatterns = patterns('',
     url(r'^messages/$', views.messages_view, name='messages'),
 	url(r'^shares/$', views.shares_view, name='shares'),
 	url(r'^shares/return/(\d)+$', views.shares_return_view, name='sharesReturn'),
-	url(r'^shares/new/(\d)+$',views.make_contract_view,name='newcontract'),
+	url(r'^shares/new/(\d)+$',views.make_share_view,name='newcontract'),
     url(r'^$', views.index_view, name='index'),
 )

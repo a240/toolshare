@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
-from sharetools.models import UserProfile, Asset, Location, Address, Message
+from sharetools.models import UserProfile, Asset, Location, Address, Message, ShareContract
+import datetime
 
 class UserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
@@ -54,9 +55,7 @@ class UserEditForm(forms.ModelForm):
 		}
 
 class MakeToolForm(forms.ModelForm):
-	location = forms.ModelChoiceField(queryset=Location.objects.all().order_by('name'))
-	
-	#model.owner = request.user
+
 	class Meta:
 		model = Asset
 		fields = ('name','description','type','location')
@@ -64,10 +63,37 @@ class MakeToolForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		self._user=kwargs.pop('user')
 		super(MakeToolForm,self).__init__(*args,**kwargs)
+		self.fields['location'].queryset = Location.objects.filter(owner=self._user)
 		
 	def save(self,commit=True):
 		inst = super(MakeToolForm,self).save(commit=False)
 		inst.owner = self._user
+		if commit:
+			inst.save()
+			self.save_m2m()
+		return inst
+		
+class MakeShareForm(forms.ModelForm):
+	loanDate = forms.DateTimeField(initial=datetime.datetime.today())
+	returnDate = forms.DateTimeField(initial=datetime.datetime.today())
+
+	
+	class Meta:
+		model = ShareContract
+		fields = ('loanDate','returnDate')
+		
+	def __init__(self, *args, **kwargs):
+		self._borrower=kwargs.pop('user')
+		self._asset=kwargs.pop('asset')
+		super(MakeShareForm,self).__init__(*args,**kwargs)
+
+		
+	def save(self,commit=True):
+		inst = super(MakeShareForm,self).save(commit=False)
+		inst.lender = self._asset.owner
+		inst.borrower = self._borrower
+		inst.asset = self._asset
+		
 		if commit:
 			inst.save()
 			self.save_m2m()
