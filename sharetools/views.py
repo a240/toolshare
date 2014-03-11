@@ -286,6 +286,9 @@ def tool_review_view(request, rq_id, request_code):
 ######################################################### 
 
 def my_tools_view(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
+		
 	assets = Asset.objects.filter(owner=request.user)	
 	template = loader.get_template('base_myTools.html')
 	context = RequestContext(request, {
@@ -295,10 +298,10 @@ def my_tools_view(request):
 
 
 #Generates a new tool, owner = requesting user
-#ToDo: Only present Locations user 
-#      is part of in locations form
-#@Phil
 def make_tool_view(request):
+	if not request.user.is_authenticated():
+			return HttpResponseRedirect(reverse('login'))
+			
 	if request.method == 'POST':
 		form = MakeToolForm(request.POST, user=request.user)
 		if form.is_valid():
@@ -315,6 +318,9 @@ def make_tool_view(request):
 
 
 def tool_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
+		
 	asset = get_object_or_404(Asset, pk=tool_id)
 	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	shared = None
@@ -335,8 +341,7 @@ def tool_delete_view(request, tool_id):
 	tool = get_object_or_404(Asset, pk=tool_id)
 	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('landing'))
-	#if tool is currently borrowed (state 1) : 
+		return HttpResponseRedirect(reverse('login'))
 	elif (shareCheck):
 		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
 		                     extra_tags='alert-warning')
