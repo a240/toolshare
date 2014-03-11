@@ -213,18 +213,19 @@ def make_tool_view(request):
 
 def tool_view(request, tool_id):
 	asset = get_object_or_404(Asset, pk=tool_id)
-	sharedset = ShareContract.objects.filter(asset__id__iexact=tool_id)
+	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	shared = None
-	if (sharedset):
+	if(sharedset):
 		shared = sharedset[0]
 	context = RequestContext(request, {
-	'user': request.user,
-	'asset': asset,
-	'shared': shared
+		'user': request.user,
+		'asset': asset,
+		'shared':shared
 	})
-
+	
 	template = loader.get_template('base_tool.html')
-	return (HttpResponse(template.render(context)))
+	return(HttpResponse(template.render(context)))
+
 
 #deletes at tool with the requested tool_id 
 #tool must be available
