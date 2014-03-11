@@ -4,11 +4,11 @@
 
 {% block content %}
 
-    <div class="jumbotron">
-        <div class="container" align="left">
-            <h1>My Shares</h1>
-        </div>
+<div class="jumbotron">
+    <div class="container" align="left">
+        <h1>My Shares</h1>
     </div>
+</div>
 <div class="container">
     {% if user_requests %}
     <div class="panel panel-default">
@@ -23,30 +23,12 @@
                 <td align="center">{{ rq.loanDate }}</td>
                 <td align="right">
                     <div class="btn-group">
-                        <a type="button" class="btn btn-success" href="">Accept</a>
-                        <a type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Deny</a>
+                        <a type="button" class="btn btn-success"
+                           href="{% url 'sharetools.views.tool_review_view' rq.id 1 %}">Accept</a>
+                        <a type="button" class="btn btn-danger"
+                           href="{% url 'sharetools.views.tool_review_view' rq.id 0 %}">Deny</a>
                     </div>
                 </td>
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title" id="myModalLabel">Request Denial</h4>
-                            </div>
-                            <div class="modal-body">
-                                Reason for Denial
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                <button type="button" class="btn btn-danger" href="">Send Denial</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </tr>
             {% endfor %}
         </table>
@@ -64,6 +46,15 @@
                 <td>{{ rq.borrower }}</td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
+                {% if rq.status == 0 %}
+                <td>{{ rq.STATUS_CHOICES.0.1 }}</td>
+                {% elif rq.status == 1 %}
+                <td>{{ rq.STATUS_CHOICES.1.1 }}</td>
+                {% elif rq.status == 2 %}
+                <td>{{ rq.STATUS_CHOICES.2.1 }}</td>
+                {% elif rq.status == 3 %}
+                <td>{{ rq.STATUS_CHOICES.3.1 }}</td>
+                {% endif %}
             </tr>
             {% endfor %}
         </table>
@@ -82,7 +73,8 @@
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
-                    <a type="button" class="btn btn-primary" href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
+                    <a type="button" class="btn btn-primary"
+                       href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
                 </td>
             </tr>
             {% endfor %}

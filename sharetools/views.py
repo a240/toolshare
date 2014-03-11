@@ -177,6 +177,9 @@ def shed_delete_view(request, shed_id):
 	if not request.user.is_authenticated():
 		return redirect('landing')
 	elif shed.owner == request.user:
+		tools = Asset.objects.filter(location=shed)
+		for tool in tools:
+			tool.delete()
 		shed.delete()
 		messages.add_message(request, messages.SUCCESS, 'Shed Successfully Deleted.', extra_tags='alert-success')
 	else:
@@ -216,16 +219,16 @@ def tool_view(request, tool_id):
 	asset = get_object_or_404(Asset, pk=tool_id)
 	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	shared = None
-	if(sharedset):
+	if (sharedset):
 		shared = sharedset[0]
 	context = RequestContext(request, {
-		'user': request.user,
-		'asset': asset,
-		'shared':shared
+	'user': request.user,
+	'asset': asset,
+	'shared': shared
 	})
-	
+
 	template = loader.get_template('base_tool.html')
-	return(HttpResponse(template.render(context)))
+	return (HttpResponse(template.render(context)))
 
 
 #deletes at tool with the requested tool_id 
@@ -239,7 +242,8 @@ def tool_delete_view(request, tool_id):
 		return HttpResponseRedirect(reverse('landing'))
 	#if tool is currently borrowed (state 1) : 
 	elif (shareCheck):
-		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.', extra_tags='alert-warning')
+		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
+		                     extra_tags='alert-warning')
 	elif tool.owner == request.user:
 		tool.delete()
 		messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
@@ -257,7 +261,7 @@ def messages_view(request):
 	messages = Message.objects.filter(msg_to=request.user)
 	if messages.count() != 0:
 		args = {'user_messages': messages,
-				'form': MessageForm}
+		        'form': MessageForm}
 	else:
 		args = {}
 	context = RequestContext(request, args)
@@ -271,23 +275,21 @@ def make_contract_view(request, tool_id):
 def shares_view(request):
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
-	myrequests = ShareContract.objects.filter(
-		borrower=request.user,
-		status=(ShareContract.ACCEPTED or ShareContract.DENIED or ShareContract.PENDING)
-	)
+	myrequests = ShareContract.objects.filter(borrower=request.user).exclude(status=ShareContract.FULFILLED)
 	current = ShareContract.objects.filter(lender=request.user, status=ShareContract.ACCEPTED)
 	former = ShareContract.objects.filter(lender=request.user, status=ShareContract.FULFILLED)
 	args = {}
 	if requests.count() != 0:
 		args['user_requests'] = requests
-	if myrequests.count() !=0:
+	if myrequests.count() != 0:
 		args['user_mypending'] = myrequests
-	if current.count() !=0:
+	if current.count() != 0:
 		args['user_current'] = current
 	if former.count() != 0:
 		args['user_former'] = former
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
+
 
 def shares_return_view(request, sc_id):
 	if not request.user.is_authenticated():
@@ -299,4 +301,19 @@ def shares_return_view(request, sc_id):
 		messages.add_message(request, messages.SUCCESS, 'Tool returned Successfully.', extra_tags='alert-success')
 	else:
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+	return redirect('shares')
+
+
+def tool_review_view(request, rq_id, request_code):
+	if not request.user.is_authenticated():
+		return redirect('landing')
+	rq = ShareContract.objects.filter(id=rq_id)[0]
+	if (rq.lender != request.user) or (rq.status != ShareContract.PENDING):
+		return redirect('shares')
+	print(str(request_code))
+	if request_code == "0":
+		rq.status = ShareContract.DENIED
+	else:
+		rq.status = ShareContract.ACCEPTED
+	rq.save()
 	return redirect('shares')
