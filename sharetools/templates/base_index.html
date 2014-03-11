@@ -11,21 +11,25 @@
 <div class="container">
 	<h2>Recent Tools</h2>
 	<hr>
+	<ul class="list-group">
 	{% for asset in assets %}
-	{% include 'includes/assetBlock.html' %}
+	<li class="list-group-item">{% include 'includes/assetBlock.html' %}</li>
 	{% empty %}
 	<div class="well well-lg">
 		<h3 class="text-center text-muted">There are no recent tools :(</h3>
 	</div>
 	{% endfor %}
+	</ul>
 	<h2>Recent Sheds</h2>
 	<hr>
+	<ul class="list-group">
 	{% for location in locations %}
-	{% include 'includes/locationBlock.html' %}
+	<li class="list-group-item">{% include 'includes/locationBlock.html' %}</li>
 	{% empty %}
 	<div class="well well-lg">
 		<h3 class="text-center text-muted">There are no recent sheds :(</h3>
 	</div>
 	{% endfor %}
+	</ul>
 </div>
 {% endblock %}

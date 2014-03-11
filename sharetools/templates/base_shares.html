@@ -32,14 +32,16 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <div class="panel-body">
+            <h5 class="text-center text-muted">No Requests</h5>
+        </div>
         {% endif %}
     </div>
     <br>
 
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">My Pending Requests</div>
-        <!-- Table -->
         {% if user_mypending %}
         <table class="table">
             {% for rq in user_mypending %}
@@ -59,13 +61,15 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <div class="panel-body">
+            <h5 class="text-center text-muted">No Requests</h5>
+        </div>
         {% endif %}
     </div>
     <br>
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">Currently Lent</div>
-        <!-- Table -->
         {% if user_current %}
         <table class="table">
             {% for rq in user_current %}
@@ -80,13 +84,15 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <div class="panel-body">
+            <h5 class="text-center text-muted">No Shares</h5>
+        </div>
         {% endif %}
     </div>
     <br>
     <div class="panel panel-default">
-        <!-- Default panel contents -->
         <div class="panel-heading">Previously Lent</div>
-        <!-- Table -->
         {% if user_former %}
         <table class="table">
             {% for rq in user_former %}
@@ -98,6 +104,10 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <div class="panel-body">
+            <h5 class="text-center text-muted">No Shares</h5>
+        </div>
         {% endif %}
     </div>
     <br>
