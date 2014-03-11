@@ -2,6 +2,7 @@ import urllib, urllib.parse, hashlib
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
@@ -9,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
-from sharetools.forms import LoginForm, UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm
 
 
 def index_view(request):
@@ -30,7 +31,7 @@ def login_view(request):
 		return redirect('index')
 	else:
 		if request.method == 'POST':
-			form = LoginForm(request.POST)
+			form = AuthenticationForm(data=request.POST)
 			if form.is_valid():
 				username = form.cleaned_data['username']
 				password = form.cleaned_data['password']
@@ -213,22 +214,38 @@ def make_tool_view(request):
 
 def tool_view(request, tool_id):
 	asset = get_object_or_404(Asset, pk=tool_id)
-	sharedset = ShareContract.objects.filter(asset__id__iexact=tool_id)
+	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	shared = None
-	if (sharedset):
+	if(sharedset):
 		shared = sharedset[0]
 	context = RequestContext(request, {
-	'user': request.user,
-	'asset': asset,
-	'shared': shared
+		'user': request.user,
+		'asset': asset,
+		'shared':shared
 	})
-
+	
 	template = loader.get_template('base_tool.html')
-	return (HttpResponse(template.render(context)))
+	return(HttpResponse(template.render(context)))
 
 
+#deletes at tool with the requested tool_id 
+#tool must be available
+#requester must be owner
+#@Phil
 def tool_delete_view(request, tool_id):
-	return (HttpResponse('Tool delete ' + tool_id))
+	tool = get_object_or_404(Asset, pk=tool_id)
+	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('landing'))
+	#if tool is currently borrowed (state 1) : 
+	elif (shareCheck):
+		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.', extra_tags='alert-warning')
+	elif tool.owner == request.user:
+		tool.delete()
+		messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
+	else:
+		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+	return HttpResponseRedirect(reverse('myTools'))
 
 
 def tool_edit_view(request, tool_id):

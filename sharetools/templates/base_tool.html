@@ -60,9 +60,6 @@
                 </a>
 				
 				{% if asset.owner == user %}
-				<a href="{% url 'toolEdit' asset.location.id %}">
-                    <button type="button" class="btn btn-primary">Edit Tool</button>
-                </a>
 				
 				<a href="{% url 'toolDeletion' asset.id %}">
                     <button type="button" class="btn btn-danger">Delete Tool</button>
