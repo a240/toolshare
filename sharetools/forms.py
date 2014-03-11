@@ -1,9 +1,13 @@
+#forms.py - Holds the forms for receiving and handling user input
+#@author David Samuelson, Phillip Lopez, Matthew Anderson, Mike Albert
+
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
 from sharetools.models import UserProfile, Asset, Location, Address, Message, ShareContract
 import datetime
+
 
 class UserForm(UserCreationForm):
 	email = forms.EmailField(required=True)
