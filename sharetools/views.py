@@ -192,6 +192,9 @@ def shed_delete_view(request, shed_id):
 	elif shed.owner == request.user:
 		tools = Asset.objects.filter(location=shed)
 		for tool in tools:
+			shares = ShareContract.objects.filter(asset=tool)
+			for share in shares:
+				share.delete()
 			tool.delete()
 		shed.delete()
 		messages.add_message(request, messages.SUCCESS, 'Shed Successfully Deleted.', extra_tags='alert-success')

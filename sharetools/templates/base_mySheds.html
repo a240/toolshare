@@ -26,13 +26,13 @@
             </div>
 			<div class="panel-body">
 				<p>{{ shedLocation.description }}</p>
-				<div class="btn-group">
+				<!--<div class="btn-group">
 					{% if shedLocation.owner == user %}
 					<a href="{% url 'sharetools.views.shed_delete_view' shedLocation.id %}">
                         <button type="button" class="btn btn-danger">Delete Shed</button>
                     </a>
 					{% endif %}
-				</div>
+				</div>-->
 			</div>
 		</div>
 	{% endfor %}
