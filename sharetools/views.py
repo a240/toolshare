@@ -2,6 +2,7 @@ import urllib, urllib.parse, hashlib
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
@@ -9,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
-from sharetools.forms import LoginForm, UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm
 
 
 def index_view(request):
@@ -30,7 +31,7 @@ def login_view(request):
 		return redirect('index')
 	else:
 		if request.method == 'POST':
-			form = LoginForm(request.POST)
+			form = AuthenticationForm(data=request.POST)
 			if form.is_valid():
 				username = form.cleaned_data['username']
 				password = form.cleaned_data['password']

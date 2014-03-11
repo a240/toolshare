@@ -1,28 +1,20 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
 from sharetools.models import UserProfile, Asset, Location, Address
 
-class UserForm(forms.ModelForm):
+class UserForm(UserCreationForm):
+	email = forms.EmailField(required=True)
+
 	class Meta:
 		model = User
-		fields = ('first_name', 'last_name', 'username', 'email', 'password')
-		widgets = {
-			'email': forms.EmailInput(),
-			'password': forms.PasswordInput(),
-		}
-
-	def save(self, commit=True):
-		user = super(UserForm, self).save(commit=False)
-		user.set_password(self.cleaned_data['password'])
-		if commit:
-			user.save()
-		return user
+		fields = ('first_name', 'last_name', 'username', 'email')
 
 class ShedForm(forms.ModelForm):
 	class Meta:
 		model = Location
-		fields = {'name', 'description'}
+		fields = ('name', 'description')
 
 	def clean_name(self):
 		locname = self.cleaned_data['name']
@@ -42,7 +34,7 @@ class ShedForm(forms.ModelForm):
 class AddressForm(forms.ModelForm):
 	class Meta:
 		model = Address
-		fields = {'street', 'city', 'state', 'country', 'zipcode'}
+		fields = ('street', 'city', 'state', 'country', 'zipcode')
 
 	def save(self, commit=True):
 		add = super(AddressForm, self).save(commit=False)
@@ -79,8 +71,4 @@ class MakeToolForm(forms.ModelForm):
 		if commit:
 			inst.save()
 			self.save_m2m()
-		return inst		
-		
-class LoginForm(forms.Form):
-	username = forms.CharField()
-	password = forms.CharField()
+		return inst
