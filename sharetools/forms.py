@@ -80,7 +80,6 @@ class MakeToolForm(forms.ModelForm):
 class MakeShareForm(forms.ModelForm):
 	loanDate = forms.DateTimeField(initial=datetime.datetime.today())
 	returnDate = forms.DateTimeField(initial=datetime.datetime.today())
-
 	
 	class Meta:
 		model = ShareContract

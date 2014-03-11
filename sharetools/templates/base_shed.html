@@ -36,7 +36,7 @@
 							<td>{{ asset.type }}</td>
 							<td>{{ asset.description|truncatechars:20 }}</td>
 							<td>{{ asset.owner.username }}</td>
-							<td>{{ asset.available }}</td>
+							<td></td>
                             <td><a type="button" class="btn btn-primary" href="{% url 'sharetools.views.tool_view' asset.id %}">View</a></td>
 						</tr>
 					{% endfor %}

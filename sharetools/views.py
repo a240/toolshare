@@ -18,14 +18,17 @@ from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, Add
 #index_view
 #The main landing page
 def index_view(request):
-	if request.user.is_authenticated():
-		template = loader.get_template('base_index.html')
-		context = RequestContext(request, {
-		})
+	if not request.user.is_authenticated():
+		template = loader.get_template('landing.html')
+		context = RequestContext(request, {})
 		return HttpResponse(template.render(context))
 	else:
-		template = loader.get_template('landing.html')
+		template = loader.get_template('base_index.html')
+		assets = Asset.objects.exclude(owner=request.user)[:5]
+		locations = Location.objects.exclude(owner=request.user)[:5]
 		context = RequestContext(request, {
+			'assets': assets,
+			'locations': locations,
 		})
 		return HttpResponse(template.render(context))
 
