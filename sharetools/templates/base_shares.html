@@ -10,11 +10,11 @@
     </div>
 </div>
 <div class="container">
-    {% if user_requests %}
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">Tool requests</div>
         <!-- Table -->
+        {% if user_requests %}
         <table class="table">
             {% for rq in user_requests %}
             <tr>
@@ -32,9 +32,9 @@
             </tr>
             {% endfor %}
         </table>
+        {% endif %}
     </div>
     <br>
-    {% endif %}
     {% if user_mypending %}
     <div class="panel panel-default">
         <!-- Default panel contents -->
