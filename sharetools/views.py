@@ -233,13 +233,11 @@ def tool_view(request, tool_id):
 #@Phil
 def tool_delete_view(request, tool_id):
 	tool = get_object_or_404(Asset, pk=tool_id)
-	shareCheck = ShareContract.objects.filter(asset__id__iexact=tool_id)
+	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('landing'))
 	#if tool is currently borrowed (state 1) : 
 	elif (shareCheck):
-		#pass
-		#if shareContract.status == 1
 		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.', extra_tags='alert-warning')
 	elif tool.owner == request.user:
 		tool.delete()
