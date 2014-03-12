@@ -1,0 +1,42 @@
+[
+  {
+    "model": "sharetools.asset_type",
+    "pk": 1,
+    "fields": {
+      "name": "Power Tools",
+      "description": "Electronically powered tools and acessories."
+    }
+  },
+  {
+    "model": "sharetools.asset_type",
+    "pk": 2,
+    "fields": {
+      "name": "Hand Tools",
+      "description": "Hammers, screwdrivers, scissors, etc..."
+    }
+  },
+  {
+    "model": "sharetools.asset_type",
+    "pk": 3,
+    "fields": {
+      "name": "Air Tools & Compressors",
+      "description": "Tools using high pressured air."
+    }
+  },
+  {
+    "model": "sharetools.asset_type",
+    "pk": 4,
+    "fields": {
+      "name": "Latters and Scaffolding",
+      "description": "Climbing stuff."
+    }
+  },
+  {
+    "model": "sharetools.asset_type",
+    "pk": 5,
+    "fields": {
+      "name": "Welding & Soldering",
+      "description": "FIRE ON DANCE FLOOR"
+    }
+  }
+]

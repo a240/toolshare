@@ -116,3 +116,19 @@ ul.dropdown-menu {
 	-moz-transition: background .3s ease-in-out;
 	transition: background .3s ease-in-out;
 }
+
+#message-group {
+    position: fixed;
+    top: 0px;    
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    pointer-events: none;
+    z-index: 9001;
+}
+
+.message {
+    width: 600px;
+    margin: 30px auto;
+    pointer-events: all;
+}

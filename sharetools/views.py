@@ -96,6 +96,8 @@ def my_profile_view(request):
 # profile_view
 # displays the profile
 def profile_view(request, user_id):
+	if not request.user.is_authenticated():
+		return redirect('index')
 	this_user = get_object_or_404(User, username__iexact=user_id)
 	user_profile = this_user.userprofile
 	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(
@@ -116,6 +118,8 @@ def profile_view(request, user_id):
 # Uses UserEditForm, redirects user to their profile view upon success
 # @Phil
 def edit_profile_view(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
 	if request.method == 'POST':
 		form = UserEditForm(request.POST, instance=request.user)
 		if form.is_valid():
@@ -144,6 +148,8 @@ def edit_profile_view(request):
 ######################################################### 
 
 def shed_view(request, shed_id):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
 	shedLocation = get_object_or_404(Location, pk=shed_id)
 	assets = Asset.objects.filter(location=shedLocation)
 	template = loader.get_template('base_shed.html')
@@ -155,6 +161,8 @@ def shed_view(request, shed_id):
 
 
 def my_sheds_view(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
 	shedLocations = Location.objects.filter(owner=request.user)
 	template = loader.get_template('base_mySheds.html')
 	context = RequestContext(request, {
@@ -165,7 +173,7 @@ def my_sheds_view(request):
 
 def shed_create_view(request):
 	if not request.user.is_authenticated():
-		return redirect('landing')
+		return HttpResponseRedirect(reverse('login'))
 	if request.method == 'POST':
 		add_form = AddressForm(request.POST)
 		sform = ShedForm(request.POST)
@@ -211,6 +219,8 @@ def shed_delete_view(request, shed_id):
 #########################################################
 
 def make_share_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return redirect('index')
 	curr_asset = get_object_or_404(Asset, pk=tool_id)
 	if request.method == 'POST':
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
@@ -230,6 +240,8 @@ def make_share_view(request, tool_id):
 
 
 def shares_view(request):
+	if not request.user.is_authenticated():
+		return redirect('index')
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
 	myrequests = ShareContract.objects.filter(borrower=request.user).exclude(status=ShareContract.FULFILLED)
@@ -250,7 +262,7 @@ def shares_view(request):
 
 def shares_return_view(request, sc_id):
 	if not request.user.is_authenticated():
-		return redirect('landing')
+		return redirect('index')
 	sc = ShareContract.objects.filter(id=sc_id)[0]
 	if sc.lender == request.user:
 		sc.status = ShareContract.FULFILLED
@@ -262,7 +274,7 @@ def shares_return_view(request, sc_id):
 
 def tool_review_view(request, rq_id, request_code):
 	if not request.user.is_authenticated():
-		return redirect('landing')
+		return redirect('index')
 	rq = ShareContract.objects.filter(id=rq_id)[0]
 	if (rq.lender != request.user) or (rq.status != ShareContract.PENDING):
 		return redirect('shares')
@@ -344,6 +356,8 @@ def tool_view(request, tool_id):
 
 
 def tool_delete_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return redirect('index')
 	tool = get_object_or_404(Asset, pk=tool_id)
 	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	if not request.user.is_authenticated():
@@ -365,4 +379,6 @@ def tool_delete_view(request, tool_id):
 #Allows a user to change their tools shed location
 #Planned: R2
 def tool_edit_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return redirect('index')
 	return (HttpResponse('Tool edit ' + tool_id))
