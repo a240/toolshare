@@ -1,5 +1,4 @@
 #Tool Share
-###A basic tool sharing web app
 
 ###Dependencies:
 Python 3.0+	
