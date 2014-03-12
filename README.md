@@ -26,7 +26,7 @@ You will be directed to the Hub Page, which contains recently created tools and 
 4. Check what tools you have registered:
 
 	a. Select "Tools" in the top right corner. 
-	b. Click "View" on the drop down.
+	b. Click "My Tools" on the drop down.
 	
 5. Create a new tool:
 	
@@ -49,7 +49,7 @@ You will be directed to the Hub Page, which contains recently created tools and 
 	
 8. Approving/Checking Shares:
 
-	a. Click "Sheds" in the top right corner of the website.
+	a. Click "Shares" in the top right corner of the website.
 	b. Look at your "Tool Requests" on the tool requests panel.
 	c. Press "Accept" to approve ladysman127's share request.
 	d. You may notice the "Currently Lent" tab below now contains the request now.
