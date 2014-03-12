@@ -36,11 +36,9 @@
                     {% if user.is_authenticated %}
                     <li>
                         <a href="{% url 'messaging.views.messages_view' %}">
-                            {% if has_unread_messages %}
                             <span class="badge">
                             {% unread_message_count user %}
                             </span>
-                            {% endif %}
                             <i class="fa fa-envelope-o"></i>
                         </a>
                     </li>
