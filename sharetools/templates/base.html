@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+{% load message_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,7 +35,14 @@
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'messaging.views.messages_view' %}"><i class="fa fa-envelope-o"></i></a>
+                        <a href="{% url 'messaging.views.messages_view' %}">
+                            {% if has_unread_messages %}
+                            <span class="badge">
+                            {% unread_message_count user %}
+                            </span>
+                            {% endif %}
+                            <i class="fa fa-envelope-o"></i>
+                        </a>
                     </li>
                     <li>
                         <a href="{% url 'sharetools.views.my_sheds_view' %}"><i class="fa fa-home"></i> Sheds</a>
