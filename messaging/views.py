@@ -2,20 +2,16 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from messaging.models import Message
-from messaging.forms import MessageForm
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from messaging.forms import MessageForm
 
 def messages_view(request):
 	if not request.user.is_authenticated():
-		return redirect('landing')
+		return redirect('login')
 	if request.method == 'POST':
 		form = MessageForm(data=request.POST)
-		print(request.POST)
 		if form.is_valid():
-			print('hey')
 			subject = form.cleaned_data['subject']
 			to = form.cleaned_data['to']
 			body = form.cleaned_data['body']
@@ -34,9 +30,11 @@ def messages_view(request):
 	template = loader.get_template('base_messages_inbox.html')
 	message_list = Message.objects.filter(msg_to=request.user)
 	if message_list.count() != 0:
-		args = {'user_messages': message_list,
-		        'form': MessageForm}
+		args = {'user_messages': message_list, 'form': MessageForm}
 	else:
 		args = {}
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
+
+def message_delete_view(request, message_id):
+	pass
