@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'sharetools',
     'bootstrapform',
+    'messaging',
 )
 
 MIDDLEWARE_CLASSES = (

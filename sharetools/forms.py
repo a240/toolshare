@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
-from sharetools.models import UserProfile, Asset, Location, Address, Message, ShareContract
+from sharetools.models import UserProfile, Asset, Location, Address, ShareContract
 import datetime
 
 

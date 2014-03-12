@@ -12,7 +12,7 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Message
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm
 
 #index_view
@@ -208,20 +208,7 @@ def shed_delete_view(request, shed_id):
 
 #########################################################
 #            Category: SHARE Manipulation               #
-######################################################### 
-
-
-def messages_view(request):
-	template = loader.get_template('base_messages_inbox.html')
-	messages = Message.objects.filter(msg_to=request.user)
-	if messages.count() != 0:
-		args = {'user_messages': messages}
-		        #'form': MessageForm}
-	else:
-		args = {}
-	context = RequestContext(request, args)
-	return HttpResponse(template.render(context))
-
+#########################################################
 
 def make_share_view(request, tool_id):
 	curr_asset = get_object_or_404(Asset, pk=tool_id)
