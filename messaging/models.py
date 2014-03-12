@@ -8,5 +8,9 @@ class Message(models.Model):
 	body = models.TextField()
 	read = models.BooleanField(default=False)
 
+	def markRead(self):
+		self.read = True
+		self.save()
+
 	def __str__(self):
 		return 'From ' + self.msg_from.__str__() + '  To: '+ self.msg_to.__str__() + self.body

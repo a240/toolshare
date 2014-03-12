@@ -28,9 +28,10 @@ def messages_view(request):
 				messages.add_message(request, messages.WARNING, 'User Does Not Exist.', extra_tags='alert-danger')
 		return redirect('messages')
 	template = loader.get_template('base_messages_inbox.html')
-	message_list = Message.objects.filter(msg_to=request.user)
+	message_list = Message.objects.filter(msg_to=request.user)[:50]
 	if message_list.count() != 0:
-		args = {'user_messages': message_list, 'form': MessageForm}
+		message_list.reverse()
+		args = {'user_messages': message_list}
 	else:
 		args = {}
 	context = RequestContext(request, args)
@@ -38,3 +39,12 @@ def messages_view(request):
 
 def message_delete_view(request, message_id):
 	pass
+
+def set_message_read(request, message_id):
+	if not request.user.is_authenticated():
+		return redirect('login')
+	msg = Message.objects.get(id=message_id)
+	if msg.msg_to != request.user:
+		return redirect('messages')
+	msg.markRead()
+	return HttpResponse
