@@ -74,12 +74,14 @@
         </div>
     </nav>
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert {% if message.tags %}{{message.tags}}{% endif %}alert-dismissable container" style="...">
-                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <strong>Alert: </strong>{{message}}
-            </div>
-        {% endfor %}
+    <div id="message-group">
+    {% for message in messages %}
+        <div class="message alert {% if message.tags %}{{message.tags}}{% endif %}alert-dismissable container" style="...">
+            <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Alert: </strong>{{message}}
+        </div>
+    {% endfor %}
+    </div>
     {% endif%}
     {% block content %}{% endblock %}
 
