@@ -26,6 +26,8 @@ def messages_view(request):
 				messages.add_message(request, messages.SUCCESS, 'Message sent Successfully', extra_tags='alert-success')
 			else:
 				messages.add_message(request, messages.WARNING, 'User Does Not Exist.', extra_tags='alert-danger')
+		else:
+			messages.add_message(request, messages.WARNING, 'One or More Invalid Field(s).', extra_tags='alert-danger')
 		return redirect('messages')
 	template = loader.get_template('base_messages_inbox.html')
 	message_q = Message.objects.filter(msg_to=request.user)[:50]
