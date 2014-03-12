@@ -8,13 +8,14 @@
 
 {% block content %}
 <div class="container">
-  <div class="column">
-    <form method="post" action="{% url 'sharetools.views.shed_create_view' %}">
-      {% csrf_token %}
-      {{ shed_form | bootstrap }}
-      {{ address_form | bootstrap }}
-      <input type="submit" value="Save" class="btn btn-primary btn-block btn-lg">
-    </form>
-  </div>
+    <div class="column">
+        <form method="post" action="{% url 'sharetools.views.shed_create_view' %}">
+            {% csrf_token %}
+            {{ shed_form | bootstrap }}
+            {{ address_form | bootstrap }}
+            <input type="submit" value="Save" class="btn btn-primary btn-block btn-lg">
+        </form>
+    </div>
 </div>
+<br>
 {% endblock %}

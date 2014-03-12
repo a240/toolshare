@@ -176,10 +176,10 @@ def shed_create_view(request):
 			shed.owner = request.user
 			shed.save()
 			messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
-			return redirect('/sheds')
+			return redirect('mySheds')
 		else:
 			messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
-			return redirect('/sheds/create/')
+			return redirect('shedCreation')
 	context = RequestContext(request, {
 	'shed_form': ShedForm(),
 	'address_form': AddressForm()
