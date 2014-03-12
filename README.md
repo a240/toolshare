@@ -58,7 +58,7 @@ You will be directed to the Hub Page, which contains recently created tools and 
 	
 9. Borrowing a tool: 
 
-	a. Select the Tools tab on the top right corner, pick "All Tools".
+	a. Select the Tools tab on the top right corner, pick "Find a Tool".
 	b. Find a tool that is available.
 	c. Click the tool's wrench button under the view tab.
 	d. Select the "Borrow" button at the bottom of the tool overview.
