@@ -41,9 +41,16 @@
                     <li>
                         <a href="{% url 'sharetools.views.shares_view' %}"><i class="fa fa-tag"></i> Shares</a>
                     </li>
-                    <li>
-                        <a href="{% url 'sharetools.views.my_tools_view' %}"><i class="fa fa-gavel"></i> Tools</a>
-                    </li>
+                    <li class="dropdown">
+                        <a href="{% url 'myTools' class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-gavel"></i> Tools</a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="{% url 'myTools' %}">View</a>
+                                <a href="{% url 'allTool' %}">Search</a>
+                                <a href="{% url 'newTool' %}">Make New</a>
+                            </li>
+                        </ul>
+                    </li>					
                     <li class="dropdown">
                         <a href="/profile" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Profile</a>
                         <ul class="dropdown-menu pull-right">
