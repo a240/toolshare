@@ -39,7 +39,12 @@ def messages_view(request):
 	return HttpResponse(template.render(context))
 
 def message_delete_view(request, message_id):
-	pass
+	if not request.user.is_authenticated():
+		return redirect('login')
+	msg = Message.objects.get(id=message_id)
+	if msg.msg_to == request.user:
+		msg.delete()
+	return redirect('messages')
 
 def set_message_read(request, message_id):
 	if not request.user.is_authenticated():
@@ -48,4 +53,6 @@ def set_message_read(request, message_id):
 	if msg.msg_to != request.user:
 		return redirect('messages')
 	msg.markRead()
-	return
+	template = loader.get_template('base_read_message.html')
+	context = RequestContext(request, {'message': msg})
+	return HttpResponse(template.render(context))

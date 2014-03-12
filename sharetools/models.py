@@ -4,10 +4,14 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from messaging.models import Message
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	zipcode = models.CharField(max_length=5)
+
+	def unread_messages(self):
+		return Message.objects.filter(read=False, msg_to=UserProfile.user).count()
 
 	def __str__(self):
 		return self.user.username

@@ -16,11 +16,21 @@
         <!-- Table -->
         {% if user_requests %}
         <table class="table">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <thead>
+            <th>Requester</th>
+            <th>Asset</th>
+            <th>Date Requested For</th>
+            </thead>
+            <tbody>
             {% for rq in user_requests %}
             <tr>
                 <td>{{ rq.borrower }}</td>
                 <td>{{ rq.asset.name }}</td>
-                <td align="center">{{ rq.loanDate }}</td>
+                <td>{{ rq.loanDate }}</td>
                 <td align="right">
                     <div class="btn-group">
                         <a type="button" class="btn btn-success"
@@ -31,6 +41,7 @@
                 </td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
         {% else %}
         <div class="panel-body">
@@ -41,9 +52,20 @@
     <br>
 
     <div class="panel panel-default">
-        <div class="panel-heading">My Pending Requests</div>
+        <div class="panel-heading">My Current Requests</div>
         {% if user_mypending %}
         <table class="table">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <thead>
+            <th>Lender</th>
+            <th>Asset</th>
+            <th>Date Requested For</th>
+            <th>Request Status</th>
+            </thead>
+            <tbody>
             {% for rq in user_mypending %}
             <tr>
                 <td>{{ rq.lender }}</td>
@@ -60,6 +82,7 @@
                 {% endif %}
             </tr>
             {% endfor %}
+            </tbody>
         </table>
         {% else %}
         <div class="panel-body">
@@ -68,10 +91,21 @@
         {% endif %}
     </div>
     <br>
+
     <div class="panel panel-default">
         <div class="panel-heading">Currently Lent</div>
         {% if user_current %}
         <table class="table">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <thead>
+            <th>Borrower</th>
+            <th>Asset</th>
+            <th>Date Borrowed</th>
+            </thead>
+            <tbody>
             {% for rq in user_current %}
             <tr>
                 <td>{{ rq.borrower }}</td>
@@ -83,6 +117,7 @@
                 </td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
         {% else %}
         <div class="panel-body">
@@ -91,10 +126,22 @@
         {% endif %}
     </div>
     <br>
+
     <div class="panel panel-default">
         <div class="panel-heading">Previously Lent</div>
         {% if user_former %}
         <table class="table">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <col width="20">
+            <thead>
+            <th>Borrower</th>
+            <th>Asset</th>
+            <th>Date Borrowed</th>
+            <th>Date Returned</th>
+            </thead>
+            <tbody>
             {% for rq in user_former %}
             <tr>
                 <td>{{ rq.borrower }}</td>
@@ -103,6 +150,7 @@
                 <td>{{ rq.returnDate }}</td>
             </tr>
             {% endfor %}
+            </tbody>
         </table>
         {% else %}
         <div class="panel-body">
