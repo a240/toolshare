@@ -151,7 +151,7 @@ def shed_view(request, shed_id):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('login'))
 	shedLocation = get_object_or_404(Location, pk=shed_id)
-	assets = Asset.objects.filter(location=shedLocation)
+	assets = Asset.objects.filter(location=shedLocation).order_by('type')
 	template = loader.get_template('base_shed.html')
 	context = RequestContext(request, {
 	'location': shedLocation,
@@ -294,7 +294,7 @@ def my_tools_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('login'))
 		
-	assets = Asset.objects.filter(owner=request.user)	
+	assets = Asset.objects.filter(owner=request.user).order_by('type')	
 	template = loader.get_template('base_myTools.html')
 	context = RequestContext(request, {
 	'assets': assets,
@@ -305,7 +305,7 @@ def all_tools_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('login'))
 		
-	assets_all = Asset.objects.all()
+	assets_all = Asset.objects.all().order_by('type')
 	assets = assets_all.exclude(owner=request.user)
 	
 	template = loader.get_template('base_allTools.html')

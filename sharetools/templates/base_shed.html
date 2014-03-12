@@ -23,6 +23,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							<th>Name</th>
 							<th>Type</th>
 							<th>Description</th>
 							<th>Owner</th>
@@ -33,6 +34,7 @@
 					<tbody>
 					{% for asset in assets %}
 						<tr>
+							<td>{{ asset.name }}</td>
 							<td>{{ asset.type }}</td>
 							<td>{{ asset.description|truncatechars:20 }}</td>
 							<td>{{ asset.owner.username }}</td>
