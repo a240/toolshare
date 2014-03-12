@@ -28,8 +28,9 @@ def messages_view(request):
 				messages.add_message(request, messages.WARNING, 'User Does Not Exist.', extra_tags='alert-danger')
 		return redirect('messages')
 	template = loader.get_template('base_messages_inbox.html')
-	message_list = Message.objects.filter(msg_to=request.user)[:50]
-	if message_list.count() != 0:
+	message_q = Message.objects.filter(msg_to=request.user)[:50]
+	if message_q.count() != 0:
+		message_list = list(message_q)
 		message_list.reverse()
 		args = {'user_messages': message_list}
 	else:
@@ -47,4 +48,4 @@ def set_message_read(request, message_id):
 	if msg.msg_to != request.user:
 		return redirect('messages')
 	msg.markRead()
-	return HttpResponse
+	return
