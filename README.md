@@ -5,16 +5,16 @@
 Python 3.0+	
 
 
-###How to install
-Download a copy of the Tool Share project
+###How to install:
+1. Download a copy of the Tool Share project
 
-run `python manage.py syncdb`
+2. run `python manage.py syncdb`
 
-run `python manage.py loaddata example_data.json`
+3. run `python manage.py loaddata example_data.json`
 
-run `python manage.py runserver`
+4. run `python manage.py runserver`
 
-###Using the website
+###Using the website:
 Welcome to Toolshare Readme! This guide will help you navigate the site for the first time.
 To begin, click the register button in the upper-right. Select a username and password, and fill
 in the appropriate fields (feel free to use a fake email) and select the "Register" button.
