@@ -47,7 +47,12 @@ class Asset(models.Model):
 	description = models.CharField(max_length=300, blank=True)
 	type = models.ForeignKey(Asset_Type, related_name = 'type')
 	location = models.ForeignKey(Location, related_name = 'location')
-
+	def isAvailable(self):
+		shared = ShareContract.objects.filter(asset=self.id, status=ShareContract.ACCEPTED)
+		if(shared):
+			return "No"
+		return "Yes"
+		
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type.name
 
