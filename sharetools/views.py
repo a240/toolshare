@@ -116,6 +116,8 @@ def profile_view(request, user_id):
 # Uses UserEditForm, redirects user to their profile view upon success
 # @Phil
 def edit_profile_view(request):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	if request.method == 'POST':
 		form = UserEditForm(request.POST, instance=request.user)
 		if form.is_valid():
@@ -144,6 +146,8 @@ def edit_profile_view(request):
 ######################################################### 
 
 def shed_view(request, shed_id):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	shedLocation = get_object_or_404(Location, pk=shed_id)
 	assets = Asset.objects.filter(location=shedLocation)
 	template = loader.get_template('base_shed.html')
@@ -155,6 +159,8 @@ def shed_view(request, shed_id):
 
 
 def my_sheds_view(request):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	shedLocations = Location.objects.filter(owner=request.user)
 	template = loader.get_template('base_mySheds.html')
 	context = RequestContext(request, {
@@ -211,6 +217,8 @@ def shed_delete_view(request, shed_id):
 #########################################################
 
 def make_share_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	curr_asset = get_object_or_404(Asset, pk=tool_id)
 	if request.method == 'POST':
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
@@ -230,6 +238,8 @@ def make_share_view(request, tool_id):
 
 
 def shares_view(request):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
 	myrequests = ShareContract.objects.filter(borrower=request.user).exclude(status=ShareContract.FULFILLED)
@@ -344,6 +354,8 @@ def tool_view(request, tool_id):
 
 
 def tool_delete_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	tool = get_object_or_404(Asset, pk=tool_id)
 	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	if not request.user.is_authenticated():
@@ -365,4 +377,6 @@ def tool_delete_view(request, tool_id):
 #Allows a user to change their tools shed location
 #Planned: R2
 def tool_edit_view(request, tool_id):
+	if not request.user.is_authenticated():
+		return redirect('landing')
 	return (HttpResponse('Tool edit ' + tool_id))
