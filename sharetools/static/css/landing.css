@@ -174,10 +174,10 @@ a:focus {
     height: 70px;
     margin-top: 15px;
     padding: 7px 16px;
-    border: 2px solid #e30;
+    border: 2px solid #428bca;
     border-radius: 35px;
     font-size: 40px;
-    color: #e30;
+    color: #428bca;
     background: 0 0;
     -webkit-transition: background .3s ease-in-out;
     -moz-transition: background .3s ease-in-out;
