@@ -1,11 +1,13 @@
-toolshare
-=========
-
-A basic tool sharing web app
+#Tool Share
+###A basic tool sharing web app
 
 
-How to Use:
-============
+###Dependencies:
+Python 3.0+	
 
-Download a copy of the 
-run "python manage.py runserver"
+
+###How to install
+Download a copy of the Tool Share project
+run `python manage.py syncdb`
+run `python manage.py loaddata example_data.json`
+run `python manage.py runserver`
