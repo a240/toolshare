@@ -7,6 +7,12 @@
 {% block title %}TS - Register{% endblock %}
 
 {% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>Welcome to TS!</h1>
+		<p>We just need to know a couple things and then you'll be on your way to sharing with your community.</p>
+	</div>
+</div>
 <div class="container">
  	<div class="row">
     	<form method="post" action="{% url 'sharetools.views.register_view' %}">{% csrf_token %}
