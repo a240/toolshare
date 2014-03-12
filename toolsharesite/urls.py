@@ -24,6 +24,7 @@ urlpatterns = patterns('',
 	#Tools -------------------------------------------------------------------
 	url(r'^tools/$', views.my_tools_view, name='myTools'),
 	url(r'^tools/new$', views.make_tool_view,name="newTool"),
+	url(r'^tools/all$', views.all_tools_view,name="allTool"),
 	url(r'^tools/delete/(\d)+$',views.tool_delete_view,name='toolDeletion'),
     url(r'^tools/review/(\d)/(\d)+$',views.tool_review_view,name='toolReview'),
 	url(r'^tools/edit/(\d)+$',views.tool_edit_view,name='toolEdit'),

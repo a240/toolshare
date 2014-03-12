@@ -301,6 +301,19 @@ def my_tools_view(request):
 	'assets': assets,
 	})
 	return HttpResponse(template.render(context))
+	
+def all_tools_view(request):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('login'))
+		
+	assets_all = Asset.objects.all()
+	assets = assets_all.exclude(owner=request.user)
+	
+	template = loader.get_template('base_allTools.html')
+	context = RequestContext(request, {
+	'assets': assets,
+	})
+	return HttpResponse(template.render(context))
 
 
 #Generates a new tool, owner = requesting user
