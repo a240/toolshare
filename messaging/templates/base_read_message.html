@@ -27,7 +27,7 @@
     <div class="row panel panel-default">
         <div class="panel-heading">
             <a style="float: right;" type="button" class="btn btn-primary" data-toggle="modal"
-               data-target="#ReplyModal">
+               data-target="#NewMessageModal">
                 Reply <span class="glyphicon glyphicon-share-alt"></span>
             </a>
             <h4>Subject: {{ message.subject }}</h4>
@@ -42,42 +42,7 @@
         </div>
     </div>
     <!-- Reply Modal -->
-    <div class="modal fade" id="ReplyModal" tabindex="-1" role="dialog" aria-labelledby="ReplyModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="ReplyModalLabel">New Message</h4>
-                </div>
-                <form role="form" method="post" action="{% url 'messaging.views.messages_view' %}">
-                    {% csrf_token %}
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="msgto">Message to:</label>
-                            <input type="text" class="form-control" id="msgto" name="to" placeholder="Enter Username"
-                                   value="{{ message.msg_from.username }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="subjectdisp">Subject:</label>
-                            <input type="text" class="form-control" id="subjectdisp" name="subject"
-                                   placeholder="Subject" value="Re: {{ message.subject }}">
-                        </div>
-                        <div class="form-group">
-                            <label for="input_area">Message Body:</label>
-                            <textarea type="text" class="form-control" id="input_area" name="body"
-                                      placeholder="Message" style="max-width:100%;"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button id="formSubmit" type="submit" class="btn btn-primary">Send Message</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    {% include "new_message.html" with msg_to=message.msg_from subject=message.subject %}
     {% endif %}
 </div>
 {% endblock %}

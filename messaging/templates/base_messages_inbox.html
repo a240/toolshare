@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load bootstrap %}
+
+{% block title %}TS - Message Center{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container" align="left">
+        <h1>My Messages</h1>
+    </div>
+</div>
+<div class="container">
+    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
+    {% include "new_message.html" %}
+    <br><br>
+    {% if user_messages %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading" align="center">Messages</div>
+
+        <!-- List -->
+        <ul class="list-group">
+            {% for msg in user_messages %}
+            <a href="{% url 'messaging.views.set_message_read' msg.id %}" style="display:block">
+                <li class="list-group-item">
+                    {% if not msg.read %}
+                    <span class="badge" style="float:right;">Unread</span>
+                    <b>
+                        {% endif %}
+                        {{ msg.subject }}
+                        {% if not msg.read %}
+                    </b>
+                    {% endif %}
+
+
+                </li>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

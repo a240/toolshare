@@ -74,6 +74,9 @@ class ShareContract(models.Model):
 	status = models.IntegerField(choices=STATUS_CHOICES, default=PENDING)
 	asset = models.ForeignKey(Asset, related_name='asset')
 
+	def getStatus(self):
+		return self.STATUS_CHOICES[self.status][1]
+
 	def __str__(self):
 		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()
 

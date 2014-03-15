@@ -26,7 +26,9 @@
 							<th>Name</th>
 							<th>Type</th>
 							<th>Description</th>
+                            {% if location.isCommunity %}
 							<th>Owner</th>
+                            {% endif %}
 							<th>Available</th>
                             <th></th>
 						</tr>
@@ -37,7 +39,9 @@
 							<td>{{ asset.name }}</td>
 							<td>{{ asset.type }}</td>
 							<td>{{ asset.description|truncatechars:20 }}</td>
+                            {% if location.isCommunity %}
 							<td>{{ asset.owner.username }}</td>
+                            {% endif %}
 							<td>{{ asset.isAvailable }}</td>
                             <td><a type="button" class="btn btn-primary" href="{% url 'sharetools.views.tool_view' asset.id %}">View</a></td>
 						</tr>

@@ -28,7 +28,7 @@
             <tbody>
             {% for rq in user_requests %}
             <tr>
-                <td>{{ rq.borrower }}</td>
+                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
@@ -68,18 +68,10 @@
             <tbody>
             {% for rq in user_mypending %}
             <tr>
-                <td>{{ rq.lender }}</td>
+                <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
-                {% if rq.status == 0 %}
-                <td>{{ rq.STATUS_CHOICES.0.1 }}</td>
-                {% elif rq.status == 1 %}
-                <td>{{ rq.STATUS_CHOICES.1.1 }}</td>
-                {% elif rq.status == 2 %}
-                <td>{{ rq.STATUS_CHOICES.2.1 }}</td>
-                {% elif rq.status == 3 %}
-                <td>{{ rq.STATUS_CHOICES.3.1 }}</td>
-                {% endif %}
+                <td>{{ rq.getStatus }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -108,7 +100,7 @@
             <tbody>
             {% for rq in user_current %}
             <tr>
-                <td>{{ rq.borrower }}</td>
+                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
@@ -144,7 +136,7 @@
             <tbody>
             {% for rq in user_former %}
             <tr>
-                <td>{{ rq.borrower }}</td>
+                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
                 <td>{{ rq.asset.name }}</td>
                 <td>{{ rq.loanDate }}</td>
                 <td>{{ rq.returnDate }}</td>

@@ -278,7 +278,6 @@ def tool_review_view(request, rq_id, request_code):
 	rq = ShareContract.objects.filter(id=rq_id)[0]
 	if (rq.lender != request.user) or (rq.status != ShareContract.PENDING):
 		return redirect('shares')
-	print(str(request_code))
 	if request_code == "0":
 		rq.status = ShareContract.DENIED
 	else:
