@@ -22,7 +22,7 @@
             <col width="20">
             <thead>
             <th>Requester</th>
-            <th>Asset</th>
+            <th><a href="{% url 'tool' rq.asset.id %}">Asset</a></th>
             <th>Date Requested For</th>
             </thead>
             <tbody>
@@ -69,7 +69,7 @@
             {% for rq in user_mypending %}
             <tr>
                 <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
-                <td>{{ rq.asset.name }}</td>
+                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td>{{ rq.getStatus }}</td>
             </tr>
@@ -101,7 +101,7 @@
             {% for rq in user_current %}
             <tr>
                 <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td>{{ rq.asset.name }}</td>
+                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
                     <a type="button" class="btn btn-primary"
@@ -137,7 +137,7 @@
             {% for rq in user_former %}
             <tr>
                 <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td>{{ rq.asset.name }}</td>
+                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td>{{ rq.returnDate }}</td>
             </tr>
