@@ -8,9 +8,11 @@
 		<img class="col-sm-4 img-circle" src="{{ avatarURL }}">
 		<div class="col-sm-8">
 			<h1>{{ userProfile.user.username }}</h1>
+            {% if userProfile.user.username != user.username %}
             <a style="float: right;" type="button" class="btn btn-primary" data-toggle="modal"
               data-target="#NewMessageModal">Message</a>
             {% include "new_message.html" with msg_to=userProfile.user.username %}
+            {% endif %}
 			<p>{{ userProfile.user.first_name }} {{ userProfile.user.last_name }}</p>
 			<p>{{ userProfile.user.email}}</p>
 			<p>{{ userProfile.zipcode}}</p>

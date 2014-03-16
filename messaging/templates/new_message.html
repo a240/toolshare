@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label for="msgto">Message to:</label>
                         <input type="text" class="form-control" id="msgto" name="to" placeholder="Enter Username"
-                               {% if msg_to %} value="{{ msg_to }}" {% endif %} >
+                        {% if msg_to %} value="{{ msg_to }}" disabled="true" {% endif %} >
                     </div>
                     <div class="form-group">
                         <label for="subjectdisp">Subject:</label>
