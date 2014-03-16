@@ -12,8 +12,8 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract
-from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm
 
 #index_view
 #The main landing page
@@ -292,8 +292,7 @@ def tool_review_view(request, rq_id, request_code):
 def my_tools_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('login'))
-		
-	assets = Asset.objects.filter(owner=request.user).order_by('type')	
+	assets = Asset.objects.filter(owner=request.user).order_by('type')
 	template = loader.get_template('base_myTools.html')
 	context = RequestContext(request, {
 	'assets': assets,
@@ -303,21 +302,38 @@ def my_tools_view(request):
 def all_tools_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('login'))
-		
-	assets_all = Asset.objects.all().order_by('type')
-	assets = assets_all.exclude(owner=request.user)
-	
+
+	args = {}
+	assets = Asset.objects.exclude(owner=request.user).order_by('type')
+	if request.method == "POST":
+		form = AssetSearchForm(data=request.POST)
+		if form.is_valid():
+			asset_type = form.cleaned_data['type']
+			name = form.cleaned_data['name']
+			args['query'] = name
+			args['type_field'] = asset_type
+			avail_only = form.cleaned_data['available_only']
+			assets = assets.filter(name__contains=name)
+			if asset_type != 'all':
+				assets = assets.filter(type__name=asset_type)
+			if avail_only:
+				temp_assets = []
+				for asset in assets:
+					if asset.isAvailable() == "Yes":
+						temp_assets.append(asset)
+				assets = temp_assets
+				args['available_only_field'] = True
 	template = loader.get_template('base_allTools.html')
-	context = RequestContext(request, {
-	'assets': assets,
-	})
+	args['assets'] = assets
+	args['asset_types'] = Asset_Type.objects.all()
+	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
 
 
 #Generates a new tool, owner = requesting user
 def make_tool_view(request):
 	if not request.user.is_authenticated():
-			return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('login'))
 			
 	if request.method == 'POST':
 		form = MakeToolForm(request.POST, user=request.user)
@@ -330,7 +346,7 @@ def make_tool_view(request):
 		form = MakeToolForm(user=request.user)
 
 	return render(request, 'base_makeTool.html', {
-	'form': form,
+		'form': form,
 	})
 
 

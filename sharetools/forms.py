@@ -91,7 +91,7 @@ class MakeShareForm(forms.ModelForm):
 		super(MakeShareForm,self).__init__(*args,**kwargs)
 
 		
-	def save(self,commit=True):
+	def save(self, commit=True):
 		inst = super(MakeShareForm,self).save(commit=False)
 		inst.lender = self._asset.owner
 		inst.borrower = self._borrower
@@ -101,3 +101,12 @@ class MakeShareForm(forms.ModelForm):
 			inst.save()
 			self.save_m2m()
 		return inst
+
+class AssetSearchForm(forms.ModelForm):
+	type = forms.CharField()
+	name = forms.CharField(required=False)
+	available_only = forms.BooleanField(required=False)
+
+	class Meta:
+		model = Asset
+		fields = ('name',)

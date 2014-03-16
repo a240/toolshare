@@ -4,50 +4,70 @@
 
 {% block content %}
 <div class="jumbotron">
-	<div class="container">
-		<h1>All Tools</h1>
-	</div>
+    <div class="container">
+        <h1>All Tools</h1>
+    </div>
 </div>
 <div class="container">
-
+    {% if asset_types %}
     <br>
-	{% if assets %}
-	<div class="row">
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-						<th>Owner</th>
-						<th>Availability</th>
-                        <th>View</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for asset in assets %}
-					<tr>
-						<td>{{ asset.name }}</td>
-						<td>{{ asset.type }}</td>
-						<td>{{ asset.description|truncatechars:20 }}</td>
-						<td>{{ asset.owner.username }}</td>
-						<td>{{ asset.isAvailable }}</td>
-                        <td><a href="{% url 'tool' asset.id %}"<button type="button" class="btn btn-primary btn-block">
-							<span class="glyphicon glyphicon-wrench"></span></button>
-							</a>
-						</td>
-					</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
-	{% else %}
-	<div class="well well-lg">
-		<h3 class="text-center text-muted">There are no tools</h3>
-	</div>
-	{% endif %}
+
+    <form method="post" class="form-inline" id="srchForm">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="name" class="form-control" value="{{ query }}">
+            <select name="type" class="form-control" form="srchForm">
+                <option value="all">All Tools</option>
+                {% for type in asset_types %}
+                <option value="{{ type.name }}"
+                    {% if type_field == type.name %} selected="true" {% endif %}>{{type.name}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-success">Search</button>
+        </div>
+    </form>
+    <input {% if available_only_field %}checked="true"{% endif %}
+        type="checkbox" form="srchForm" name="available_only"> Available Only
+    {% endif %}
+    <br>
+    {% if assets %}
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Owner</th>
+                    <th>Availability</th>
+                    <th>View</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for asset in assets %}
+                <tr>
+                    <td>{{ asset.name }}</td>
+                    <td>{{ asset.type }}</td>
+                    <td title="{{asset.description}}">{{ asset.description|truncatechars:20 }}</td>
+                    <td>{{ asset.owner.username }}</td>
+                    <td>{{ asset.isAvailable }}</td>
+                    <td>
+                        <a href="{% url 'tool' asset.id %}" type="button" class="btn btn-primary btn-block btn-sm">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="well well-lg">
+        <h3 class="text-center text-muted">There are no tools</h3>
+    </div>
+    {% endif %}
 
 </div>
 {% endblock %}
