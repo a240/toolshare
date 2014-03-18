@@ -16,20 +16,20 @@
         <!-- Table -->
         {% if user_requests %}
         <table class="table">
-            <col width="20">
-            <col width="20">
-            <col width="20">
-            <col width="20">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
             <thead>
             <th>Requester</th>
-            <th><a href="{% url 'tool' rq.asset.id %}">Asset</a></th>
+            <th>Asset</th>
             <th>Date Requested For</th>
             </thead>
             <tbody>
             {% for rq in user_requests %}
             <tr>
                 <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td>{{ rq.asset.name }}</td>
+                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
                     <div class="btn-group">
