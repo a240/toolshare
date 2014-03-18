@@ -317,11 +317,6 @@ def all_tools_view(request):
 			if asset_type != 'all':
 				assets = assets.filter(type__name=asset_type)
 			if avail_only:
-				temp_assets = []
-				for asset in assets:
-					if asset.isAvailable() == "Yes":
-						temp_assets.append(asset)
-				assets = temp_assets
 				args['available_only_field'] = True
 	template = loader.get_template('base_allTools.html')
 	args['assets'] = assets

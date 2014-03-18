@@ -40,16 +40,17 @@
                     <th>Type</th>
                     <th>Description</th>
                     <th>Owner</th>
-                    <th>Availability</th>
+                    <th>Available</th>
                     <th>View</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for asset in assets %}
+                {% if not available_only_field or available_only_field and asset.isAvailable|length > 2 %}
                 <tr>
                     <td>{{ asset.name }}</td>
                     <td>{{ asset.type }}</td>
-                    <td title="{{asset.description}}">{{ asset.description|truncatechars:20 }}</td>
+                    <td title="{{asset.description}}">{{ asset.description|truncatechars:25 }}</td>
                     <td>{{ asset.owner.username }}</td>
                     <td>{{ asset.isAvailable }}</td>
                     <td>
@@ -58,6 +59,7 @@
                         </a>
                     </td>
                 </tr>
+                {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
