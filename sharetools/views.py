@@ -52,7 +52,7 @@ def login_view(request):
 					return redirect('index')
 
 			context = RequestContext(request, {
-			'login_error': "The username and email you gave us did not match up"
+			'login_error': "The username and password you gave us did not match up"
 			})
 		else:
 			context = RequestContext(request, {})
