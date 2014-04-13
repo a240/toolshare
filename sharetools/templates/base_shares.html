@@ -116,22 +116,57 @@
             <th>Date Borrowed</th>
             </thead>
             <tbody>
-            <form method="post" name="returnReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
-                {% csrf_token %}
-                {% for rq in user_current %}
-                <tr>
-                    <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
-                    <td>{{ rq.loanDate }}</td>
-                    <td align="right">
+            {% for rq in user_current %}
+            <div class="modal fade" id="RateModal{{ rq.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="RateModal{{rq.id}}"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="Rate">Rate This Interaction</h4>
+                        </div>
+                        <form role="form" method="post" action="{% url 'sharetools.views.shares_view' %}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-success">
+                                            <input type="radio" name="options" id="up" value="true" required><span
+                                                class="glyphicon glyphicon-thumbs-up"></span>
+                                        </label>
+                                        <label class="btn btn-danger">
+                                            <input type="radio" name="options" id="down" value="false" required><span
+                                                class="glyphicon glyphicon-thumbs-down"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input_area">Comments:</label>
+                                    <textarea type="text" class="form-control" id="input_area" name="comment"
+                                              placeholder="Describe the Interaction" style="max-width:100%;"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button id="formSubmit" type="submit" name="return" value="{{rq.id}}" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <tr>
+                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                <td>{{ rq.loanDate }}</td>
+                <td align="right">
 
-                        <button type="submit" name="return" value="{{ rq.id }}" class="btn btn-primary">
-                            Mark as Returned
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </form>
+                    <button data-toggle="modal" data-target="#RateModal{{rq.id}}" class="btn btn-primary">
+                        Mark as Returned
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
             </tbody>
         </table>
         {% else %}

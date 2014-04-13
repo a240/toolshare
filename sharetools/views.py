@@ -269,9 +269,15 @@ def shares_view(request):
 			# mark a tool returned
 			sc = ShareContract.objects.get(id=request.POST.get("return", ""))
 			sc.status = ShareContract.FULFILLED
-			sc.save()
 			sc.asset.availability = True
 			sc.asset.save()
+			sc.comments = request.POST.get("comment","")
+			if request.POST.get("options","") == "true":
+				sc.borrower.userprofile.karma += 1
+			else:
+				sc.borrower.userprofile.karma -= 1
+			sc.borrower.userprofile.save()
+			sc.save()
 		return redirect('shares')
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)

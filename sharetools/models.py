@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
 	zipcode = models.CharField(max_length=5)
-
+	karma = models.IntegerField(default=0)
 	def __str__(self):
 		return self.user.username
 
@@ -73,6 +73,8 @@ class ShareContract(models.Model):
 	borrower = models.ForeignKey(User, related_name='borrower')
 	status = models.IntegerField(choices=STATUS_CHOICES, default=PENDING)
 	asset = models.ForeignKey(Asset, related_name='asset')
+	rated = models.BooleanField(default=False)
+	comments = models.CharField(max_length=300, blank=True)
 
 	def getStatus(self):
 		return self.STATUS_CHOICES[self.status][1]
