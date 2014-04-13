@@ -40,19 +40,15 @@ def messages_view(request):
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
 
-def message_delete_view(request, message_id):
-	if not request.user.is_authenticated():
-		return redirect('login')
-	msg = Message.objects.get(id=message_id)
-	if msg.msg_to == request.user:
-		msg.delete()
-	return redirect('messages')
-
 def set_message_read(request, message_id):
 	if not request.user.is_authenticated():
 		return redirect('login')
 	msg = Message.objects.get(id=message_id)
 	if msg.msg_to != request.user:
+		return redirect('messages')
+	if request.method == "POST":
+		if request.POST.get("delete", "-1") != "-1":
+			msg.delete()
 		return redirect('messages')
 	msg.markRead()
 	template = loader.get_template('base_read_message.html')

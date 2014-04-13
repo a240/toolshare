@@ -353,7 +353,6 @@ def tool_view(request, tool_id):
 		return HttpResponseRedirect(reverse('login'))
 	if request.method == "POST":
 		if request.POST.get("delete", "-1") != "-1":
-			tool_id = request.POST.get("delete", "")
 			tool = get_object_or_404(Asset, pk=tool_id)
 			shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 			if (shareCheck):

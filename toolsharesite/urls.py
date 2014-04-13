@@ -36,5 +36,4 @@ urlpatterns = patterns('',
     #Messaging --------------------------------------------------------
 	url(r'^messages/$', messaging.views.messages_view, name='messages'),
 	url(r'^messages/(\d+)+$', messaging.views.set_message_read, name='messageRead'),
-	url(r'^messages/delete/(\d+)+$', messaging.views.message_delete_view, name='messageDelete'),
 )

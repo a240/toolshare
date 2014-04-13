@@ -26,24 +26,25 @@
             <th>Date Requested For</th>
             </thead>
             <tbody>
-            {% for rq in user_requests %}
-            <tr>
-                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
-                <td>{{ rq.loanDate }}</td>
-                <td align="right">
-                    <form method="post" name="verifyReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
-                        {% csrf_token %}
+            <form method="post" name="verifyReq" action="{% url 'sharetools.views.shares_view' %}">
+                {% csrf_token %}
+                {% for rq in user_requests %}
+                <tr>
+                    <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td>{{ rq.loanDate }}</td>
+                    <td align="right">
+
                         <div class="btn-group">
                             <button type="submit" name="approve" value="{{ rq.id }}" class="btn btn-success">Accept
                             </button>
                             <button type="submit" name="deny" value="{{ rq.id }}" class="btn btn-danger">Deny
                             </button>
                         </div>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </form>
             </tbody>
         </table>
         {% else %}
@@ -70,20 +71,21 @@
             <th>Request Status</th>
             </thead>
             <tbody>
-            {% for rq in user_mypending %}
-            <tr>
-                <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
-                <td>{{ rq.loanDate }}</td>
-                <td>{{ rq.getStatus }}</td>
-                <td>
-                    <form method="post" name="cancelReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
-                        {% csrf_token %}
+            <form method="post" name="cancelReq" action="{% url 'sharetools.views.shares_view' %}">
+                {% csrf_token %}
+                {% for rq in user_mypending %}
+                <tr>
+                    <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
+                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td>{{ rq.loanDate }}</td>
+                    <td>{{ rq.getStatus }}</td>
+                    <td>
+
                         <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Cancel</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </form>
             </tbody>
         </table>
         {% else %}
@@ -108,21 +110,22 @@
             <th>Date Borrowed</th>
             </thead>
             <tbody>
-            {% for rq in user_current %}
-            <tr>
-                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
-                <td>{{ rq.loanDate }}</td>
-                <td align="right">
-                    <form method="post" name="returnReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
-                        {% csrf_token %}
+            <form method="post" name="returnReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
+                {% csrf_token %}
+                {% for rq in user_current %}
+                <tr>
+                    <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td>{{ rq.loanDate }}</td>
+                    <td align="right">
+
                         <button type="submit" name="return" value="{{ rq.id }}" class="btn btn-primary">
                             Mark as Returned
                         </button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </form>
             </tbody>
         </table>
         {% else %}
