@@ -241,6 +241,30 @@ def make_share_view(request, tool_id):
 def shares_view(request):
 	if not request.user.is_authenticated():
 		return redirect('index')
+	if request.method == "POST":
+		if request.POST.get("cancel","-1") != "-1":
+			# cancel pending request
+			ShareContract.objects.get(id=request.POST.get("cancel", "")).delete()
+		elif request.POST.get("approve","-1") != "-1":
+			# approve a share request
+			sc = ShareContract.objects.get(id=request.POST.get("approve", ""))
+			sc.status = ShareContract.ACCEPTED
+			sc.save()
+			sc.asset.availability = False
+			sc.asset.save()
+		elif request.POST.get("deny","-1") != "-1":
+			# disapprove a share request
+			sc = ShareContract.objects.get(id=request.POST.get("deny",""))
+			sc.status = ShareContract.DENIED
+			sc.save()
+		elif request.POST.get("return", "-1") != "-1":
+			# mark a tool returned
+			sc = ShareContract.objects.get(id=request.POST.get("return", ""))
+			sc.status = ShareContract.FULFILLED
+			sc.save()
+			sc.asset.availability = True
+			sc.asset.save()
+		return redirect('shares')
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
 	myrequests = ShareContract.objects.filter(borrower=request.user).exclude(status=ShareContract.FULFILLED)
@@ -257,36 +281,6 @@ def shares_view(request):
 		args['user_former'] = former
 	context = RequestContext(request, args)
 	return HttpResponse(template.render(context))
-
-
-def shares_return_view(request, sc_id):
-	if not request.user.is_authenticated():
-		return redirect('index')
-	sc = ShareContract.objects.filter(id=sc_id)[0]
-	if sc.lender == request.user:
-		sc.status = ShareContract.FULFILLED
-		sc.asset.availability = True
-		sc.asset.save()
-		sc.save()
-		messages.add_message(request, messages.SUCCESS, 'Tool returned Successfully.', extra_tags='alert-success')
-	else:
-		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
-	return redirect('shares')
-
-def tool_review_view(request, rq_id, request_code):
-	if not request.user.is_authenticated():
-		return redirect('index')
-	rq = ShareContract.objects.filter(id=rq_id)[0]
-	if (rq.lender != request.user) or (rq.status != ShareContract.PENDING):
-		return redirect('shares')
-	if request_code == "0":
-		rq.status = ShareContract.DENIED
-	else:
-		rq.status = ShareContract.ACCEPTED
-		rq.asset.availability = False
-		rq.asset.save()
-	rq.save()
-	return redirect('shares')
 
 #########################################################
 #             Category: Tool Manipulation               #

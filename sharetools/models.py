@@ -79,4 +79,3 @@ class ShareContract(models.Model):
 
 	def __str__(self):
 		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()
-

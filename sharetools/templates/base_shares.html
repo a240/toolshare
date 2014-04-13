@@ -32,12 +32,15 @@
                 <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-success"
-                           href="{% url 'sharetools.views.tool_review_view' rq.id 1 %}">Accept</a>
-                        <a type="button" class="btn btn-danger"
-                           href="{% url 'sharetools.views.tool_review_view' rq.id 0 %}">Deny</a>
-                    </div>
+                    <form method="post" name="verifyReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
+                        {% csrf_token %}
+                        <div class="btn-group">
+                            <button type="submit" name="approve" value="{{ rq.id }}" class="btn btn-success">Accept
+                            </button>
+                            <button type="submit" name="deny" value="{{ rq.id }}" class="btn btn-danger">Deny
+                            </button>
+                        </div>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
@@ -55,10 +58,11 @@
         <div class="panel-heading">My Current Requests</div>
         {% if user_mypending %}
         <table class="table">
-            <col width="20">
-            <col width="20">
-            <col width="20">
-            <col width="20">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
             <thead>
             <th>Lender</th>
             <th>Asset</th>
@@ -72,6 +76,12 @@
                 <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td>{{ rq.getStatus }}</td>
+                <td>
+                    <form method="post" name="cancelReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
+                        {% csrf_token %}
+                        <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Cancel</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
             </tbody>
@@ -104,8 +114,12 @@
                 <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
-                    <a type="button" class="btn btn-primary"
-                       href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
+                    <form method="post" name="returnReq{{rq.id}}" action="{% url 'sharetools.views.shares_view' %}">
+                        {% csrf_token %}
+                        <button type="submit" name="return" value="{{ rq.id }}" class="btn btn-primary">
+                            Mark as Returned
+                        </button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
