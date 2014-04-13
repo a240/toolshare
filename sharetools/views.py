@@ -252,6 +252,10 @@ def shares_view(request):
 		elif request.POST.get("approve", "-1") != "-1":
 			# approve a share request
 			sc = ShareContract.objects.get(id=request.POST.get("approve", ""))
+			if not sc.asset.availability:
+				messages.add_message(request,  messages.WARNING, 'Tool is currently borrowed and cannot be lent.',
+							 extra_tags='alert-warning')
+				return redirect('shares')
 			sc.status = ShareContract.ACCEPTED
 			sc.save()
 			sc.asset.availability = False
