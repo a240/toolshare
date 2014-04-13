@@ -25,7 +25,6 @@ urlpatterns = patterns('',
 	url(r'^tools/$', sharetools.views.my_tools_view, name='myTools'),
 	url(r'^tools/new$', sharetools.views.make_tool_view,name="newTool"),
 	url(r'^tools/all$', sharetools.views.all_tools_view,name="allTool"),
-	url(r'^tools/delete/(\d+)$',sharetools.views.tool_delete_view,name='toolDeletion'),
 	url(r'^tools/edit/(\d+)$',sharetools.views.tool_edit_view,name='toolEdit'),
 	url(r'^tools/(\d+)$', sharetools.views.tool_view, name='tool'),
 	
@@ -37,5 +36,4 @@ urlpatterns = patterns('',
     #Messaging --------------------------------------------------------
 	url(r'^messages/$', messaging.views.messages_view, name='messages'),
 	url(r'^messages/(\d+)+$', messaging.views.set_message_read, name='messageRead'),
-	url(r'^messages/delete/(\d+)+$', messaging.views.message_delete_view, name='messageDelete'),
 )
