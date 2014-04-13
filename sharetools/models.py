@@ -79,3 +79,19 @@ class ShareContract(models.Model):
 
 	def __str__(self):
 		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()
+
+class membership(models.Model):
+	"""
+	A record of a user's membership role within a shed.
+	"""
+	MEMBER = 0
+	MODERATOR = 1
+	ADMIN = 2	
+	ROLE_CHOICES = (
+		(MEMBER, 'Member'),
+		(MODERATOR, 'Moderator'),
+		(ADMIN, 'Admin'),
+	)
+	shed = models.ForeignKey(Location)
+	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)
+	user = models.ForeignKey(User)
