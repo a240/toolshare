@@ -238,7 +238,6 @@ def make_share_view(request, tool_id):
 	})
 
 
-
 def shares_view(request):
 	if not request.user.is_authenticated():
 		return redirect('index')
@@ -266,6 +265,8 @@ def shares_return_view(request, sc_id):
 	sc = ShareContract.objects.filter(id=sc_id)[0]
 	if sc.lender == request.user:
 		sc.status = ShareContract.FULFILLED
+		sc.asset.availability = True
+		sc.asset.save()
 		sc.save()
 		messages.add_message(request, messages.SUCCESS, 'Tool returned Successfully.', extra_tags='alert-success')
 	else:
@@ -282,6 +283,8 @@ def tool_review_view(request, rq_id, request_code):
 		rq.status = ShareContract.DENIED
 	else:
 		rq.status = ShareContract.ACCEPTED
+		rq.asset.availability = False
+		rq.asset.save()
 	rq.save()
 	return redirect('shares')
 

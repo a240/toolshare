@@ -92,15 +92,15 @@ class MakeShareForm(forms.ModelForm):
 
 		
 	def save(self, commit=True):
-		inst = super(MakeShareForm,self).save(commit=False)
-		inst.lender = self._asset.owner
-		inst.borrower = self._borrower
-		inst.asset = self._asset
+		shareContractinst = super(MakeShareForm,self).save(commit=False)
+		shareContractinst.lender = self._asset.owner
+		shareContractinst.borrower = self._borrower
+		shareContractinst.asset = self._asset
 		
 		if commit:
-			inst.save()
+			shareContractinst.save()
 			self.save_m2m()
-		return inst
+		return shareContractinst
 
 class AssetSearchForm(forms.ModelForm):
 	type = forms.CharField()
