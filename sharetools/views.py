@@ -44,6 +44,7 @@ class IndexView(TemplateView):
 		return render(request, self.template_name, context_instance=context)
 
 
+
 #########################################################
 #          Category: USER PROFILE Manipulation          #
 ######################################################### 
@@ -80,6 +81,7 @@ class LoginView(TemplateView):
 				'login_error': "The username and password combination you gave us did not work"
 				})
 				return render(request, self.template_name, context_instance=context)
+
 
 
 def logout_view(request):
