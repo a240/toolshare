@@ -54,6 +54,11 @@ def set_message_read(request, message_id):
 	msg = Message.objects.get(id=message_id)
 	if msg.msg_to != request.user:
 		return redirect('messaging:messages')
+
+	if request.method == "POST":
+		if request.POST.get("delete", "-1") != "-1":
+			msg.delete()
+		return redirect('messaging:messages')
 	msg.markRead()
 	template = loader.get_template('base_read_message.html')
 	context = RequestContext(request, {'message': msg})

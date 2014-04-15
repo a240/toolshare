@@ -26,21 +26,30 @@
             <th>Date Requested For</th>
             </thead>
             <tbody>
-            {% for rq in user_requests %}
-            <tr>
-                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
-                <td>{{ rq.loanDate }}</td>
-                <td align="right">
-                    <div class="btn-group">
-                        <a type="button" class="btn btn-success"
-                           href="{% url 'sharetools.views.tool_review_view' rq.id 1 %}">Accept</a>
-                        <a type="button" class="btn btn-danger"
-                           href="{% url 'sharetools.views.tool_review_view' rq.id 0 %}">Deny</a>
-                    </div>
-                </td>
-            </tr>
-            {% endfor %}
+            <form method="post" name="verifyReq" action="{% url 'sharetools.views.shares_view' %}">
+                {% csrf_token %}
+                {% for rq in user_requests %}
+                <tr>
+                    <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td>{{ rq.loanDate }}</td>
+                    <td align="right">
+
+                        <div class="btn-group">
+                            {% if rq.asset.availability %}
+                            <button type="submit" name="approve" value="{{ rq.id }}" class="btn btn-success">Accept
+                            </button>
+                            {% else %}
+                            <button class="btn btn-default disabled">Borrowed
+                            </button>
+                            {% endif %}
+                            <button type="submit" name="deny" value="{{ rq.id }}" class="btn btn-danger">Deny
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </form>
             </tbody>
         </table>
         {% else %}
@@ -55,10 +64,11 @@
         <div class="panel-heading">My Current Requests</div>
         {% if user_mypending %}
         <table class="table">
-            <col width="20">
-            <col width="20">
-            <col width="20">
-            <col width="20">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
             <thead>
             <th>Lender</th>
             <th>Asset</th>
@@ -66,14 +76,22 @@
             <th>Request Status</th>
             </thead>
             <tbody>
-            {% for rq in user_mypending %}
-            <tr>
-                <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
-                <td>{{ rq.loanDate }}</td>
-                <td>{{ rq.getStatus }}</td>
-            </tr>
-            {% endfor %}
+            <form method="post" name="cancelReq" action="{% url 'sharetools.views.shares_view' %}">
+                {% csrf_token %}
+                {% for rq in user_mypending %}
+                <tr>
+                    <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
+                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td>{{ rq.loanDate }}</td>
+                    <td>{{ rq.getStatus }}</td>
+                    <td>
+                        {% if rq.asset.availability %}
+                        <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Cancel</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </form>
             </tbody>
         </table>
         {% else %}
@@ -99,13 +117,53 @@
             </thead>
             <tbody>
             {% for rq in user_current %}
+            <div class="modal fade" id="RateModal{{ rq.id }}" tabindex="-1" role="dialog"
+                 aria-labelledby="RateModal{{rq.id}}"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="Rate">Rate This Interaction</h4>
+                        </div>
+                        <form role="form" method="post" action="{% url 'sharetools.views.shares_view' %}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-success">
+                                            <input type="radio" name="options" id="up" value="true" required><span
+                                                class="glyphicon glyphicon-thumbs-up"></span>
+                                        </label>
+                                        <label class="btn btn-danger">
+                                            <input type="radio" name="options" id="down" value="false" required><span
+                                                class="glyphicon glyphicon-thumbs-down"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="input_area">Comments:</label>
+                                    <textarea type="text" class="form-control" id="input_area" name="comment"
+                                              placeholder="Describe the Interaction" style="max-width:100%;"></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button id="formSubmit" type="submit" name="return" value="{{rq.id}}" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
             <tr>
                 <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
                 <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
-                    <a type="button" class="btn btn-primary"
-                       href="{% url 'sharetools.views.shares_return_view' rq.id %}">Mark as Returned</a>
+
+                    <button data-toggle="modal" data-target="#RateModal{{rq.id}}" class="btn btn-primary">
+                        Mark as Returned
+                    </button>
                 </td>
             </tr>
             {% endfor %}

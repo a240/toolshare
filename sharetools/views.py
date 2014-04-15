@@ -38,10 +38,11 @@ class IndexView(TemplateView):
 		assets = Asset.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
 		locations = Location.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
 		context = RequestContext(request, {
-			'assets': assets,
-			'locations': locations,
+		'assets': assets,
+		'locations': locations,
 		})
 		return render(request, self.template_name, context_instance=context)
+
 
 #########################################################
 #          Category: USER PROFILE Manipulation          #
@@ -64,7 +65,7 @@ class LoginView(TemplateView):
 		form = AuthenticationForm(data=request.POST)
 		if not form.is_valid():
 			context = RequestContext(request, {
-			'login_error': "Error with from data"
+			'login_error': "The username and password you gave us did not match up"
 			})
 			return render(request, self.template_name, context_instance=context)
 		else:
@@ -73,12 +74,13 @@ class LoginView(TemplateView):
 			user = authenticate(username=username, password=password)
 			if user is not None and user.is_active:
 				login(request, user)
-				return redirect('index')
+				return redirect('sharetools:index')
 			else:
 				context = RequestContext(request, {
 				'login_error': "The username and password combination you gave us did not work"
 				})
 				return render(request, self.template_name, context_instance=context)
+
 
 def logout_view(request):
 	logout(request)
@@ -145,7 +147,7 @@ class ProfileView(TemplateView):
 # @Phil
 def edit_profile_view(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('sharetools:login'))
 	if request.method == 'POST':
 		form = UserEditForm(request.POST, instance=request.user)
 		if form.is_valid():
@@ -169,13 +171,14 @@ def edit_profile_view(request):
 	})
 	return HttpResponse(template.render(context))
 
+
 #########################################################
 #             Category: SHED Manipulation               #
 ######################################################### 
 
 def shed_view(request, shed_id):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('sharetools:login'))
 	shedLocation = get_object_or_404(Location, pk=shed_id)
 	assets = Asset.objects.filter(location=shedLocation).order_by('type')
 	template = loader.get_template('base_shed.html')
@@ -188,7 +191,7 @@ def shed_view(request, shed_id):
 
 def my_sheds_view(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('sharetools:login'))
 	shedLocations = Location.objects.filter(owner=request.user)
 	template = loader.get_template('base_mySheds.html')
 	context = RequestContext(request, {
@@ -199,7 +202,7 @@ def my_sheds_view(request):
 
 def shed_create_view(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('sharetools:login'))
 	if request.method == 'POST':
 		add_form = AddressForm(request.POST)
 		sform = ShedForm(request.POST)
@@ -210,7 +213,7 @@ def shed_create_view(request):
 			shed.owner = request.user
 			shed.save()
 			messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
-			return redirect('mySheds')
+			return redirect('sharetools:mySheds')
 		else:
 			messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
 			return redirect('sharetools:makeShed')
@@ -225,7 +228,7 @@ def shed_create_view(request):
 def shed_delete_view(request, shed_id):
 	shed = get_object_or_404(Location, pk=shed_id)
 	if not request.user.is_authenticated():
-		return redirect('landing')
+		return redirect('sharetools:landing')
 	elif shed.owner == request.user:
 		tools = Asset.objects.filter(location=shed)
 		for tool in tools:
@@ -246,17 +249,18 @@ def shed_delete_view(request, shed_id):
 
 def make_share_view(request, tool_id):
 	if not request.user.is_authenticated():
-		return redirect('index')
+		return redirect('sharetools:index')
 	curr_asset = get_object_or_404(Asset, pk=tool_id)
 	if request.method == 'POST':
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
 		if form.is_valid():
-			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.', extra_tags='alert-success')
+			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',
+								 extra_tags='alert-success')
 			form.save()
-			return redirect('shares')
+			return redirect('sharetools:shares')
 
 	else:
-		form = MakeShareForm(user=request.user,asset=curr_asset)
+		form = MakeShareForm(user=request.user, asset=curr_asset)
 
 	return render(request, 'base_makeShare.html', {
 	'form': form,
@@ -266,7 +270,41 @@ def make_share_view(request, tool_id):
 
 def shares_view(request):
 	if not request.user.is_authenticated():
-		return redirect('index')
+		return redirect('sharetools:index')
+	if request.method == "POST":
+		if request.POST.get("cancel", "-1") != "-1":
+			# cancel pending request
+			ShareContract.objects.get(id=request.POST.get("cancel", "")).delete()
+		elif request.POST.get("approve", "-1") != "-1":
+			# approve a share request
+			sc = ShareContract.objects.get(id=request.POST.get("approve", ""))
+			if not sc.asset.availability:
+				messages.add_message(request,  messages.WARNING, 'Tool is currently borrowed and cannot be lent.',
+							 extra_tags='alert-warning')
+				return redirect('sharetools:shares')
+			sc.status = ShareContract.ACCEPTED
+			sc.save()
+			sc.asset.availability = False
+			sc.asset.save()
+		elif request.POST.get("deny", "-1") != "-1":
+			# disapprove a share request
+			sc = ShareContract.objects.get(id=request.POST.get("deny", ""))
+			sc.status = ShareContract.DENIED
+			sc.save()
+		elif request.POST.get("return", "-1") != "-1":
+			# mark a tool returned
+			sc = ShareContract.objects.get(id=request.POST.get("return", ""))
+			sc.status = ShareContract.FULFILLED
+			sc.asset.availability = True
+			sc.asset.save()
+			sc.comments = request.POST.get("comment","")
+			if request.POST.get("options","") == "true":
+				sc.borrower.userprofile.karma += 1
+			else:
+				sc.borrower.userprofile.karma -= 1
+			sc.borrower.userprofile.save()
+			sc.save()
+		return redirect('sharetools:shares')
 	template = loader.get_template('base_shares.html')
 	requests = ShareContract.objects.filter(lender=request.user, status=ShareContract.PENDING)
 	myrequests = ShareContract.objects.filter(borrower=request.user).exclude(status=ShareContract.FULFILLED)
@@ -285,52 +323,24 @@ def shares_view(request):
 	return HttpResponse(template.render(context))
 
 
-def shares_return_view(request, sc_id):
-	if not request.user.is_authenticated():
-		return redirect('index')
-	sc = ShareContract.objects.filter(id=sc_id)[0]
-	if sc.lender == request.user:
-		sc.status = ShareContract.FULFILLED
-		sc.asset.availability = True
-		sc.asset.save()
-		sc.save()
-		messages.add_message(request, messages.SUCCESS, 'Tool returned Successfully.', extra_tags='alert-success')
-	else:
-		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
-	return redirect('shares')
-
-def tool_review_view(request, rq_id, request_code):
-	if not request.user.is_authenticated():
-		return redirect('index')
-	rq = ShareContract.objects.filter(id=rq_id)[0]
-	if (rq.lender != request.user) or (rq.status != ShareContract.PENDING):
-		return redirect('shares')
-	if request_code == "0":
-		rq.status = ShareContract.DENIED
-	else:
-		rq.status = ShareContract.ACCEPTED
-		rq.asset.availability = False
-		rq.asset.save()
-	rq.save()
-	return redirect('shares')
-
 #########################################################
 #             Category: Tool Manipulation               #
 ######################################################### 
 
 def my_tools_view(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('sharetools:login'))
 	assets = Asset.objects.filter(owner=request.user).order_by('type')
 	template = loader.get_template('base_myTools.html')
 	context = RequestContext(request, {
 	'assets': assets,
 	})
 	return HttpResponse(template.render(context))
-	
+
+
 def all_tools_view(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
+		return HttpResponseRedirect(reverse('sharetools:login'))
 
 	args = {}
 	assets = Asset.objects.exclude(owner=request.user).order_by('type')
@@ -357,27 +367,42 @@ def all_tools_view(request):
 #Generates a new tool, owner = requesting user
 def make_tool_view(request):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
-			
+		return HttpResponseRedirect(reverse('sharetools:login'))
+
 	if request.method == 'POST':
 		form = MakeToolForm(request.POST, user=request.user)
 		if form.is_valid():
 			messages.add_message(request, messages.SUCCESS, 'Tool Created Successfully.', extra_tags='alert-success')
 			form.save()
-			return HttpResponseRedirect(reverse('myTools'))
+			return HttpResponseRedirect(reverse('sharetools:myTools'))
 
 	else:
 		form = MakeToolForm(user=request.user)
 
 	return render(request, 'base_makeTool.html', {
-		'form': form,
+	'form': form,
 	})
 
 
 def tool_view(request, tool_id):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
-		
+		return HttpResponseRedirect(reverse('sharetools:login'))
+	if request.method == "POST":
+		if request.POST.get("delete", "-1") != "-1":
+			tool = get_object_or_404(Asset, pk=tool_id)
+			shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
+			if (shareCheck):
+				messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
+							 extra_tags='alert-warning')
+			elif tool.owner == request.user:
+				tool.delete()
+				shareCheck = ShareContract.objects.filter(asset=tool_id)
+				for share in shareCheck:
+					share.delete()
+				messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
+			else:
+				messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+			return redirect('sharetools:myTools')
 	asset = get_object_or_404(Asset, pk=tool_id)
 	sharedset = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
 	shared = None
@@ -393,31 +418,10 @@ def tool_view(request, tool_id):
 	return (HttpResponse(template.render(context)))
 
 
-
-def tool_delete_view(request, tool_id):
-	if not request.user.is_authenticated():
-		return redirect('index')
-	tool = get_object_or_404(Asset, pk=tool_id)
-	shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('login'))
-	elif (shareCheck):
-		messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
-		                     extra_tags='alert-warning')
-	elif tool.owner == request.user:
-		tool.delete()
-		shareCheck = ShareContract.objects.filter(asset=tool_id)
-		for share in shareCheck:
-			share.delete()
-		messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
-	else:
-		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
-	return HttpResponseRedirect(reverse('myTools'))
-
 #tool_edit_view
 #Allows a user to change their tools shed location
 #Planned: R2
 def tool_edit_view(request, tool_id):
 	if not request.user.is_authenticated():
-		return redirect('index')
+		return redirect('sharetools:index')
 	return (HttpResponse('Tool edit ' + tool_id))

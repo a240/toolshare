@@ -21,14 +21,11 @@ urlpatterns = patterns('sharetools.views',
 	url(r'^tools/$', views.my_tools_view, name='myTools'),
 	url(r'^tools/new$', views.make_tool_view,name="newTool"),
 	url(r'^tools/all$', views.all_tools_view,name="allTool"),
-	url(r'^tools/delete/(\d+)$',views.tool_delete_view,name='toolDeletion'),
-    url(r'^tools/review/(\d+)/(\d+)$',views.tool_review_view,name='toolReview'),
 	url(r'^tools/edit/(\d+)$',views.tool_edit_view,name='toolEdit'),
 	url(r'^tools/(\d+)$', views.tool_view, name='tool'),
 	
 	#Shares ----------------------------------------------------------
 	url(r'^shares/$', views.shares_view, name='shares'),
-	url(r'^shares/return/(\d+)+$', views.shares_return_view, name='sharesReturn'),
 	url(r'^shares/new/(\d+)+$', views.make_share_view,name='newcontract'),
 	
 	url(r'^$', views.IndexView.as_view(), name='index'),

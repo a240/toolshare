@@ -15,7 +15,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <a href="{% url 'messaging.views.messages_view' %}">
+        <a href="{% url 'messaging:messages' %}">
             <button type="button" class="btn btn-primary">
                 <span class="glyphicon glyphicon-arrow-left"></span>
                 Back to Inbox
@@ -31,10 +31,15 @@
                 Reply <span class="glyphicon glyphicon-share-alt"></span>
             </a>
             <h4>Subject: {{ message.subject }}</h4>
-            <a href="{% url 'messaging.views.message_delete_view' message.id %}" style="float: right;" type="button"
-               class="btn btn-danger">
-                <span class="glyphicon glyphicon-trash"></span>
-            </a>
+
+            <form method="post" name="deleteMessage{{message.id}}"
+                  action="{% url 'messaging:messageRead' message.id %}">
+                {% csrf_token %}
+                <button style="float: right;" type="submit" name="delete" value="{{ message.id }}"
+                        class="btn btn-danger">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </form>
             <h4>From: {{ message.msg_from.username }}</h4>
         </div>
         <div class="panel-body">
