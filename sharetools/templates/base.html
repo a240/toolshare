@@ -27,7 +27,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" href="{% url 'sharetools.views.index_view' %}">
+                <a class="navbar-brand" href="{% url 'sharetools:index' %}">
                     <i class="fa fa-archive"></i>  <span class="light">Tool</span> Share
                 </a>
             </div>
@@ -35,7 +35,7 @@
                 <ul class="nav navbar-nav">
                     {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'messaging.views.messages_view' %}">
+                        <a href="{% url 'messaging:messages' %}">
                             <span class="badge">
                             {% unread_message_count user %}
                             </span>
@@ -43,39 +43,39 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{% url 'sharetools.views.my_sheds_view' %}"><i class="fa fa-home"></i> Sheds</a>
+                        <a href="{% url 'sharetools:mySheds' %}"><i class="fa fa-home"></i> Sheds</a>
                     </li>
                     <li>
-                        <a href="{% url 'sharetools.views.shares_view' %}"><i class="fa fa-tag"></i> Shares</a>
+                        <a href="{% url 'sharetools:shares' %}"><i class="fa fa-tag"></i> Shares</a>
                     </li>
                     <li class="dropdown">
-                        <a href="{% url 'myTools' %}" data-toggle="dropdown"><i class="fa fa-gavel"></i> Tools</a>
+                        <a href="{% url 'sharetools:myTools' %}" data-toggle="dropdown"><i class="fa fa-gavel"></i> Tools</a>
                         <ul class="dropdown-menu pull-right">
                             <li>
-                                <a href="{% url 'newTool' %}">Make New</a>
-                                <a href="{% url 'myTools' %}">My Tools</a>
-                                <a href="{% url 'allTool' %}">Find a Tool</a>
+                                <a href="{% url 'sharetools:newTool' %}">Make New</a>
+                                <a href="{% url 'sharetools:myTools' %}">My Tools</a>
+                                <a href="{% url 'sharetools:allTool' %}">Find a Tool</a>
                             </li>
                         </ul>
                     </li>					
                     <li class="dropdown">
-                        <a href="{% url 'myProfile' %}" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="{% url 'sharetools:myProfile' %}" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-user"></i> Profile
                         </a>
                         <ul class="dropdown-menu pull-right">
                             <li>
-                                <a href="{% url 'sharetools.views.my_profile_view' %}">View</a>
-                                <a href="{% url 'sharetools.views.edit_profile_view' %}">Edit</a>
-                                <a href="{% url 'sharetools.views.logout_view' %}">Log out</a>
+                                <a href="{% url 'sharetools:myProfile' %}">View</a>
+                                <a href="{% url 'sharetools:editProfile' %}">Edit</a>
+                                <a href="{% url 'sharetools:logout' %}">Log out</a>
                             </li>
                         </ul>
                     </li>
                     {% else %}
                     <li>
-                        <a href="{% url 'sharetools.views.register_view' %}">Sign up</a>
+                        <a href="{% url 'sharetools:register' %}">Sign up</a>
                     </li>
                     <li>
-                        <a href="{% url 'sharetools.views.login_view' %}">Login</a>
+                        <a href="{% url 'sharetools:login' %}">Login</a>
                     </li>
                     {% endif %}
                 </ul>

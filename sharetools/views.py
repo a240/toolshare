@@ -6,113 +6,139 @@ import urllib, urllib.parse, hashlib
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
+from django.views.generic import TemplateView
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm
 
-#index_view
-#The main landing page
-def index_view(request):
-	if not request.user.is_authenticated():
-		template = loader.get_template('landing.html')
-		context = RequestContext(request, {})
-		return HttpResponse(template.render(context))
-	else:
-		template = loader.get_template('base_index.html')
-		assets = Asset.objects.exclude(owner=request.user)[:5]
-		locations = Location.objects.exclude(owner=request.user)[:5]
+class LoginRequiredMixin(object):
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view)
+
+class IndexView(TemplateView):
+	"""
+	The main index page of the site.
+	"""
+
+	NUMBER_OF_RECENT_ITEMS = 5
+	template_name = "base_index.html"
+
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_authenticated():
+			return render(request, 'landing.html', {})
+
+		assets = Asset.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
+		locations = Location.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
 		context = RequestContext(request, {
 			'assets': assets,
 			'locations': locations,
 		})
-		return HttpResponse(template.render(context))
+		return render(request, self.template_name, context_instance=context)
 
 #########################################################
 #          Category: USER PROFILE Manipulation          #
 ######################################################### 
 
+class LoginView(TemplateView):
+	"""
+	The view where a user can login.
+	"""
 
-def login_view(request):
-	if request.user.is_authenticated():
-		return redirect('index')
-	else:
-		if request.method == 'POST':
-			form = AuthenticationForm(data=request.POST)
-			if form.is_valid():
-				username = form.cleaned_data['username']
-				password = form.cleaned_data['password']
-				user = authenticate(username=username, password=password)
-				if user is not None and user.is_active:
-					login(request, user)
-					return redirect('index')
+	template_name = 'base_login.html'
 
+	def get(self, request, *args, **kwargs):
+		if request.user.is_authenticated():
+			redirect('sharetools:index')
+
+		return render(request, self.template_name)
+
+	def post(self, request, *args, **kwargs):
+		form = AuthenticationForm(data=request.POST)
+		if not form.is_valid():
 			context = RequestContext(request, {
-			'login_error': "The username and email you gave us did not match up"
+			'login_error': "Error with from data"
 			})
+			return render(request, self.template_name, context_instance=context)
 		else:
-			context = RequestContext(request, {})
-
-		template = loader.get_template('base_login.html')
-		return HttpResponse(template.render(context))
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password']
+			user = authenticate(username=username, password=password)
+			if user is not None and user.is_active:
+				login(request, user)
+				return redirect('index')
+			else:
+				context = RequestContext(request, {
+				'login_error': "The username and password combination you gave us did not work"
+				})
+				return render(request, self.template_name, context_instance=context)
 
 def logout_view(request):
 	logout(request)
-	return redirect('index')
+	return redirect('sharetools:index')
 
+class RegisterView(TemplateView):
+	"""
+	The view where users register a new profile.
+	"""
+	template_name = 'base_register.html'
 
-def register_view(request):
-	if request.user.is_authenticated():
-		return redirect('index')
-	else:
-		if request.method == 'POST':
-			user_form = UserForm(request.POST)
-			if user_form.is_valid():
-				user = user_form.save()
-				profile = UserProfile()
-				profile.user = user
-				profile.save()
-				return redirect('login')
-			else:
-				messages.add_message(request, messages.WARNING, 'Form Submission Error.', extra_tags='alert-warning')
-				return redirect('register')
+	def get(self, request, *args, **kwargs):
+		if request.user.is_authenticated():
+			redirect('sharetools:index')
+
 		context = RequestContext(request, {
-		'form': UserForm()
+			'form': UserForm()
 		})
-		template = loader.get_template('base_register.html')
-		return HttpResponse(template.render(context))
+		return render(request, self.template_name, context_instance=context)
 
+	def post(self, request, *args, **kwargs):
+		form = UserForm(request.POST)
+		if not form.is_valid():
+			messages.add_message(request, messages.WARNING, 'Form Submission Error.', extra_tags='alert-warning')
+			return redirect('sharetools:register')
+		else:
+			user = form.save()
+			profile = UserProfile()
+			profile.user = user
+			profile.save()
+			return redirect('sharetools:login')
 
 # my_profile_view
 # displays the requesting users profile
 def my_profile_view(request):
-	return profile_view(request, request.user.username)
+	return ProfileView.as_view()(request, request.user)
 
-
-# profile_view
-# displays the profile
-def profile_view(request, user_id):
-	if not request.user.is_authenticated():
-		return redirect('index')
-	this_user = get_object_or_404(User, username__iexact=user_id)
-	user_profile = this_user.userprofile
-	gravatar_url = 'http://www.gravatar.com/avatar/' + hashlib.md5(
-		this_user.email.lower().encode('utf-8')).hexdigest() + '?'
-	gravatar_url += urllib.parse.urlencode({
-	'd': 'identicon',
-	's': 350,
+def generateGravatarUrl(user):
+	url = 'http://www.gravatar.com/avatar/' + hashlib.md5(
+		user.email.lower().encode('utf-8')).hexdigest() + '?'
+	url += urllib.parse.urlencode({
+		'd': 'identicon',
+		's': 350,
 	})
-	template = loader.get_template('base_profile.html')
-	context = RequestContext(request, {
-	'userProfile': user_profile,
-	'avatarURL': gravatar_url,
-	})
-	return HttpResponse(template.render(context))
+	return url
 
+class ProfileView(TemplateView):
+	"""
+	View of a particular user's profile.
+	"""
+	template_name = 'base_profile.html'
+
+
+	def get(self, request, user_id, *args, **kwargs):
+		user = get_object_or_404(User, username=user_id)
+		context = RequestContext(request, {
+			'userProfile': user.userprofile,
+			'avatarURL': generateGravatarUrl(user),
+		})
+		return render(request, self.template_name, context_instance=context)
 
 # Allows users to modify their profile
 # Uses UserEditForm, redirects user to their profile view upon success
@@ -187,7 +213,7 @@ def shed_create_view(request):
 			return redirect('mySheds')
 		else:
 			messages.add_message(request, messages.WARNING, 'Shed Creation Error.', extra_tags='alert-warning')
-			return redirect('shedCreation')
+			return redirect('sharetools:makeShed')
 	context = RequestContext(request, {
 	'shed_form': ShedForm(),
 	'address_form': AddressForm()

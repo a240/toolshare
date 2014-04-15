@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="NewMessageLabel">New Message</h4>
             </div>
-            <form role="form" method="post" action="{% url 'messaging.views.messages_view' %}">
+            <form role="form" method="post" action="{% url 'messaging:messages' %}">
                 {% csrf_token %}
                 <div class="modal-body">
 

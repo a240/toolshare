@@ -14,7 +14,7 @@
 </div>
 <div class="container">
     <div class="column">
-        <form method="post" action="{% url 'sharetools.views.shed_create_view' %}">
+        <form method="post" action="{% url 'sharetools:makeShed' %}">
             {% csrf_token %}
             {{ shed_form | bootstrap }}
             {{ address_form | bootstrap }}

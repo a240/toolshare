@@ -28,7 +28,7 @@ def messages_view(request):
 				messages.add_message(request, messages.WARNING, 'User Does Not Exist.', extra_tags='alert-danger')
 		else:
 			messages.add_message(request, messages.WARNING, 'One or More Invalid Field(s).', extra_tags='alert-danger')
-		return redirect('messages')
+		return redirect('messaging:messages')
 	template = loader.get_template('base_messages_inbox.html')
 	message_q = Message.objects.filter(msg_to=request.user)[:50]
 	if message_q.count() != 0:
@@ -46,14 +46,14 @@ def message_delete_view(request, message_id):
 	msg = Message.objects.get(id=message_id)
 	if msg.msg_to == request.user:
 		msg.delete()
-	return redirect('messages')
+	return redirect('messaging:messages')
 
 def set_message_read(request, message_id):
 	if not request.user.is_authenticated():
-		return redirect('login')
+		return redirect('sharetools:login')
 	msg = Message.objects.get(id=message_id)
 	if msg.msg_to != request.user:
-		return redirect('messages')
+		return redirect('messaging:messages')
 	msg.markRead()
 	template = loader.get_template('base_read_message.html')
 	context = RequestContext(request, {'message': msg})

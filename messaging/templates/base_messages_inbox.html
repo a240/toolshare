@@ -22,7 +22,7 @@
         <!-- List -->
         <ul class="list-group">
             {% for msg in user_messages %}
-            <a href="{% url 'messaging.views.set_message_read' msg.id %}" style="display:block">
+            <a href="{% url 'messaging:messageRead' msg.id %}" style="display:block">
                 <li class="list-group-item">
                     {% if not msg.read %}
                     <span class="badge" style="float:right;">Unread</span>
