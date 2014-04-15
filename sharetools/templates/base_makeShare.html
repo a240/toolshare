@@ -13,7 +13,7 @@
 
 <div class="container">
   <div class="row">
-	<form action="{% url 'sharetools.views.make_share_view' tool_id%}" method="post">{% csrf_token %}
+	<form action="{% url 'sharetools:makeShareContract' tool_id%}" method="post">{% csrf_token %}
 	{{ form | bootstrap }}
       <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg">
     </form>

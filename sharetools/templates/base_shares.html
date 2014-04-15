@@ -26,12 +26,12 @@
             <th>Date Requested For</th>
             </thead>
             <tbody>
-            <form method="post" name="verifyReq" action="{% url 'sharetools.views.shares_view' %}">
+            <form method="post" name="verifyReq" action="{% url 'sharetools:shares' %}">
                 {% csrf_token %}
                 {% for rq in user_requests %}
                 <tr>
-                    <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td><a href="{% url 'sharetools:profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                    <td><a href="{% url 'sharetools:tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                     <td>{{ rq.loanDate }}</td>
                     <td align="right">
 
@@ -76,12 +76,12 @@
             <th>Request Status</th>
             </thead>
             <tbody>
-            <form method="post" name="cancelReq" action="{% url 'sharetools.views.shares_view' %}">
+            <form method="post" name="cancelReq" action="{% url 'sharetools:shares' %}">
                 {% csrf_token %}
                 {% for rq in user_mypending %}
                 <tr>
-                    <td><a href="{% url 'profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
-                    <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                    <td><a href="{% url 'sharetools:profile' rq.lender.username %}">{{ rq.lender.username }}</a></td>
+                    <td><a href="{% url 'sharetools:tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                     <td>{{ rq.loanDate }}</td>
                     <td>{{ rq.getStatus }}</td>
                     <td>
@@ -126,7 +126,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             <h4 class="modal-title" id="Rate">Rate This Interaction</h4>
                         </div>
-                        <form role="form" method="post" action="{% url 'sharetools.views.shares_view' %}">
+                        <form role="form" method="post" action="{% url 'sharetools:shares' %}">
                             {% csrf_token %}
                             <div class="modal-body">
                                 <div class="form-group">
@@ -156,8 +156,8 @@
                 </div>
             </div>
             <tr>
-                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                <td><a href="{% url 'sharetools:profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                <td><a href="{% url 'sharetools:tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td align="right">
 
@@ -194,8 +194,8 @@
             <tbody>
             {% for rq in user_former %}
             <tr>
-                <td><a href="{% url 'profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
-                <td><a href="{% url 'tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
+                <td><a href="{% url 'sharetools:profile' rq.borrower.username %}">{{ rq.borrower.username }}</a></td>
+                <td><a href="{% url 'sharetools:tool' rq.asset.id %}">{{ rq.asset.name }}</a></td>
                 <td>{{ rq.loanDate }}</td>
                 <td>{{ rq.returnDate }}</td>
             </tr>

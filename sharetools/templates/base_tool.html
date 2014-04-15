@@ -67,7 +67,7 @@
                     {% else %}
 
                     {% if not shared %}
-                    <a href="{% url 'newcontract' asset.id %}">
+                    <a href="{% url 'sharetools:makeShareContract' asset.id %}">
                         <button type="button" class="btn btn-primary">Borrow</button>
                     </a>
                     {% endif %}
