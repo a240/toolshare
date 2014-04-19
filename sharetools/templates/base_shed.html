@@ -2,8 +2,6 @@
 
 {% block title %}TS - {{ location.name }}{% endblock %}
 
-{% block styles}
-
 {% block content %}
 <div class="jumbotron">
 	<div class="container">
@@ -16,6 +14,15 @@
 	</div>
 </div>
 <div class="container">
+	<div class="row ">
+		<div class="col-sm-4">	
+			<a type="button" class="btn btn-primary btn-block" href="">View</a>
+		</div>
+		<div class="col-sm-4">
+		</div>
+		<div class="col-sm-4">
+		</div>
+	</div>
 	<div class="col-lg-8">
 		{% if assets %}
 		<div class="row">
@@ -64,8 +71,12 @@
 			<div class="panel-body">
 				<p>{{ location.description }}</p>
 				<hr>
+				{% if location.address %}
 				<img class="img-responsive" src="http://maps.googleapis.com/maps/api/staticmap?center={{ location.address.zipcode }}&zoom=13&size=400x400&sensor=false" />
 				<p><strong>Location: </strong>{{ location.address.city }}, {{ location.address.state }}</p>
+				{% else %}
+				<p><strong>Location: </strong>Not Available</p>
+				{% endif %}
 			</div>
 			<div class="panel-footer">
 				Created by <a href="{% url 'sharetools:profile' location.owner %}">{{ location.owner.username }}</a>
