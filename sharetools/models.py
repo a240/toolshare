@@ -29,6 +29,7 @@ class Location(models.Model):
 	address = models.ForeignKey(Address)
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
+	isOriginal = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
 
 	def __str__(self):

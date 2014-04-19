@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm
 
 class LoginRequiredMixin(object):
@@ -113,6 +113,25 @@ class RegisterView(TemplateView):
 			profile = UserProfile()
 			profile.user = user
 			profile.save()
+			
+			
+			default_address = Address.objects.create(
+				street = "Enter a street",
+				city = "Edit this shed ",
+				state = "To provide it's location",
+				country = "United States",
+				zipcode = "99999",
+			)
+			
+			Location.objects.create(
+				owner=user,
+				name = user.username + "'s shed",
+				address = default_address,
+				description = "This is your original shed.",
+				isOriginal = True,
+			)
+			
+			
 			return redirect('sharetools:login')
 
 # my_profile_view
@@ -231,7 +250,7 @@ def shed_delete_view(request, shed_id):
 	shed = get_object_or_404(Location, pk=shed_id)
 	if not request.user.is_authenticated():
 		return redirect('sharetools:landing')
-	elif shed.owner == request.user:
+	elif (shed.owner == request.user) and not shed.isOriginal:
 		tools = Asset.objects.filter(location=shed)
 		for tool in tools:
 			shares = ShareContract.objects.filter(asset=tool)
