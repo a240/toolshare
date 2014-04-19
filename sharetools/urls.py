@@ -8,12 +8,12 @@ urlpatterns = patterns('sharetools.views',
 	url(r'^login/$', views.LoginView.as_view(), name='login'),
 	url(r'^logout/$', views.logout_view, name='logout'),
 	url(r'^profile/$', views.my_profile_view, name='myProfile'),
-	url(r'^profile/edit$', views.edit_profile_view, name='editProfile'),
+	url(r'^profile/edit$', views.EditProfileView.as_view(), name='editProfile'),
 	url(r'^profile/(\w+)$', views.ProfileView.as_view(), name='profile'),
 	
 	#Sheds -------------------------------------------------------------------
 	url(r'^sheds/$', views.my_sheds_view, name='mySheds'),
-	url(r'^sheds/(\d+)$', views.shed_view, name='shed'),
+	url(r'^sheds/(\d+)$', views.ShedView.as_view(), name='shed'),
 	url(r'^sheds/create$', views.shed_create_view, name='makeShed'),
 	url(r'^sheds/delete/(\d+)+$', views.shed_delete_view, name='shedDeletion'),
 	

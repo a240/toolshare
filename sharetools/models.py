@@ -5,13 +5,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
-	user = models.OneToOneField(User)
-	zipcode = models.CharField(max_length=5)
-	karma = models.IntegerField(default=0)
-	def __str__(self):
-		return self.user.username
-
 class Address(models.Model):
 	street = models.CharField(max_length=80)
 	city = models.CharField(max_length=80)
@@ -24,9 +17,9 @@ class Address(models.Model):
 
 class Location(models.Model):
 	owner = models.ForeignKey(User)
-	name = models.CharField(max_length=80, unique=True)
+	name = models.CharField(max_length=80)
 	description = models.CharField(max_length=1000)
-	address = models.ForeignKey(Address)
+	address = models.ForeignKey(Address, null=True)
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
 	isOriginal = models.BooleanField(default=False)
@@ -34,6 +27,14 @@ class Location(models.Model):
 
 	def __str__(self):
 		return self.name
+
+class UserProfile(models.Model):
+	user = models.OneToOneField(User)
+	zipcode = models.CharField(max_length=5)
+	karma = models.IntegerField(default=0)
+	privateLocation = models.ForeignKey(Location)
+	def __str__(self):
+		return self.user.username
 
 class Asset_Type(models.Model):
 	name = models.CharField(max_length=80, unique=True)

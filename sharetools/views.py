@@ -112,6 +112,13 @@ class RegisterView(TemplateView):
 			user = form.save()
 			profile = UserProfile()
 			profile.user = user
+			privateShed = Location.objects.create(
+				owner = user,
+				name = "Private Shed",
+				description = "Your private shed.  Seems like a nice spot to put tools you may not want to share right now.",
+				isPrivate = True
+			)
+			profile.privateLocation = privateShed
 			profile.save()
 			
 			
@@ -162,53 +169,55 @@ class ProfileView(TemplateView):
 			'avatarURL': generateGravatarUrl(user),
 		})
 		return render(request, self.template_name, context_instance=context)
+class EditProfileView(LoginRequiredMixin, TemplateView):
+	"""
+	Allows users to modify their profile.
+	"""
+	template_name = 'base_editProfile.html'
 
-# Allows users to modify their profile
-# Uses UserEditForm, redirects user to their profile view upon success
-# @Phil
-def edit_profile_view(request):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('sharetools:login'))
-	if request.method == 'POST':
+	def get(self, request):
+		form = UserEditForm(initial={
+			'first_name': request.user.first_name,
+			'last_name': request.user.last_name,
+			'zipcode': request.user.userprofile.zipcode,
+			'email': request.user.email
+		})
+		context = RequestContext(request, {
+			'user_name': request.user.username,
+			'form': form
+		})
+		return render(request, self.template_name, context_instance=context)
+
+
+	def post(self, request):
 		form = UserEditForm(request.POST, instance=request.user)
-		if form.is_valid():
+		if not form.is_valid():
+			return render(request, self.template_name, context_instance=context)
+		else:
 			request.user.userprofile.zipcode = form.cleaned_data['zipcode']
 			request.user.password = make_password(form.cleaned_data['password'], 'pbkdf2_sha256')
 			request.user.userprofile.save()
 			form.save()
 			return my_profile_view(request)
-	else:
-		form = UserEditForm(initial={
-		'first_name': request.user.first_name,
-		'last_name': request.user.last_name,
-		'zipcode': request.user.userprofile.zipcode,
-		'email': request.user.email
-		})
-
-	template = loader.get_template('base_editProfile.html')
-	context = RequestContext(request, {
-	'user_name': request.user.username,
-	'form': form
-	})
-	return HttpResponse(template.render(context))
-
 
 #########################################################
 #             Category: SHED Manipulation               #
 ######################################################### 
 
-def shed_view(request, shed_id):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('sharetools:login'))
-	shedLocation = get_object_or_404(Location, pk=shed_id)
-	assets = Asset.objects.filter(location=shedLocation).order_by('type')
-	template = loader.get_template('base_shed.html')
-	context = RequestContext(request, {
-	'location': shedLocation,
-	'assets': assets,
-	})
-	return HttpResponse(template.render(context))
+class ShedView(LoginRequiredMixin, TemplateView):
+	"""
+	The view for a particular shed.
+	"""
+	template_name = 'base_shed.html'
 
+	def get(self, request, shed_id):		
+		shedLocation = get_object_or_404(Location, pk=shed_id)
+		assets = Asset.objects.filter(location=shedLocation).order_by('type')
+		context = RequestContext(request, {
+			'location': shedLocation,
+			'assets': assets,
+		})
+		return render(request, self.template_name, context_instance=context)
 
 def my_sheds_view(request):
 	if not request.user.is_authenticated():
