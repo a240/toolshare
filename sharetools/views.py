@@ -120,25 +120,8 @@ class RegisterView(TemplateView):
 			)
 			profile.privateLocation = privateShed
 			profile.save()
-			
-			
-			default_address = Address.objects.create(
-				street = "Enter a street",
-				city = "Edit this shed ",
-				state = "To provide it's location",
-				country = "United States",
-				zipcode = "99999",
-			)
-			
-			Location.objects.create(
-				owner=user,
-				name = user.username + "'s shed",
-				address = default_address,
-				description = "This is your original shed.",
-				isOriginal = True,
-			)
-			
-			
+
+
 			return redirect('sharetools:login')
 
 # my_profile_view
@@ -272,10 +255,38 @@ def shed_delete_view(request, shed_id):
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
 	return redirect('mySheds')
 
-
 #########################################################
 #            Category: SHARE Manipulation               #
 #########################################################
+
+
+class MakeShareView(TemplateView, LoginRequiredMixin):
+	"""
+	A view for creating a new share contract for an asset.
+	"""
+
+	template_name = 'base_makeShare.html'
+
+	def get(self, request, tool_id):
+		curr_asset = get_object_or_404(Asset, pk=tool_id)		
+		form = MakeShareForm(user=request.user, asset=curr_asset)
+
+		context = RequestContext(request, {
+			'form': form,
+			'tool_id': tool_id
+		})
+
+		return render(request, self.template_name, context)
+
+	def post(self, request, tool_id):
+		curr_asset = get_object_or_404(Asset, pk=tool_id)		
+		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
+		if form.is_valid():
+			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',
+								 extra_tags='alert-success')
+			form.save()
+			return redirect('sharetools:shares')
+
 
 def make_share_view(request, tool_id):
 	if not request.user.is_authenticated():
