@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}TS - {{ location.name }}{% endblock %}
+
+{% block styles}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>
+			{% if location.isPrivate %}
+			<i class="fa fa-lock"></i>
+			{% endif %}
+			{{ location.name }}
+
+		</h1>
+	</div>
+</div>
+<div class="container">
+<i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this shed. Contact an admin to join:
+{% for admin in admins %}
+	<a href="{% url 'sharetools:profile' admin.user %}">
+	{{admin.user}}
+	</a>
+	,
+{% endfor %}
+</div>
+<hr>
+<center>
+	<div class="col-lg-8 col-md-offset-2">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">About</h3>
+			</div>
+			<div class="panel-body">
+				<p>{{ location.description }}</p>
+				<hr>
+				{% if location.address %}
+				<img class="img-responsive" src="http://maps.googleapis.com/maps/api/staticmap?center={{ location.address.zipcode }}&zoom=13&size=600x600&sensor=false" />
+				<p><strong>Location: </strong>{{ location.address.city }}, {{ location.address.state }}</p>
+				{% else %}
+				<p><strong>Location: </strong>Not Available</p>
+				{% endif %}
+			</div>
+			<div class="panel-footer">
+				Created by <a href="{% url 'sharetools:profile' location.owner %}">{{ location.owner.username }}</a>
+			</div>
+		</div>
+		</center>
+	</div>
+</center>
+{% endblock %}

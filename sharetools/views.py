@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, membership
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm
 
 class LoginRequiredMixin(object):
@@ -192,15 +192,31 @@ class ShedView(LoginRequiredMixin, TemplateView):
 	The view for a particular shed.
 	"""
 	template_name = 'base_shed.html'
+	template_nonmember = 'base_shed_notmember.html'
 
-	def get(self, request, shed_id):		
+	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
+		members = membership.objects.filter(shed=shedLocation)
+		admins = members.filter(role=membership.ADMIN)
+		mods = members.filter(role=membership.MODERATOR)
+		try:
+			member = membership.objects.get(shed=shedLocation, user=request.user)
+		except:
+			member = None
+			
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
 			'location': shedLocation,
 			'assets': assets,
+			'members' : members,
+			'admins' : admins,
 		})
-		return render(request, self.template_name, context_instance=context)
+		
+		if member == None:
+			return render(request, self.template_nonmember, context_instance=context)
+		
+		else:
+			return render(request, self.template_name, context_instance=context)
 
 def my_sheds_view(request):
 	if not request.user.is_authenticated():

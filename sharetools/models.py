@@ -23,6 +23,16 @@ class Location(models.Model):
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
+	
+	#Settings Fields
+	#These fields represent settings that can be 
+	#Modified by Admins/Moderators to change
+	#How the Location will work
+	
+	membershipRequired = models.BooleanField(default=False)
+	inviteOnly = models.BooleanField(default=False)
+	#do tools need to be pre-approved when added to shed
+	toolModeration = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.name
@@ -98,3 +108,6 @@ class membership(models.Model):
 	shed = models.ForeignKey(Location)
 	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)
 	user = models.ForeignKey(User)
+	
+	def __str__(self):
+		return self.user.username + " is a " + str(self.role) + " of " + self.shed.name
