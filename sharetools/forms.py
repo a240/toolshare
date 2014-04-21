@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
-from sharetools.models import UserProfile, Asset, Location, Address, ShareContract, membership
+from sharetools.models import UserProfile, Asset, Location, Address, ShareContract, Membership
 import datetime
 
 
@@ -48,7 +48,6 @@ class AddressForm(forms.ModelForm):
 		return add
 		
 class AddMemberForm(forms.ModelForm):
-	
 	role = forms.ChoiceField(membership.ROLE_CHOICES)
 	
 	class Meta:
@@ -85,7 +84,6 @@ class EditShedForm(forms.ModelForm):
 			'toolModeration',
 		)
 			
-		
 
 class UserEditForm(forms.ModelForm):
 	zipcode = forms.CharField(max_length = 5)
@@ -108,6 +106,8 @@ class MakeToolForm(forms.ModelForm):
 		self._user=kwargs.pop('user')
 		super(MakeToolForm,self).__init__(*args,**kwargs)
 		self.fields['location'].queryset = Location.objects.filter(owner=self._user)
+		userprofile = UserProfile.objects.get(user=self._user)
+		self.fields['location'].initial = userprofile.privateLocation
 		
 	def save(self,commit=True):
 		inst = super(MakeToolForm,self).save(commit=False)
