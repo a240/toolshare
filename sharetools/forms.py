@@ -49,17 +49,17 @@ class AddressForm(forms.ModelForm):
 		
 class AddMemberForm(forms.ModelForm):
 
-	role = forms.ChoiceField(membership.ROLE_CHOICES)
+	role = forms.ChoiceField(Membership.ROLE_CHOICES)
 	
 	class Meta:
-		model = membership
+		model = Membership
 		fields = ('role','user')
 		
 	def __init__(self, *args, **kwargs):
 		self._location=kwargs.pop('location')
 		super(AddMemberForm,self).__init__(*args,**kwargs)
 		users = set()
-		for member in membership.objects.filter(shed=self._location,role=membership.REQUEST):
+		for member in Membership.objects.filter(shed=self._location,role=Membership.REQUEST):
 			users.add(member.user.id)
 		self.fields['user'].queryset = User.objects.filter(id__in = users)
 			
@@ -80,7 +80,6 @@ class EditShedForm(forms.ModelForm):
 			'description',
 			'address',
 			'isActive',
-			'membershipRequired',
 			'inviteOnly',
 			'toolModeration',
 		)

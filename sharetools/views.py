@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, membership
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, Membership
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm, EditShedForm
 from sharetools.manager import set_user_role
 
@@ -119,7 +119,6 @@ class RegisterView(TemplateView):
 				name = "Private Shed",
 				description = "Your private shed.  Seems like a nice spot to put tools you may not want to share right now.",
 				isPrivate = True, 
-				membershipRequired = True 
 			)
 			profile.privateLocation = privateShed
 			profile.save()
@@ -219,14 +218,13 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		members = Membership.objects.filter(location=shedLocation)
 		admins = members.filter(role=Membership.ADMIN)
-
+		isMember = True
 		try:
-
-			member = membership.objects.get(shed=shedLocation, user=request.user)
-			if member.role == membership.REQUEST:
-				member = None
+			member = Membership.objects.get(shed=shedLocation, user=request.user)
+			if member.role == Membership.REQUEST:
+				isMember = False
 		except:
-			member = None
+			isMember = False
 
 
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
@@ -247,13 +245,13 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
-		members = membership.objects.filter(shed=shedLocation)
-		admins = members.filter(role=membership.ADMIN)
-		mods = members.filter(role=membership.MODERATOR)
+		members = Membership.objects.filter(shed=shedLocation)
+		admins = members.filter(role=Membership.ADMIN)
+		mods = members.filter(role=Membership.MODERATOR)
 		isAdmin = True
 		try:
-			member = membership.objects.get(shed=shedLocation, user=request.user)
-			if member.role == membership.MEMBER:
+			member = Membership.objects.get(shed=shedLocation, user=request.user)
+			if member.role == Membership.MEMBER:
 				isAdmin=False
 		except:
 			isAdmin = False
@@ -278,7 +276,7 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 		memberForm = AddMemberForm(request.POST, location=shedLocation)
 		editForm = EditShedForm(request.POST, instance=shedLocation)
 		if memberForm.is_valid():
-			member = membership.objects.get(shed=shedLocation, user=memberForm.cleaned_data['user'])
+			member = Membership.objects.get(shed=shedLocation, user=memberForm.cleaned_data['user'])
 			member.delete()
 			memberForm.save()
 			return redirect('sharetools:shedAdmin',shed_id)
@@ -314,9 +312,9 @@ def shed_create_view(request):
 			shed.address = address
 			shed.owner = request.user
 			shed.save()
-			membership.objects.create( 
+			Membership.objects.create( 
 				shed = shed, 
-				role = membership.ADMIN, 
+				role = Membership.ADMIN, 
 				user = request.user 
  			) 
 			messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
