@@ -116,10 +116,17 @@ class RegisterView(TemplateView):
 				owner = user,
 				name = "Private Shed",
 				description = "Your private shed.  Seems like a nice spot to put tools you may not want to share right now.",
-				isPrivate = True
+				isPrivate = True, 
+				membershipRequired = True 
 			)
 			profile.privateLocation = privateShed
 			profile.save()
+			
+			membership.objects.create( 
+							shed = profile.privateLocation, 
+ 							role = membership.ADMIN, 
+ 							user = user 
+ 			) 
 
 
 			return redirect('sharetools:login')
@@ -212,7 +219,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			'admins' : admins,
 		})
 		
-		if member == None:
+		if member == None and shedLocation.membershipRequired:
 			return render(request, self.template_nonmember, context_instance=context)
 		
 		else:
