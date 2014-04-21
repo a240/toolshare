@@ -39,8 +39,8 @@ class IndexView(TemplateView):
 		assets = Asset.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
 		locations = Location.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
 		context = RequestContext(request, {
-		'assets': assets,
-		'locations': locations,
+			'assets': assets,
+			'locations': locations,
 		})
 		return render(request, self.template_name, context_instance=context)
 
@@ -218,26 +218,23 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		members = Membership.objects.filter(location=shedLocation)
 		admins = members.filter(role=Membership.ADMIN)
-		mods = members.filter(role=Membership.MODERATOR)
 
 		try:
 			membership = Membership.objects.get(location=shedLocation, user=request.user)
-		except Membership.DoesNotExist:			
-			membership = None
-
-
+		except Membership.DoesNotExist:
+			isMember = False
+		else:
+			isMember = True
+		
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
-			'location': shedLocation,
 			'assets': assets,
-			'members' : members,
 			'admins' : admins,
+			'location': shedLocation,
+			'isMember': isMember
 		})
 		
-		if membership == None and shedLocation.membershipRequired:
-			return render(request, self.template_nonmember, context_instance=context)	
-		else:
-			return render(request, self.template_name, context_instance=context)
+		return render(request, self.template_name, context_instance=context)
 			
 class ShedModView(LoginRequiredMixin, TemplateView):
 	"""
@@ -383,13 +380,13 @@ class MakeShareView(LoginRequiredMixin, TemplateView):
 		memberships = Membership.objects.filter(user=request.user, location=curr_asset.location)
 		if not memberships.exists():
 			messages.add_message(request, messages.WARNING, 'You do not have permission to borrow this tool.',
-								 extra_tags='alert-warning')
+				extra_tags='alert-warning')
 			return redirect('sharetools:shares')
 
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
 		if form.is_valid():
 			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',
-								 extra_tags='alert-success')
+				extra_tags='alert-success')
 			form.save()
 			return redirect('sharetools:shares')
 

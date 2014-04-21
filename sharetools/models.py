@@ -31,10 +31,8 @@ class Location(models.Model):
 	#Settings Fields
 	#These fields represent settings that can be 
 	#Modified by Admins/Moderators to change
-	#How the Location will work
+	#How the Location will work	
 	
-	# AM
-	membershipRequired = models.BooleanField(default=False)
 	#do tools need to be pre-approved when added to shed
 	toolModeration = models.BooleanField(default=True)
 	inviteOnly = models.BooleanField(default=False)

@@ -14,14 +14,24 @@
 	</div>
 </div>
 <div class="container">
-	<div class="row ">
-		<div class="col-sm-4">
-		</div>
-		<div class="col-sm-4">
-		</div>
+	{% if not isMember %}
+	<div class="bs-callout bs-callout-info">
+		<h4><i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this shed</h4>
+		<p>If you would like to be, you can message one of the following Admin's requesting to join:
+		{% for admin in admins %}
+			<a href="{% url 'sharetools:profile' admin.user %}">
+			{{admin.user}}
+			</a>{% if forloop.last %}.{% else %},{% endif %}
+		{% endfor %}
+		</p>
 	</div>
+	{% endif %}
 	<div class="col-lg-8">
-		{% if assets %}
+		{% if location.isPrivate and not isMember %}
+		<div class="well well-lg">
+			<h3 class="text-center text-muted"><i class="fa fa-lock"></i></h3>
+		</div>
+		{% else %}
 		<div class="row">
 			<div class="table-responsive">
 				<table class="table table-striped">
@@ -49,14 +59,14 @@
 							<td>{{ asset.isAvailable }}</td>
                             <td><a type="button" class="btn btn-primary" href="{% url 'sharetools:tool' asset.id %}">View</a></td>
 						</tr>
+					{% empty %}
+						<div class="well well-lg">
+							<h3 class="text-center text-muted">This shed has no tools :(</h3>
+						</div>
 					{% endfor %}
 					</tbody>
 				</table>
 			</div>
-		</div>
-		{% else %}
-		<div class="well well-lg">
-			<h3 class="text-center text-muted">This shed has no tools :(</h3>
 		</div>
 		{% endif %}
 	</div>
