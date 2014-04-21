@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load bootstrap %}
+
+{% block title %}TS - Add Member{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>Add a Member to your shed </h1>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<form action="{% url 'sharetools:addmember' shed_id %}" method="post">{% csrf_token %}
+	{{ form | bootstrap }}
+			<input type="submit" value="Update" class="btn btn-primary btn-block btn-lg">
+		</form>
+	</div>
+</div>
+{% endblock %}

@@ -117,11 +117,15 @@ class RegisterView(TemplateView):
 				owner = user,
 				name = "Private Shed",
 				description = "Your private shed.  Seems like a nice spot to put tools you may not want to share right now.",
-				isPrivate = True
+				isPrivate = True, 
+				membershipRequired = True 
 			)
 			profile.privateLocation = privateShed
 			profile.save()
-			set_user_role(user=user, location=privateShed, role=Membership.ADMIN)
+			set_user_role(user=user,
+				location=privateShed,
+				role=Membership.ADMIN
+			)
 
 			return redirect('sharetools:login')
 
@@ -153,6 +157,7 @@ class ProfileView(TemplateView):
 			'avatarURL': generateGravatarUrl(user),
 		})
 		return render(request, self.template_name, context_instance=context)
+		
 class EditProfileView(LoginRequiredMixin, TemplateView):
 	"""
 	Allows users to modify their profile.
@@ -184,6 +189,20 @@ class EditProfileView(LoginRequiredMixin, TemplateView):
 			form.save()
 			return my_profile_view(request)
 
+class RatingsView(LoginRequiredMixin, TemplateView):
+	"""
+	User Ratings Page
+	"""
+	template_name = 'base_ratings.html'
+	def get(self, request, name):
+		user = get_object_or_404(User,username=name)
+		rated_shares = ShareContract.objects.filter(borrower=user, rated=True)
+		context = RequestContext(request, {
+			'userProfile': user.userprofile,
+			'ratings': rated_shares,
+		})
+		return render(request, self.template_name, context_instance=context)
+
 #########################################################
 #             Category: SHED Manipulation               #
 ######################################################### 
@@ -197,14 +216,16 @@ class ShedView(LoginRequiredMixin, TemplateView):
 
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
-		members = Membership.objects.filter(shed=shedLocation)
-		admins = Members.filter(role=Membership.ADMIN)
-		mods = Members.filter(role=Membership.MODERATOR)
+		members = Membership.objects.filter(location=shedLocation)
+		admins = members.filter(role=Membership.ADMIN)
+		mods = members.filter(role=Membership.MODERATOR)
+
 		try:
-			member = Membership.objects.get(shed=shedLocation, user=request.user)
-		except:
-			member = None
-			
+			membership = Membership.objects.get(location=shedLocation, user=request.user)
+		except Membership.DoesNotExist:			
+			membership = None
+
+
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
 			'location': shedLocation,
@@ -213,12 +234,71 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			'admins' : admins,
 		})
 		
-		if member == None:
-			return render(request, self.template_nonmember, context_instance=context)
-		
+		if membership == None and shedLocation.membershipRequired:
+			return render(request, self.template_nonmember, context_instance=context)	
 		else:
 			return render(request, self.template_name, context_instance=context)
+			
+class ShedModView(LoginRequiredMixin, TemplateView):
+	"""
+	The view for moderating a shed.
+	"""
+	template_name = 'base_shed_mod.html'
 
+	def get(self, request, shed_id):	
+		shedLocation = get_object_or_404(Location, pk=shed_id)
+		members = membership.objects.filter(shed=shedLocation)
+		admins = members.filter(role=membership.ADMIN)
+		mods = members.filter(role=membership.MODERATOR)
+		isAdmin = True
+		try:
+			member = membership.objects.get(shed=shedLocation, user=request.user)
+			if member.role == membership.MEMBER:
+				isAdmin=False
+		except:
+			isAdmin = False
+			
+		context = RequestContext(request, {
+			'location': shedLocation,
+			'members': members, 
+			'admins': admins,
+			'mods': mods,
+			'isAdmin': isAdmin,
+		})
+		return render(request, self.template_name, context_instance=context)
+		
+	def post(self, request):
+		#form = ShedModForm(request.POST, instance=request.user)
+		if not form.is_valid():
+			return render(request, self.template_name, context_instance=context)
+
+			
+					#user will be passed in from admin menu
+def add_member_view(request, shed_id ):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('sharetools:login'))
+	shedLocation = get_object_or_404(Location, pk=shed_id)
+	if request.method == 'POST':
+		form = AddMemberForm(request.POST)
+		if form.is_valid():
+			try:
+				member = membership.objects.get(shed=shedLocation, user=form.cleaned_data['user'])
+				member.delete()
+			except:
+				pass		
+			form.save()
+			#update this to redirect to shed moderator page when done
+			return redirect('sharetools:mySheds')
+
+	else:
+		form = AddMemberForm()
+
+	return render(request, 'base_shed_addmember.html', {
+	'form': form,
+	'shed_id': shed_id,
+	
+	})
+			
 def my_sheds_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('sharetools:login'))
@@ -344,10 +424,18 @@ def shares_view(request):
 			sc.asset.availability = True
 			sc.asset.save()
 			sc.comments = request.POST.get("comment","")
+			userprofile = sc.borrower.userprofile
 			if request.POST.get("options","") == "true":
-				sc.borrower.userprofile.karma += 1
+				sc.borrower.userprofile.up_votes += 1
+				sc.rated=1
 			else:
-				sc.borrower.userprofile.karma -= 1
+				sc.borrower.userprofile.down_votes += 1
+				sc.rated=2
+			try:
+				percent = (userprofile.up_votes / (userprofile.getNumVotes())) * 100
+			except ZeroDivisionError:
+				percent = 0
+			sc.borrower.userprofile.votePercent = percent
 			sc.borrower.userprofile.save()
 			sc.save()
 		return redirect('sharetools:shares')

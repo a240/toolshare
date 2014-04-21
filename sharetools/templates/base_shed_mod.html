@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
+<<<<<<< HEAD
 {% block title %}TS - {{ location.name }}{% endblock %}
+=======
+{% block title %}TS - {{ location.name }} Administration {% endblock %}
+>>>>>>> FETCH_HEAD
 
 {% block styles}
 
@@ -8,6 +12,7 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>
+<<<<<<< HEAD
 			{% if location.isPrivate %}
 			<i class="fa fa-lock"></i>
 			{% endif %}
@@ -72,5 +77,21 @@
 			</div>
 		</div>
 	</div>
+=======
+			{{ location.name }} ADMIN PAGE
+		</h1>
+	</div>
+</div>
+<div>
+{% if not isAdmin %}
+you're not an admin
+{% endif %}
+
+
+
+</div>
+<div class="container">
+
+>>>>>>> FETCH_HEAD
 </div>
 {% endblock %}
