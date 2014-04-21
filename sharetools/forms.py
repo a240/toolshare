@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
-from sharetools.models import UserProfile, Asset, Location, Address, ShareContract
+from sharetools.models import UserProfile, Asset, Location, Address, ShareContract, membership
 import datetime
 
 
@@ -46,6 +46,18 @@ class AddressForm(forms.ModelForm):
 		if commit:
 			add.save()
 		return add
+		
+class AddMemberForm(forms.ModelForm):
+	choices = (
+		(membership.MEMBER, 'Member'),
+		(membership.MODERATOR, 'Moderator'),
+		(membership.ADMIN, 'Admin'),
+	)
+	role = forms.ChoiceField(choices)
+	
+	class Meta:
+		model = membership
+		fields = ('role','shed','user')
 
 class UserEditForm(forms.ModelForm):
 	zipcode = forms.CharField(max_length = 5)

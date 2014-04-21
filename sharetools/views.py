@@ -15,7 +15,7 @@ from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, membership
-from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm
 
 class LoginRequiredMixin(object):
     @classmethod
@@ -159,6 +159,7 @@ class ProfileView(TemplateView):
 			'avatarURL': generateGravatarUrl(user),
 		})
 		return render(request, self.template_name, context_instance=context)
+		
 class EditProfileView(LoginRequiredMixin, TemplateView):
 	"""
 	Allows users to modify their profile.
@@ -224,7 +225,67 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		
 		else:
 			return render(request, self.template_name, context_instance=context)
+			
+class ShedModView(LoginRequiredMixin, TemplateView):
+	"""
+	The view for moderating a shed.
+	"""
+	template_name = 'base_shed_mod.html'
 
+	def get(self, request, shed_id):	
+		shedLocation = get_object_or_404(Location, pk=shed_id)
+		members = membership.objects.filter(shed=shedLocation)
+		admins = members.filter(role=membership.ADMIN)
+		mods = members.filter(role=membership.MODERATOR)
+		isAdmin = True
+		try:
+			member = membership.objects.get(shed=shedLocation, user=request.user)
+			if member.role == membership.MEMBER:
+				isAdmin=False
+		except:
+			isAdmin = False
+			
+		context = RequestContext(request, {
+			'location': shedLocation,
+			'members': members, 
+			'admins': admins,
+			'mods': mods,
+			'isAdmin': isAdmin,
+		})
+		return render(request, self.template_name, context_instance=context)
+		
+	def post(self, request):
+		#form = ShedModForm(request.POST, instance=request.user)
+		if not form.is_valid():
+			return render(request, self.template_name, context_instance=context)
+
+			
+					#user will be passed in from admin menu
+def add_member_view(request, shed_id ):
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('sharetools:login'))
+	shedLocation = get_object_or_404(Location, pk=shed_id)
+	if request.method == 'POST':
+		form = AddMemberForm(request.POST)
+		if form.is_valid():
+			try:
+				member = membership.objects.get(shed=shedLocation, user=form.cleaned_data['user'])
+				member.delete()
+			except:
+				pass		
+			form.save()
+			#update this to redirect to shed moderator page when done
+			return redirect('sharetools:mySheds')
+
+	else:
+		form = AddMemberForm()
+
+	return render(request, 'base_shed_addmember.html', {
+	'form': form,
+	'shed_id': shed_id,
+	
+	})
+			
 def my_sheds_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('sharetools:login'))
