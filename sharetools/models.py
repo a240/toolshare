@@ -124,6 +124,8 @@ class Membership(models.Model):
 	location = models.ForeignKey(Location)
 	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)
 	user = models.ForeignKey(User)
-
+	def role_toString(self):
+		return self.ROLE_CHOICES[self.role][1]
+		
 	def __str__(self):
 		return self.user.username + ' is a ' + self.ROLE_CHOICES[self.role][1] + ' in ' + self.location.owner.username + '\'s ' + self.location.name
