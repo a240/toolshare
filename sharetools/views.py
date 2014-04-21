@@ -116,10 +116,17 @@ class RegisterView(TemplateView):
 				owner = user,
 				name = "Private Shed",
 				description = "Your private shed.  Seems like a nice spot to put tools you may not want to share right now.",
-				isPrivate = True
+				isPrivate = True, 
+				membershipRequired = True 
 			)
 			profile.privateLocation = privateShed
 			profile.save()
+			
+			membership.objects.create( 
+							shed = profile.privateLocation, 
+ 							role = membership.ADMIN, 
+ 							user = user 
+ 			) 
 
 
 			return redirect('sharetools:login')
@@ -208,7 +215,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 	template_name = 'base_shed.html'
 	template_nonmember = 'base_shed_notmember.html'
 
-	def get(self, request, shed_id):
+	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		members = membership.objects.filter(shed=shedLocation)
 		admins = members.filter(role=membership.ADMIN)
@@ -217,7 +224,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			member = membership.objects.get(shed=shedLocation, user=request.user)
 		except:
 			member = None
-
+			
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
 			'location': shedLocation,
@@ -225,10 +232,10 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			'members' : members,
 			'admins' : admins,
 		})
-
-		if member == None:
+		
+		if member == None and shedLocation.membershipRequired:
 			return render(request, self.template_nonmember, context_instance=context)
-
+		
 		else:
 			return render(request, self.template_name, context_instance=context)
 
@@ -298,7 +305,7 @@ class MakeShareView(TemplateView, LoginRequiredMixin):
 	template_name = 'base_makeShare.html'
 
 	def get(self, request, tool_id):
-		curr_asset = get_object_or_404(Asset, pk=tool_id)
+		curr_asset = get_object_or_404(Asset, pk=tool_id)		
 		form = MakeShareForm(user=request.user, asset=curr_asset)
 
 		context = RequestContext(request, {
@@ -309,7 +316,7 @@ class MakeShareView(TemplateView, LoginRequiredMixin):
 		return render(request, self.template_name, context)
 
 	def post(self, request, tool_id):
-		curr_asset = get_object_or_404(Asset, pk=tool_id)
+		curr_asset = get_object_or_404(Asset, pk=tool_id)		
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
 		if form.is_valid():
 			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',

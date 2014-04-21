@@ -34,7 +34,7 @@ class Location(models.Model):
 	membershipRequired = models.BooleanField(default=False)
 	inviteOnly = models.BooleanField(default=False)
 	#do tools need to be pre-approved when added to shed
-	toolModeration = models.BooleanField(default=True)
+	toolModeration = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.name
