@@ -29,6 +29,5 @@ urlpatterns = patterns('sharetools.views',
 	#Shares ----------------------------------------------------------
 	url(r'^shares/$', views.shares_view, name='shares'),
 	url(r'^shares/new/(\d+)+$', views.MakeShareView.as_view(), name='makeShareContract'),
-	
 	url(r'^$', views.IndexView.as_view(), name='index'),
 )

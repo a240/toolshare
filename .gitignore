@@ -34,6 +34,7 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+*.pyc
 
 # django
 db.sqlite3
