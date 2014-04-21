@@ -212,17 +212,19 @@ class ShedView(LoginRequiredMixin, TemplateView):
 	The view for a particular shed.
 	"""
 	template_name = 'base_shed.html'
-	template_nonmember = 'base_shed_notmember.html'
 
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		members = Membership.objects.filter(location=shedLocation)
 		admins = members.filter(role=Membership.ADMIN)
 		isMember = True
+		isAdmin = False
 		try:
 			member = Membership.objects.get(location=shedLocation, user=request.user)
 			if member.role == Membership.REQUEST:
 				isMember = False
+			if member.role == (Membership.ADMIN or Membership.MODERATOR):
+				isAdmin = True
 		except:
 			isMember = False
 
@@ -232,7 +234,8 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			'assets': assets,
 			'admins' : admins,
 			'location': shedLocation,
-			'isMember': isMember
+			'isMember': isMember,
+			'isAdmin': isAdmin
 		})
 		
 		return render(request, self.template_name, context_instance=context)

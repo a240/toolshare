@@ -83,6 +83,9 @@ class EditShedForm(forms.ModelForm):
 			'inviteOnly',
 			'toolModeration',
 		)
+		widgets = {
+			'description': forms.Textarea(),
+		}
 			
 
 class UserEditForm(forms.ModelForm):

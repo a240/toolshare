@@ -40,6 +40,7 @@
 							<th>Name</th>
 							<th>Type</th>
 							<th>Description</th>
+	
                             {% if location.isCommunity %}
 							<th>Owner</th>
                             {% endif %}
@@ -86,6 +87,17 @@
 				{% endif %}
 			</div>
 			<div class="panel-footer">
+				{% if isAdmin %}
+				<a href="{% url 'sharetools:shedAdmin' location.id %}"<button type="button" class="btn btn-default btn-block">
+				<span class="glyphicon glyphicon-pencil"></span></button> Manage this Shed
+				</a>
+				
+				{% else %}
+				<a href="{% url 'sharetools:index' %}"<button type="button" class="btn btn-success btn-block">
+				<span class="glyphicon glyphicon-pencil"></span></button> Request to be a Member
+				</a>				
+				{% endif %}
+				<hr></hr>
 				Created by <a href="{% url 'sharetools:profile' location.owner %}">{{ location.owner.username }}</a>
 			</div>
 		</div>
