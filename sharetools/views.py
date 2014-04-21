@@ -183,6 +183,20 @@ class EditProfileView(LoginRequiredMixin, TemplateView):
 			form.save()
 			return my_profile_view(request)
 
+class RatingsView(LoginRequiredMixin, TemplateView):
+	"""
+	User Ratings Page
+	"""
+	template_name = 'base_ratings.html'
+	def get(self, request, name):
+		user = get_object_or_404(User,username=name)
+		rated_shares = ShareContract.objects.filter(borrower=user, rated=True)
+		context = RequestContext(request, {
+			'userProfile': user.userprofile,
+			'ratings': rated_shares,
+		})
+		return render(request, self.template_name, context_instance=context)
+
 #########################################################
 #             Category: SHED Manipulation               #
 ######################################################### 
@@ -194,7 +208,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 	template_name = 'base_shed.html'
 	template_nonmember = 'base_shed_notmember.html'
 
-	def get(self, request, shed_id):	
+	def get(self, request, shed_id):
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		members = membership.objects.filter(shed=shedLocation)
 		admins = members.filter(role=membership.ADMIN)
@@ -203,7 +217,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			member = membership.objects.get(shed=shedLocation, user=request.user)
 		except:
 			member = None
-			
+
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
 			'location': shedLocation,
@@ -211,10 +225,10 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			'members' : members,
 			'admins' : admins,
 		})
-		
+
 		if member == None:
 			return render(request, self.template_nonmember, context_instance=context)
-		
+
 		else:
 			return render(request, self.template_name, context_instance=context)
 
@@ -284,7 +298,7 @@ class MakeShareView(TemplateView, LoginRequiredMixin):
 	template_name = 'base_makeShare.html'
 
 	def get(self, request, tool_id):
-		curr_asset = get_object_or_404(Asset, pk=tool_id)		
+		curr_asset = get_object_or_404(Asset, pk=tool_id)
 		form = MakeShareForm(user=request.user, asset=curr_asset)
 
 		context = RequestContext(request, {
@@ -295,7 +309,7 @@ class MakeShareView(TemplateView, LoginRequiredMixin):
 		return render(request, self.template_name, context)
 
 	def post(self, request, tool_id):
-		curr_asset = get_object_or_404(Asset, pk=tool_id)		
+		curr_asset = get_object_or_404(Asset, pk=tool_id)
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
 		if form.is_valid():
 			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',
@@ -355,10 +369,18 @@ def shares_view(request):
 			sc.asset.availability = True
 			sc.asset.save()
 			sc.comments = request.POST.get("comment","")
+			userprofile = sc.borrower.userprofile
 			if request.POST.get("options","") == "true":
-				sc.borrower.userprofile.karma += 1
+				sc.borrower.userprofile.up_votes += 1
+				sc.rated=1
 			else:
-				sc.borrower.userprofile.karma -= 1
+				sc.borrower.userprofile.down_votes += 1
+				sc.rated=2
+			try:
+				percent = (userprofile.up_votes / (userprofile.getNumVotes())) * 100
+			except ZeroDivisionError:
+				percent = 0
+			sc.borrower.userprofile.votePercent = percent
 			sc.borrower.userprofile.save()
 			sc.save()
 		return redirect('sharetools:shares')
