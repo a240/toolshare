@@ -14,8 +14,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
-from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address
+from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, Membership
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm
+from sharetools.manager import set_user_role
 
 class LoginRequiredMixin(object):
     @classmethod
@@ -94,7 +95,7 @@ class RegisterView(TemplateView):
 	"""
 	template_name = 'base_register.html'
 
-	def get(self, request, *args, **kwargs):
+	def get(self, request):
 		if request.user.is_authenticated():
 			redirect('sharetools:index')
 
@@ -120,7 +121,7 @@ class RegisterView(TemplateView):
 			)
 			profile.privateLocation = privateShed
 			profile.save()
-
+			set_user_role(user=user, location=privateShed, role=Membership.ADMIN)
 
 			return redirect('sharetools:login')
 
@@ -192,15 +193,31 @@ class ShedView(LoginRequiredMixin, TemplateView):
 	The view for a particular shed.
 	"""
 	template_name = 'base_shed.html'
+	template_nonmember = 'base_shed_notmember.html'
 
-	def get(self, request, shed_id):		
+	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
+		members = Membership.objects.filter(shed=shedLocation)
+		admins = Members.filter(role=Membership.ADMIN)
+		mods = Members.filter(role=Membership.MODERATOR)
+		try:
+			member = Membership.objects.get(shed=shedLocation, user=request.user)
+		except:
+			member = None
+			
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
 			'location': shedLocation,
 			'assets': assets,
+			'members' : members,
+			'admins' : admins,
 		})
-		return render(request, self.template_name, context_instance=context)
+		
+		if member == None:
+			return render(request, self.template_nonmember, context_instance=context)
+		
+		else:
+			return render(request, self.template_name, context_instance=context)
 
 def my_sheds_view(request):
 	if not request.user.is_authenticated():
@@ -260,7 +277,7 @@ def shed_delete_view(request, shed_id):
 #########################################################
 
 
-class MakeShareView(TemplateView, LoginRequiredMixin):
+class MakeShareView(LoginRequiredMixin, TemplateView):
 	"""
 	A view for creating a new share contract for an asset.
 	"""
@@ -279,34 +296,22 @@ class MakeShareView(TemplateView, LoginRequiredMixin):
 		return render(request, self.template_name, context)
 
 	def post(self, request, tool_id):
-		curr_asset = get_object_or_404(Asset, pk=tool_id)		
+		# Get the tool or 404
+		curr_asset = get_object_or_404(Asset, pk=tool_id)
+		# Test if user has required permissions
+		# Only members of the shed of the tool may borrow it
+		memberships = Membership.objects.filter(user=request.user, location=curr_asset.location)
+		if not memberships.exists():
+			messages.add_message(request, messages.WARNING, 'You do not have permission to borrow this tool.',
+								 extra_tags='alert-warning')
+			return redirect('sharetools:shares')
+
 		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
 		if form.is_valid():
 			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',
 								 extra_tags='alert-success')
 			form.save()
 			return redirect('sharetools:shares')
-
-
-def make_share_view(request, tool_id):
-	if not request.user.is_authenticated():
-		return redirect('sharetools:index')
-	curr_asset = get_object_or_404(Asset, pk=tool_id)
-	if request.method == 'POST':
-		form = MakeShareForm(request.POST, user=request.user, asset=curr_asset)
-		if form.is_valid():
-			messages.add_message(request, messages.SUCCESS, 'Share Contract Created Successfully.',
-								 extra_tags='alert-success')
-			form.save()
-			return redirect('sharetools:shares')
-
-	else:
-		form = MakeShareForm(user=request.user, asset=curr_asset)
-
-	return render(request, 'base_makeShare.html', {
-	'form': form,
-	'tool_id': tool_id
-	})
 
 
 def shares_view(request):
@@ -425,9 +430,45 @@ def make_tool_view(request):
 	})
 
 
+class ToolView(LoginRequiredMixin, TemplateView):
+	"""
+	A view for a single tool.
+	"""
+
+	template_name = 'base_tool.html'
+
+	def get(self, request, tool_id):
+		asset = get_object_or_404(Asset, pk=tool_id)
+		shared = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
+		context = RequestContext(request, {
+			'user': request.user,
+			'asset': asset,
+			'shared': shared
+		})
+
+		return render(request, self.template_name, context)
+
+	def post(self, request, tool_id):
+		if request.POST.get("delete", "-1") != "-1":
+			tool = get_object_or_404(Asset, pk=tool_id)
+			shareCheck = ShareContract.objects.filter(asset=tool_id, status=ShareContract.ACCEPTED)
+			if (shareCheck):
+				messages.add_message(request, messages.WARNING, 'Tool is currently borrowed and cannot be deleted.',
+							 extra_tags='alert-warning')
+			elif tool.owner == request.user:
+				tool.delete()
+				shareCheck = ShareContract.objects.filter(asset=tool_id)
+				for share in shareCheck:
+					share.delete()
+				messages.add_message(request, messages.SUCCESS, 'Tool Successfully Deleted.', extra_tags='alert-success')
+			else:
+				messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
+			return redirect('sharetools:myTools')
+		else:
+			redirect('sharetools:myTools')
+
+
 def tool_view(request, tool_id):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('sharetools:login'))
 	if request.method == "POST":
 		if request.POST.get("delete", "-1") != "-1":
 			tool = get_object_or_404(Asset, pk=tool_id)

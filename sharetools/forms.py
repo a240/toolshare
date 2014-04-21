@@ -68,6 +68,8 @@ class MakeToolForm(forms.ModelForm):
 		self._user=kwargs.pop('user')
 		super(MakeToolForm,self).__init__(*args,**kwargs)
 		self.fields['location'].queryset = Location.objects.filter(owner=self._user)
+		userprofile = UserProfile.objects.get(user=self._user)
+		self.fields['location'].initial = userprofile.privateLocation
 		
 	def save(self,commit=True):
 		inst = super(MakeToolForm,self).save(commit=False)

@@ -23,6 +23,16 @@ class Location(models.Model):
 	isActive = models.BooleanField(default=True)
 	isPrivate = models.BooleanField(default=False)
 	dateCreated = models.DateTimeField(auto_now_add=True)
+	
+	#Settings Fields
+	#These fields represent settings that can be 
+	#Modified by Admins/Moderators to change
+	#How the Location will work
+	
+	membershipRequired = models.BooleanField(default=False)
+	inviteOnly = models.BooleanField(default=False)
+	#do tools need to be pre-approved when added to shed
+	toolModeration = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.name
@@ -32,6 +42,7 @@ class UserProfile(models.Model):
 	zipcode = models.CharField(max_length=5)
 	karma = models.IntegerField(default=0)
 	privateLocation = models.ForeignKey(Location)
+	
 	def __str__(self):
 		return self.user.username
 
@@ -83,7 +94,7 @@ class ShareContract(models.Model):
 	def __str__(self):
 		return self.lender.__str__() + ' lent ' + self.borrower.__str__() + ' a ' + self.asset.__str__() +  ' on ' + self.loanDate.__str__()
 
-class membership(models.Model):
+class Membership(models.Model):
 	"""
 	A record of a user's membership role within a shed.
 	"""
@@ -95,6 +106,9 @@ class membership(models.Model):
 		(MODERATOR, 'Moderator'),
 		(ADMIN, 'Admin'),
 	)
-	shed = models.ForeignKey(Location)
+	location = models.ForeignKey(Location)
 	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)
 	user = models.ForeignKey(User)
+	
+	def __str__(self):
+		return self.user.username + ' is a ' + self.ROLE_CHOICES[self.role][1] + ' in ' + self.location.owner.username + '\'s ' + self.location.name
