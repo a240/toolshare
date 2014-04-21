@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}TS - {{ user.username }}'s profile{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1>{{ userProfile.user.username }}'s Ratings</h1>
+    </div>
+</div>
+<div class="container">
+    {% if ratings %}
+    <table class="table">
+        <col width="50%">
+        <col width="50%">
+        <thead>
+            <th>Outcome</th>
+            <th>Rating</th>
+        </thead>
+        {% for sc in ratings %}
+        <tbody>
+            <tr>
+                <td>
+                {% if sc.rated = 1 %}
+                    Positive
+                {% else %}
+                    Negative
+                {% endif %}
+                </td>
+                <td>
+                    {{sc.comments}}
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
