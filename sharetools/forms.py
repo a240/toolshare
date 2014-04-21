@@ -59,13 +59,13 @@ class AddMemberForm(forms.ModelForm):
 		self._location=kwargs.pop('location')
 		super(AddMemberForm,self).__init__(*args,**kwargs)
 		users = set()
-		for member in Membership.objects.filter(shed=self._location,role=Membership.REQUEST):
+		for member in Membership.objects.filter(location=self._location,role=Membership.REQUEST):
 			users.add(member.user.id)
 		self.fields['user'].queryset = User.objects.filter(id__in = users)
 			
 	def save(self,commit=True):
 		inst = super(AddMemberForm,self).save(commit=False)
-		inst.shed = self._location
+		inst.location = self._location
 		if commit:
 			inst.save()
 			self.save_m2m()

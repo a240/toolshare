@@ -220,7 +220,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		admins = members.filter(role=Membership.ADMIN)
 		isMember = True
 		try:
-			member = Membership.objects.get(shed=shedLocation, user=request.user)
+			member = Membership.objects.get(location=shedLocation, user=request.user)
 			if member.role == Membership.REQUEST:
 				isMember = False
 		except:
@@ -245,18 +245,18 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
-		members = Membership.objects.filter(shed=shedLocation)
+		members = Membership.objects.filter(location=shedLocation)
 		admins = members.filter(role=Membership.ADMIN)
 		mods = members.filter(role=Membership.MODERATOR)
 		isAdmin = True
 		try:
-			member = Membership.objects.get(shed=shedLocation, user=request.user)
+			member = Membership.objects.get(location=shedLocation, user=request.user)
 			if member.role == Membership.MEMBER:
 				isAdmin=False
 		except:
 			isAdmin = False
 		if not isAdmin:
-			return HttpResponseRedirect(reverse('sharetools:login'))
+			return HttpResponseRedirect(reverse('sharetools:index'))
 
 		memberForm = AddMemberForm(location=shedLocation)
 		editForm = EditShedForm(instance=shedLocation)
@@ -276,7 +276,7 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 		memberForm = AddMemberForm(request.POST, location=shedLocation)
 		editForm = EditShedForm(request.POST, instance=shedLocation)
 		if memberForm.is_valid():
-			member = Membership.objects.get(shed=shedLocation, user=memberForm.cleaned_data['user'])
+			member = Membership.objects.get(location=shedLocation, user=memberForm.cleaned_data['user'])
 			member.delete()
 			memberForm.save()
 			return redirect('sharetools:shedAdmin',shed_id)
@@ -313,7 +313,7 @@ def shed_create_view(request):
 			shed.owner = request.user
 			shed.save()
 			Membership.objects.create( 
-				shed = shed, 
+				location = shed, 
 				role = Membership.ADMIN, 
 				user = request.user 
  			) 

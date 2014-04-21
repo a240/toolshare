@@ -2,86 +2,12 @@
 {% load bootstrap %}
 
 
-{% block title %}TS - {{ location.name }}{% endblock %}
-
 {% block title %}TS - {{ location.name }} Administration {% endblock %}
 
 {% block styles}
 
 {% block content %}
-<div class="jumbotron">
-	<div class="container">
-		<h1>
 
-			{% if location.isPrivate %}
-			<i class="fa fa-lock"></i>
-			{% endif %}
-			{{ location.name }}
-		</h1>
-	</div>
-</div>
-<div class="container">
-	<div class="col-lg-8">
-		{% if assets %}
-		<div class="row">
-			<div class="table-responsive">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Type</th>
-							<th>Description</th>
-                            {% if location.isCommunity %}
-							<th>Owner</th>
-                            {% endif %}
-							<th>Available</th>
-                            <th></th>
-						</tr>
-					</thead>
-					<tbody>
-					{% for asset in assets %}
-						<tr>
-							<td>{{ asset.name }}</td>
-							<td>{{ asset.type }}</td>
-							<td>{{ asset.description|truncatechars:20 }}</td>
-                            {% if location.isCommunity %}
-							<td>{{ asset.owner.username }}</td>
-                            {% endif %}
-							<td>{{ asset.isAvailable }}</td>
-                            <td><a type="button" class="btn btn-primary" href="{% url 'sharetools:tool' asset.id %}">View</a></td>
-						</tr>
-					{% endfor %}
-					</tbody>
-				</table>
-			</div>
-		</div>
-		{% else %}
-		<div class="well well-lg">
-			<h3 class="text-center text-muted">This shed has no tools :(</h3>
-		</div>
-		{% endif %}
-	</div>
-	<div class="col-lg-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">About</h3>
-			</div>
-			<div class="panel-body">
-				<p>{{ location.description }}</p>
-				<hr>
-				<img class="img-responsive" src="http://maps.googleapis.com/maps/api/staticmap?center={{ location.address.zipcode }}&zoom=13&size=400x400&sensor=false" />
-				<p><strong>Location: </strong>{{ location.address.city }}, {{ location.address.state }}</p>
-			</div>
-			<div class="panel-footer">
-				Created by <a href="{% url 'sharetools:profile' location.owner %}">{{ location.owner.username }}</a>
-			</div>
-		</div>
-	</div>
-
-			{{ location.name }} ADMIN PAGE
-		</h1>
-	</div>
-</div>
 <div>
 
 <form action="{% url 'sharetools:shedAdmin' location.id%}" method="post">{% csrf_token %}
