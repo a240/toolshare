@@ -48,6 +48,7 @@ class AddressForm(forms.ModelForm):
 		return add
 		
 class AddMemberForm(forms.ModelForm):
+
 	role = forms.ChoiceField(membership.ROLE_CHOICES)
 	
 	class Meta:

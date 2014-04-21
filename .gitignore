@@ -38,3 +38,6 @@ nosetests.xml
 
 # django
 db.sqlite3
+*.pyc
+bootstrapform/__pycache__/meta.cpython-33.pyc
+bootstrapform/__pycache__/__init__.cpython-33.pyc

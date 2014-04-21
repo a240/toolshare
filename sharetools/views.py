@@ -14,7 +14,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
-
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, membership
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm, EditShedForm
 from sharetools.manager import set_user_role
@@ -222,11 +221,14 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		admins = members.filter(role=Membership.ADMIN)
 
 		try:
+
 			member = membership.objects.get(shed=shedLocation, user=request.user)
 			if member.role == membership.REQUEST:
 				member = None
 		except:
 			member = None
+
+
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
 		context = RequestContext(request, {
 			'assets': assets,

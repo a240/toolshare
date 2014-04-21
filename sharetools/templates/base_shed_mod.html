@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap %}
 
+
+{% block title %}TS - {{ location.name }}{% endblock %}
+
 {% block title %}TS - {{ location.name }} Administration {% endblock %}
 
 {% block styles}
@@ -9,6 +12,7 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>
+
 			{% if location.isPrivate %}
 			<i class="fa fa-lock"></i>
 			{% endif %}
@@ -73,6 +77,7 @@
 			</div>
 		</div>
 	</div>
+
 			{{ location.name }} ADMIN PAGE
 		</h1>
 	</div>
