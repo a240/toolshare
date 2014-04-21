@@ -17,7 +17,6 @@ urlpatterns = patterns('sharetools.views',
 	url(r'^sheds/(\d+)$', views.ShedView.as_view(), name='shed'),
 	url(r'^sheds/create$', views.shed_create_view, name='makeShed'),
 	url(r'^sheds/delete/(\d+)+$', views.shed_delete_view, name='shedDeletion'),
-	url(r'^sheds/(\d+)/addmember$', views.add_member_view, name='addmember'),
 	url(r'^sheds/(\d+)/admin$', views.ShedModView.as_view(), name='shedAdmin'),
 	
 	#Tools -------------------------------------------------------------------

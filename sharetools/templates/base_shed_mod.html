@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load bootstrap %}
 {% block title %}TS - {{ location.name }} Administration {% endblock %}
 
 {% block styles}
@@ -13,9 +13,14 @@
 	</div>
 </div>
 <div>
-{% if not isAdmin %}
-you're not an admin
-{% endif %}
+
+<form action="{% url 'sharetools:shedAdmin' location.id%}" method="post">{% csrf_token %}
+{{ memberForm | bootstrap }}
+<input type="submit" value="Add" class="btn btn-primary btn-block btn-lg">
+
+<form action="{% url 'sharetools:shedAdmin' location.id%}" method="post">{% csrf_token %}
+{{ editForm | bootstrap }}
+<input type="submit" value="Update" class="btn btn-primary btn-block btn-lg">
 
 
 

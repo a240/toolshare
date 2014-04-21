@@ -15,7 +15,7 @@ from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, membership
-from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm, EditShedForm
 
 class LoginRequiredMixin(object):
     @classmethod
@@ -223,6 +223,8 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		mods = members.filter(role=membership.MODERATOR)
 		try:
 			member = membership.objects.get(shed=shedLocation, user=request.user)
+			if member.role == membership.REQUEST:
+				member = None
 		except:
 			member = None
 			
@@ -258,48 +260,40 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 				isAdmin=False
 		except:
 			isAdmin = False
+		if not isAdmin:
+			return HttpResponseRedirect(reverse('sharetools:login'))
+
+		memberForm = AddMemberForm(location=shedLocation)
+		editForm = EditShedForm(instance=shedLocation)
 			
 		context = RequestContext(request, {
 			'location': shedLocation,
 			'members': members, 
 			'admins': admins,
 			'mods': mods,
-			'isAdmin': isAdmin,
+			'memberForm': memberForm,
+			'editForm': editForm,
 		})
 		return render(request, self.template_name, context_instance=context)
 		
-	def post(self, request):
-		#form = ShedModForm(request.POST, instance=request.user)
-		if not form.is_valid():
-			return render(request, self.template_name, context_instance=context)
-
+	def post(self, request, shed_id):
+		shedLocation = get_object_or_404(Location, pk=shed_id)
+		memberForm = AddMemberForm(request.POST, location=shedLocation)
+		editForm = EditShedForm(request.POST, instance=shedLocation)
+		if memberForm.is_valid():
+			member = membership.objects.get(shed=shedLocation, user=memberForm.cleaned_data['user'])
+			member.delete()
+			memberForm.save()
+			return redirect('sharetools:shedAdmin',shed_id)
+		
+		elif editForm.is_valid():
+			editForm.save()
+			return redirect('sharetools:shedAdmin',shed_id)	
 			
-					#user will be passed in from admin menu
-def add_member_view(request, shed_id ):
-	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse('sharetools:login'))
-	shedLocation = get_object_or_404(Location, pk=shed_id)
-	if request.method == 'POST':
-		form = AddMemberForm(request.POST)
-		if form.is_valid():
-			try:
-				member = membership.objects.get(shed=shedLocation, user=form.cleaned_data['user'])
-				member.delete()
-			except:
-				pass		
-			form.save()
-			#update this to redirect to shed moderator page when done
-			return redirect('sharetools:mySheds')
-
-	else:
-		form = AddMemberForm()
-
-	return render(request, 'base_shed_addmember.html', {
-	'form': form,
-	'shed_id': shed_id,
-	
-	})
+		else:
+			return redirect('sharetools:shedAdmin',shed_id)
 			
+
 def my_sheds_view(request):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('sharetools:login'))
@@ -323,6 +317,11 @@ def shed_create_view(request):
 			shed.address = address
 			shed.owner = request.user
 			shed.save()
+			membership.objects.create( 
+				shed = shed, 
+				role = membership.ADMIN, 
+				user = request.user 
+ 			) 
 			messages.add_message(request, messages.SUCCESS, 'Shed Created Successfully.', extra_tags='alert-success')
 			return redirect('sharetools:mySheds')
 		else:

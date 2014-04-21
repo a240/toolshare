@@ -113,10 +113,12 @@ class membership(models.Model):
 	MEMBER = 0
 	MODERATOR = 1
 	ADMIN = 2
+	REQUEST = 3
 	ROLE_CHOICES = (
 		(MEMBER, 'Member'),
 		(MODERATOR, 'Moderator'),
 		(ADMIN, 'Admin'),
+		(REQUEST, 'Request'),
 	)
 	shed = models.ForeignKey(Location)
 	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)

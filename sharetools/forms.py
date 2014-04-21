@@ -48,16 +48,44 @@ class AddressForm(forms.ModelForm):
 		return add
 		
 class AddMemberForm(forms.ModelForm):
-	choices = (
-		(membership.MEMBER, 'Member'),
-		(membership.MODERATOR, 'Moderator'),
-		(membership.ADMIN, 'Admin'),
-	)
-	role = forms.ChoiceField(choices)
+	
+	role = forms.ChoiceField(membership.ROLE_CHOICES)
 	
 	class Meta:
 		model = membership
-		fields = ('role','shed','user')
+		fields = ('role','user')
+		
+	def __init__(self, *args, **kwargs):
+		self._location=kwargs.pop('location')
+		super(AddMemberForm,self).__init__(*args,**kwargs)
+		users = set()
+		for member in membership.objects.filter(shed=self._location,role=membership.REQUEST):
+			users.add(member.user.id)
+		self.fields['user'].queryset = User.objects.filter(id__in = users)
+			
+	def save(self,commit=True):
+		inst = super(AddMemberForm,self).save(commit=False)
+		inst.shed = self._location
+		if commit:
+			inst.save()
+			self.save_m2m()
+		return inst
+		
+class EditShedForm(forms.ModelForm):
+	
+	class Meta:
+		model = Location
+		fields = (
+			'name',
+			'description',
+			'address',
+			'isActive',
+			'membershipRequired',
+			'inviteOnly',
+			'toolModeration',
+		)
+			
+		
 
 class UserEditForm(forms.ModelForm):
 	zipcode = forms.CharField(max_length = 5)
