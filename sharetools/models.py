@@ -26,13 +26,14 @@ class Location(models.Model):
 	isActive = models.BooleanField(default=True)
 	# Determines if a shed is visible thoses who are not members
 	isPrivate = models.BooleanField(default=False)
-	dateCreated = models.DateTimeField(auto_now_add=True)
-	
+	dateCreated = models.DateTimeField(auto_now_add=True)	
+	# Determines if the it is a community or personal loction 
+	isCommunity = models.BooleanField(default=True)
 	#Settings Fields
 	#These fields represent settings that can be 
 	#Modified by Admins/Moderators to change
 	#How the Location will work	
-	
+
 	#do tools need to be pre-approved when added to shed
 	toolModeration = models.BooleanField(default=True)
 	inviteOnly = models.BooleanField(default=False)
@@ -69,12 +70,7 @@ class Asset(models.Model):
 	description = models.CharField(max_length=300, blank=True)
 	type = models.ForeignKey(Asset_Type, related_name='type')
 	location = models.ForeignKey(Location, related_name='location')
-	availability = models.BooleanField(default=True)
-
-	def isAvailable(self):
-		if self.availability:
-			return "Yes"
-		return "No"
+	isAvailable = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.owner.username + '\'s ' + self.type.name
@@ -124,6 +120,7 @@ class Membership(models.Model):
 	location = models.ForeignKey(Location)
 	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)
 	user = models.ForeignKey(User)
+
 	def role_toString(self):
 		return self.ROLE_CHOICES[self.role][1]
 		

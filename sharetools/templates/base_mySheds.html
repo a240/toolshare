@@ -11,35 +11,36 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>My Sheds</h1>
+		<hr>
+		<a href="{% url 'sharetools:makeShed' %}"><button type="button" class="btn btn-primary">Create New Shed</button></a>
 	</div>
 </div>
 <div class="container">
-    <div class="row">
-			<a href="{% url 'sharetools:makeShed' %}"><button type="button" class="btn btn-primary">Create New Shed</button></a>
-	</div>
-    <br>
-	{% if shedLocations %}
-	{% for shedLocation in shedLocations %}
+	{% for membership in memberships %}
 		<div class="row panel panel-default">
 			<div class="panel-heading">
 				<h1>
-					{% if shedLocation.isPrivate %}
+					{% if membership.location.isPrivate %}
 					<i class="fa fa-lock"></i>
 					{% endif %}
-					<a href="{% url 'sharetools:shed' shedLocation.id %}">
-					{{ shedLocation.name }}
+					<a href="{% url 'sharetools:shed' membership.location.id %}">
+					{{ membership.location.name }}
 	                </a>
                 </h1>
             </div>
 			<div class="panel-body">
-				<p>{{ shedLocation.description }}</p>
+				<p>{{ membership.location.description }}</p>
+			</div>
+			<div class="panel-footer">
+				{% if membership.role == membership.MODERATOR or membership.role == membership.ADMIN %}
+				<a href="{% url 'sharetools:shedAdmin' membership.location.id %}"><buttom type="buttom" class="btn btn-warning">Moderate</buttom></a>
+				{% endif %}
 			</div>
 		</div>
-	{% endfor %}
-	{% else %}
+	{% empty %}
 		<div class="well well-lg">
 			<h3 class="text-center text-muted">You have no sheds :(</h3>
 		</div>
-	{% endif %}
+	{% endfor %}
 </div>
 {% endblock %}
