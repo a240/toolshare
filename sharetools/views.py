@@ -233,11 +233,15 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		role = get_user_role(location=shedLocation, user=request.user)
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
-		membership = Membership.objects.filter(user=request.user, location=shedLocation)
+		try:
+			membership = Membership.objects.get(location=shedLocation, user=request.user)
+		except Membership.DoesNotExist:
+			membership = None
 		context = RequestContext(request, {
 			'assets': assets,
 			'location': shedLocation,
 			'isMember': is_member(user=request.user, location=shedLocation),
+			'isMod': is_mod(user=request.user, location=shedLocation),
 			'membership': membership
 		})
 		

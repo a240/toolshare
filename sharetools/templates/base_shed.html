@@ -83,12 +83,14 @@
 				{% endif %}
 			</div>
 			<div class="panel-footer">
-				{% if isMember %}
-				<a href="{% url 'sharetools:shedAdmin' location.id %}"<button type="button" class="btn btn-default btn-block">
-				<span class="glyphicon glyphicon-pencil"></span></button> Manage this Shed
-				</a>	
-				{% elif membership.role == membership.REQUEST %}
-				<a href="#" class="btn btn-default btn-block disabled" role="button">Request Sent</a>
+				{% if membership %}
+					{% if membership.role == membership.ADMIN %}
+					<a href="{% url 'sharetools:shedAdmin' location.id %}"<button type="button" class="btn btn-default btn-block">
+					<span class="glyphicon glyphicon-pencil"></span></button> Manage this Shed
+					</a>
+					{% elif membership.role = membership.REQUEST %}
+					<a href="#" class="btn btn-default btn-block disabled" role="button">Request Sent</a>
+					{% endif %}
 				{% else %}
 				<form name="requestMembership" action="{% url 'sharetools:shed' location.id %}" method="post">
 					{% csrf_token %}
