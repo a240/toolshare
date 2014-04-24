@@ -198,7 +198,7 @@ class RatingsView(LoginRequiredMixin, TemplateView):
 	template_name = 'base_ratings.html'
 	def get(self, request, name):
 		user = get_object_or_404(User,username=name)
-		rated_shares = ShareContract.objects.filter(borrower=user, rated=True)
+		rated_shares = ShareContract.objects.filter(borrower=user, rated__gt=0)
 		context = RequestContext(request, {
 			'userProfile': user.userprofile,
 			'ratings': rated_shares,
