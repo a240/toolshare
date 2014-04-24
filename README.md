@@ -51,21 +51,22 @@ You will be directed to the Hub Page, which contains recently created tools and 
 
 	a. Click "Shares" in the top right corner of the website.
 	b. Look at your "Tool Requests" on the tool requests panel.
-	c. Press "Accept" to approve ladysman127's share request.
+	c. Press "Accept" to approve TodLove's share request.
 	d. You may notice the "Currently Lent" tab below now contains the request now.
-	e. Under the "Currently Lent" tab, click "Mark as Returned" on the PS2 Keyboard.
+	e. Under the "Currently Lent" tab, click "Mark as Returned" on the Pencil.
+		1. You will be prompted to rate the interaction.
+		2. Select thumbs up or thumbs down and write a brief description about the interaction.
+		3. This will effect the users Karma, which is displayed on their Profile Page.
 	f. You may notice the "Previously Lent" tab is now updated with the old share request.
 	
 9. Borrowing a tool: 
 
-	a. Select the Tools tab on the top right corner, pick "Find a Tool".
-	b. Find a tool that is available.
-	c. Click the tool's wrench button under the view tab.
-	d. Select the "Borrow" button at the bottom of the tool overview.
-	e. Enter a date to borrow the tool. You will be redirected to the "Shares" page.
-	f. "My Current Requests" will now contain a new pending request.
-	g. Once the owner of the tool accepts the request, it's status will be changed to accepted.
-	
+	a. Click My Shed's from the top right corner of the website.
+	b. Scroll down and select Tod's House.
+	c. Find the "Hand Drill 3000" and select view. 
+	d. Press "Borrow"
+	e. Enter the date you would like to borrow it.
+	f. You are now borrowing this tool.
 
 	
 
