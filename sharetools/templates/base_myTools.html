@@ -35,10 +35,10 @@
 						<td>{{ asset.description|truncatechars:20 }}</td>
 						<td>{{ asset.owner.username }}</td>
 						<td>{{ asset.isAvailable }}</td>
-                        <td><a href="{% url 'sharetools:tool' asset.id %}"<button type="button" class="btn btn-primary btn-block">
-							<span class="glyphicon glyphicon-wrench"></span></button>
-							</a>
-						</td>
+							<td><a href="{% url 'sharetools:tool' asset.id %}"<button type="button" class="btn btn-primary btn-block">
+								<span class="glyphicon glyphicon-wrench"></span></button>
+								</a>
+							</td>
 					</tr>
 				{% endfor %}
 				</tbody>
