@@ -36,7 +36,7 @@
                     <td align="right">
 
                         <div class="btn-group">
-                            {% if rq.asset.availability %}
+                            {% if rq.asset.isAvailable %}
                             <button type="submit" name="approve" value="{{ rq.id }}" class="btn btn-success">Accept
                             </button>
                             {% else %}
@@ -85,7 +85,7 @@
                     <td>{{ rq.loanDate }}</td>
                     <td>{{ rq.getStatus }}</td>
                     <td>
-                        {% if rq.asset.availability %}
+                        {% if rq.asset.isAvailable %}
                         <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Cancel</button>
                         {% endif %}
                     </td>
