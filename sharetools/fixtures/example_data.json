@@ -1,1 +1,1270 @@
-[{"pk": 1, "model": "contenttypes.contenttype", "fields": {"name": "log entry", "app_label": "admin", "model": "logentry"}}, {"pk": 2, "model": "contenttypes.contenttype", "fields": {"name": "permission", "app_label": "auth", "model": "permission"}}, {"pk": 3, "model": "contenttypes.contenttype", "fields": {"name": "group", "app_label": "auth", "model": "group"}}, {"pk": 4, "model": "contenttypes.contenttype", "fields": {"name": "user", "app_label": "auth", "model": "user"}}, {"pk": 5, "model": "contenttypes.contenttype", "fields": {"name": "content type", "app_label": "contenttypes", "model": "contenttype"}}, {"pk": 6, "model": "contenttypes.contenttype", "fields": {"name": "session", "app_label": "sessions", "model": "session"}}, {"pk": 7, "model": "contenttypes.contenttype", "fields": {"name": "user profile", "app_label": "sharetools", "model": "userprofile"}}, {"pk": 8, "model": "contenttypes.contenttype", "fields": {"name": "address", "app_label": "sharetools", "model": "address"}}, {"pk": 9, "model": "contenttypes.contenttype", "fields": {"name": "location", "app_label": "sharetools", "model": "location"}}, {"pk": 10, "model": "contenttypes.contenttype", "fields": {"name": "asset_ type", "app_label": "sharetools", "model": "asset_type"}}, {"pk": 11, "model": "contenttypes.contenttype", "fields": {"name": "asset", "app_label": "sharetools", "model": "asset"}}, {"pk": 12, "model": "contenttypes.contenttype", "fields": {"name": "share contract", "app_label": "sharetools", "model": "sharecontract"}}, {"pk": 13, "model": "contenttypes.contenttype", "fields": {"name": "message", "app_label": "messaging", "model": "message"}}, {"pk": "km45hl6dnhd62gagmllr6wzr19b68w5k", "model": "sessions.session", "fields": {"session_data": "NzFmNzQ1ZDI5MDI5MWZlMTg5ZjZmYWNjYmNkMTliMTlhYTRiN2Q3Nzp7fQ==", "expire_date": "2014-03-26T21:19:11.947Z"}}, {"pk": 1, "model": "sharetools.address", "fields": {"street": "445 Walker Valley Road", "zipcode": "12345", "country": "United States", "state": "New York", "city": "Rochester"}}, {"pk": 2, "model": "sharetools.address", "fields": {"street": "106 Stony Brook Road", "zipcode": "12345", "country": "United States", "state": "New York", "city": "Rochester"}}, {"pk": 3, "model": "sharetools.address", "fields": {"street": "Rocky Road", "zipcode": "12345", "country": "United States", "state": "New York", "city": "Rochester"}}, {"pk": 4, "model": "sharetools.address", "fields": {"street": "Main St", "zipcode": "12345", "country": "United States", "state": "New York", "city": "Rochester"}}, {"pk": 5, "model": "sharetools.address", "fields": {"street": "Lomb Memorial Drive", "zipcode": "12345", "country": "United States", "state": "New York", "city": "Rochester"}}, {"pk": 6, "model": "sharetools.address", "fields": {"street": "Test Street Road", "zipcode": "12345", "country": "United States", "state": "New York", "city": "Rochester"}}, {"pk": 1, "model": "sharetools.asset_type", "fields": {"name": "Power Tools", "description": "Electronically powered tools and acessories."}}, {"pk": 2, "model": "sharetools.asset_type", "fields": {"name": "Hand Tools", "description": "Hammers, screwdrivers, scissors, etc..."}}, {"pk": 3, "model": "sharetools.asset_type", "fields": {"name": "Air Tools & Compressors", "description": "Tools using high pressured air."}}, {"pk": 4, "model": "sharetools.asset_type", "fields": {"name": "Ladders and Scaffolding", "description": "Climbing stuff."}}, {"pk": 5, "model": "sharetools.asset_type", "fields": {"name": "Welding & Soldering", "description": "FIRE ON DANCE FLOOR"}}, {"pk": 1, "model": "auth.permission", "fields": {"codename": "add_logentry", "name": "Can add log entry", "content_type": 1}}, {"pk": 2, "model": "auth.permission", "fields": {"codename": "change_logentry", "name": "Can change log entry", "content_type": 1}}, {"pk": 3, "model": "auth.permission", "fields": {"codename": "delete_logentry", "name": "Can delete log entry", "content_type": 1}}, {"pk": 4, "model": "auth.permission", "fields": {"codename": "add_permission", "name": "Can add permission", "content_type": 2}}, {"pk": 5, "model": "auth.permission", "fields": {"codename": "change_permission", "name": "Can change permission", "content_type": 2}}, {"pk": 6, "model": "auth.permission", "fields": {"codename": "delete_permission", "name": "Can delete permission", "content_type": 2}}, {"pk": 7, "model": "auth.permission", "fields": {"codename": "add_group", "name": "Can add group", "content_type": 3}}, {"pk": 8, "model": "auth.permission", "fields": {"codename": "change_group", "name": "Can change group", "content_type": 3}}, {"pk": 9, "model": "auth.permission", "fields": {"codename": "delete_group", "name": "Can delete group", "content_type": 3}}, {"pk": 10, "model": "auth.permission", "fields": {"codename": "add_user", "name": "Can add user", "content_type": 4}}, {"pk": 11, "model": "auth.permission", "fields": {"codename": "change_user", "name": "Can change user", "content_type": 4}}, {"pk": 12, "model": "auth.permission", "fields": {"codename": "delete_user", "name": "Can delete user", "content_type": 4}}, {"pk": 13, "model": "auth.permission", "fields": {"codename": "add_contenttype", "name": "Can add content type", "content_type": 5}}, {"pk": 14, "model": "auth.permission", "fields": {"codename": "change_contenttype", "name": "Can change content type", "content_type": 5}}, {"pk": 15, "model": "auth.permission", "fields": {"codename": "delete_contenttype", "name": "Can delete content type", "content_type": 5}}, {"pk": 16, "model": "auth.permission", "fields": {"codename": "add_session", "name": "Can add session", "content_type": 6}}, {"pk": 17, "model": "auth.permission", "fields": {"codename": "change_session", "name": "Can change session", "content_type": 6}}, {"pk": 18, "model": "auth.permission", "fields": {"codename": "delete_session", "name": "Can delete session", "content_type": 6}}, {"pk": 19, "model": "auth.permission", "fields": {"codename": "add_userprofile", "name": "Can add user profile", "content_type": 7}}, {"pk": 20, "model": "auth.permission", "fields": {"codename": "change_userprofile", "name": "Can change user profile", "content_type": 7}}, {"pk": 21, "model": "auth.permission", "fields": {"codename": "delete_userprofile", "name": "Can delete user profile", "content_type": 7}}, {"pk": 22, "model": "auth.permission", "fields": {"codename": "add_address", "name": "Can add address", "content_type": 8}}, {"pk": 23, "model": "auth.permission", "fields": {"codename": "change_address", "name": "Can change address", "content_type": 8}}, {"pk": 24, "model": "auth.permission", "fields": {"codename": "delete_address", "name": "Can delete address", "content_type": 8}}, {"pk": 25, "model": "auth.permission", "fields": {"codename": "add_location", "name": "Can add location", "content_type": 9}}, {"pk": 26, "model": "auth.permission", "fields": {"codename": "change_location", "name": "Can change location", "content_type": 9}}, {"pk": 27, "model": "auth.permission", "fields": {"codename": "delete_location", "name": "Can delete location", "content_type": 9}}, {"pk": 28, "model": "auth.permission", "fields": {"codename": "add_asset_type", "name": "Can add asset_ type", "content_type": 10}}, {"pk": 29, "model": "auth.permission", "fields": {"codename": "change_asset_type", "name": "Can change asset_ type", "content_type": 10}}, {"pk": 30, "model": "auth.permission", "fields": {"codename": "delete_asset_type", "name": "Can delete asset_ type", "content_type": 10}}, {"pk": 31, "model": "auth.permission", "fields": {"codename": "add_asset", "name": "Can add asset", "content_type": 11}}, {"pk": 32, "model": "auth.permission", "fields": {"codename": "change_asset", "name": "Can change asset", "content_type": 11}}, {"pk": 33, "model": "auth.permission", "fields": {"codename": "delete_asset", "name": "Can delete asset", "content_type": 11}}, {"pk": 34, "model": "auth.permission", "fields": {"codename": "add_sharecontract", "name": "Can add share contract", "content_type": 12}}, {"pk": 35, "model": "auth.permission", "fields": {"codename": "change_sharecontract", "name": "Can change share contract", "content_type": 12}}, {"pk": 36, "model": "auth.permission", "fields": {"codename": "delete_sharecontract", "name": "Can delete share contract", "content_type": 12}}, {"pk": 37, "model": "auth.permission", "fields": {"codename": "add_message", "name": "Can add message", "content_type": 13}}, {"pk": 38, "model": "auth.permission", "fields": {"codename": "change_message", "name": "Can change message", "content_type": 13}}, {"pk": 39, "model": "auth.permission", "fields": {"codename": "delete_message", "name": "Can delete message", "content_type": 13}}, {"pk": 1, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": true, "email": "otis1017@gmail.com", "is_active": true, "first_name": "", "last_login": "2014-03-12T21:14:37.886Z", "date_joined": "2014-03-12T19:26:00.009Z", "is_superuser": true, "username": "otis", "password": "pbkdf2_sha256$12000$g49VNrwS5uqq$JzpumS4WUypXINm0ew9n/hR6iN6/ZedjDjX6l/NngS4=", "user_permissions": []}}, {"pk": 2, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T20:14:03.846Z", "date_joined": "2014-03-12T19:28:40.015Z", "is_superuser": false, "username": "garry", "password": "pbkdf2_sha256$12000$P6iQNcQaWdqS$De7PR9DzdajURCfCQM09cD+RRB0I9rKQZKzOFe0rYQg=", "user_permissions": []}}, {"pk": 3, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T19:28:58.263Z", "date_joined": "2014-03-12T19:28:58.263Z", "is_superuser": false, "username": "omegle", "password": "pbkdf2_sha256$12000$MXahTUlcA7Lp$YvKjf8Bj86wSxKXXRSOxWeDAUzcqDA0x5zLastMX3/A=", "user_permissions": []}}, {"pk": 4, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T19:29:16.134Z", "date_joined": "2014-03-12T19:29:16.134Z", "is_superuser": false, "username": "larry", "password": "pbkdf2_sha256$12000$mgTODi3A7CsA$2aWdR/z738XZoWm3XE3OfnpVPGX9+v7+zowZa5jatuU=", "user_permissions": []}}, {"pk": 5, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T19:29:32.788Z", "date_joined": "2014-03-12T19:29:32.788Z", "is_superuser": false, "username": "bill", "password": "pbkdf2_sha256$12000$R1Jz77GSHsHb$k3ay847kf5qXuBccZjjtm+hP8Sd/pV0VNQzsdOLIZRo=", "user_permissions": []}}, {"pk": 6, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T19:29:52.468Z", "date_joined": "2014-03-12T19:29:52.468Z", "is_superuser": false, "username": "george", "password": "pbkdf2_sha256$12000$ZyDom2hSIvOy$cR7wMXicoHFVlcjRrixK0hHAbkq8Km20OJP5cW5oPLU=", "user_permissions": []}}, {"pk": 7, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T21:13:33.158Z", "date_joined": "2014-03-12T19:30:35.395Z", "is_superuser": false, "username": "ladysman127", "password": "pbkdf2_sha256$12000$gyzwDDqUA9YN$64JLLDznBdsB4wwWsCeOLOJdcF637cjs6PsBkHCozAg=", "user_permissions": []}}, {"pk": 8, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T20:01:24.693Z", "date_joined": "2014-03-12T20:01:24.693Z", "is_superuser": false, "username": "david", "password": "pbkdf2_sha256$12000$McIF25JGNknM$bQsdvux8hZLDzxJs4Ez08sPhIBDjYpem5KX6owudw+0=", "user_permissions": []}}, {"pk": 9, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T20:01:51.151Z", "date_joined": "2014-03-12T20:01:51.151Z", "is_superuser": false, "username": "matt", "password": "pbkdf2_sha256$12000$MDoYQ2WTqtEa$3SNIVrJ9PLO7QJKt+ETkL/30c001CPwEvGL5kBwsZhA=", "user_permissions": []}}, {"pk": 10, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T20:02:02.825Z", "date_joined": "2014-03-12T20:02:02.825Z", "is_superuser": false, "username": "mike", "password": "pbkdf2_sha256$12000$dATxpnou5NBI$doapU+dTYpbfWg1S9GTSMALmS5ZUa9l8bpSuLUebfU0=", "user_permissions": []}}, {"pk": 11, "model": "auth.user", "fields": {"last_name": "", "groups": [], "is_staff": false, "email": "", "is_active": true, "first_name": "", "last_login": "2014-03-12T20:02:15.177Z", "date_joined": "2014-03-12T20:02:15.177Z", "is_superuser": false, "username": "phil", "password": "pbkdf2_sha256$12000$EbfYSxuxM8aI$y7tMETJ82i/fs2lzm58vb+HFwNAFW1C6g7VEn4kUN1k=", "user_permissions": []}}, {"pk": 12, "model": "auth.user", "fields": {"last_name": "stevenson", "groups": [], "is_staff": false, "email": "steve@steve.com", "is_active": true, "first_name": "steve", "last_login": "2014-03-12T21:15:58.133Z", "date_joined": "2014-03-12T20:44:07.733Z", "is_superuser": false, "username": "steve", "password": "pbkdf2_sha256$12000$pbkdf2_sha256$pPIq55XqQFA0GNEQCQ6ZCq6CbP2biSUTsZoOYia6iQA=", "user_permissions": []}}, {"pk": 13, "model": "auth.user", "fields": {"last_name": "User", "groups": [], "is_staff": false, "email": "testuser@testeruser.com", "is_active": true, "first_name": "Test", "last_login": "2014-03-12T21:18:02.058Z", "date_joined": "2014-03-12T20:48:47.514Z", "is_superuser": false, "username": "testuser", "password": "pbkdf2_sha256$12000$pbkdf2_sha256$bFqiCIFf2hcm4uwx2QZuTtc747cg9+UC5MNQz0RXuuo=", "user_permissions": []}}, {"pk": 1, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 1}}, {"pk": 2, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 2}}, {"pk": 3, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 3}}, {"pk": 4, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 4}}, {"pk": 5, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 5}}, {"pk": 6, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 6}}, {"pk": 7, "model": "sharetools.userprofile", "fields": {"zipcode": "12755", "user": 7}}, {"pk": 8, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 8}}, {"pk": 9, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 9}}, {"pk": 10, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 10}}, {"pk": 11, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 11}}, {"pk": 12, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 12}}, {"pk": 13, "model": "sharetools.userprofile", "fields": {"zipcode": "12345", "user": 13}}, {"pk": 1, "model": "sharetools.location", "fields": {"dateCreated": "2014-03-12T20:05:36.198Z", "isPrivate": false, "address": 4, "isActive": true, "name": "george's shed", "description": "George of the Jungle Shed ", "owner": 6}}, {"pk": 2, "model": "sharetools.location", "fields": {"dateCreated": "2014-03-12T20:06:36.973Z", "isPrivate": false, "address": 3, "isActive": true, "name": "Larry Bird's Shed", "description": "A Shed for Gardening Tools Only", "owner": 4}}, {"pk": 3, "model": "sharetools.location", "fields": {"dateCreated": "2014-03-12T20:07:16.263Z", "isPrivate": false, "address": 5, "isActive": true, "name": "Garry's Mod Creative Shed", "description": "A shed for those who like to create nic-nacs", "owner": 2}}, {"pk": 4, "model": "sharetools.location", "fields": {"dateCreated": "2014-03-12T20:07:59.822Z", "isPrivate": false, "address": 4, "isActive": true, "name": "Air Tools Exclusive", "description": "A shed for the latest and greatest air tools", "owner": 4}}, {"pk": 5, "model": "sharetools.location", "fields": {"dateCreated": "2014-03-12T21:03:58.994Z", "isPrivate": false, "address": 6, "isActive": true, "name": "Test User's Great Testing Shed", "description": "A Shed for testing everything", "owner": 13}}, {"pk": 1, "model": "sharetools.asset", "fields": {"name": "Blow Gun", "type": 3, "description": "Blows air at 23km per hour speeds", "location": 4, "owner": 4}}, {"pk": 2, "model": "sharetools.asset", "fields": {"name": "Air Grinder", "type": 3, "description": "Use it to grind away at that rust", "location": 4, "owner": 4}}, {"pk": 3, "model": "sharetools.asset", "fields": {"name": "Air Nailer", "type": 3, "description": "Forget using a hammer, use this to nail it quick", "location": 4, "owner": 4}}, {"pk": 4, "model": "sharetools.asset", "fields": {"name": "Air Ratchet", "type": 3, "description": "Screw bolts in quick", "location": 4, "owner": 4}}, {"pk": 5, "model": "sharetools.asset", "fields": {"name": "Air Screw Gun", "type": 3, "description": "Screws Screws really fast", "location": 4, "owner": 4}}, {"pk": 6, "model": "sharetools.asset", "fields": {"name": "Air Sander", "type": 3, "description": "Enter Sand man, with air", "location": 4, "owner": 4}}, {"pk": 7, "model": "sharetools.asset", "fields": {"name": "Air Hammer", "type": 3, "description": "Because we can", "location": 4, "owner": 4}}, {"pk": 8, "model": "sharetools.asset", "fields": {"name": "Hammer", "type": 2, "description": "A regular hammer", "location": 1, "owner": 6}}, {"pk": 9, "model": "sharetools.asset", "fields": {"name": "Philips Screw Driver", "type": 2, "description": "Not a flat head", "location": 1, "owner": 6}}, {"pk": 10, "model": "sharetools.asset", "fields": {"name": "Regular Screw Driver", "type": 2, "description": "Flat", "location": 1, "owner": 6}}, {"pk": 11, "model": "sharetools.asset", "fields": {"name": "Box Cutter", "type": 2, "description": "A Box cutter", "location": 1, "owner": 6}}, {"pk": 12, "model": "sharetools.asset", "fields": {"name": "Large Red Ladder", "type": 4, "description": "A steel ladder, very stirdy", "location": 1, "owner": 2}}, {"pk": 13, "model": "sharetools.asset", "fields": {"name": "Clamp", "type": 2, "description": "Holds stuff to other stuff ", "location": 1, "owner": 6}}, {"pk": 14, "model": "sharetools.asset", "fields": {"name": "Tool Box", "type": 2, "description": "Carry your other tools in this", "location": 1, "owner": 6}}, {"pk": 15, "model": "sharetools.asset", "fields": {"name": "Welder", "type": 5, "description": "Produces a blue hot flame ", "location": 1, "owner": 6}}, {"pk": 16, "model": "sharetools.asset", "fields": {"name": "Welding Mask", "type": 5, "description": "Protect yourself from the flame", "location": 1, "owner": 6}}, {"pk": 17, "model": "sharetools.asset", "fields": {"name": "Crowbar", "type": 2, "description": "Looks sorta like the Lambda symbol", "location": 1, "owner": 6}}, {"pk": 18, "model": "sharetools.asset", "fields": {"name": "Rubber Mallet", "type": 2, "description": "Softer than a normal hammer", "location": 1, "owner": 6}}, {"pk": 19, "model": "sharetools.asset", "fields": {"name": "Socket Set", "type": 2, "description": "A socket wrench plus sockets", "location": 1, "owner": 2}}, {"pk": 20, "model": "sharetools.asset", "fields": {"name": "Screw Gun", "type": 1, "description": "Batteries not included", "location": 3, "owner": 2}}, {"pk": 21, "model": "sharetools.asset", "fields": {"name": "Hand Push Lawn Mower", "type": 2, "description": "An old style lawn mower with no engine", "location": 3, "owner": 2}}, {"pk": 22, "model": "sharetools.asset", "fields": {"name": "Hand Saw", "type": 2, "description": "Saw with your hands", "location": 3, "owner": 2}}, {"pk": 23, "model": "sharetools.asset", "fields": {"name": "Small Step Stool", "type": 4, "description": "Mainly used for painting", "location": 3, "owner": 2}}, {"pk": 24, "model": "sharetools.asset", "fields": {"name": "Shovel", "type": 2, "description": "A large shovel made for lifting rocks", "location": 2, "owner": 4}}, {"pk": 25, "model": "sharetools.asset", "fields": {"name": "Level", "type": 2, "description": "Make it perfect", "location": 2, "owner": 4}}, {"pk": 26, "model": "sharetools.asset", "fields": {"name": "Solder Iron", "type": 5, "description": "Melt metal like butter", "location": 2, "owner": 4}}, {"pk": 27, "model": "sharetools.asset", "fields": {"name": "Testing Tool", "type": 1, "description": "A tool that tests other tools", "location": 5, "owner": 13}}, {"pk": 28, "model": "sharetools.asset", "fields": {"name": "PS2 Keyboard", "type": 2, "description": "Good luck finding a computer to plug this into!", "location": 5, "owner": 13}}, {"pk": 29, "model": "sharetools.asset", "fields": {"name": "Power Light", "type": 1, "description": "A really bright light", "location": 5, "owner": 13}}, {"pk": 1, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:35:19Z", "lender": 4, "asset": 5, "status": 1, "borrower": 7, "returnDate": "2014-03-20T20:35:12Z"}}, {"pk": 2, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:35:39Z", "lender": 4, "asset": 24, "status": 0, "borrower": 10, "returnDate": "2014-03-28T20:35:37Z"}}, {"pk": 3, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:36:09Z", "lender": 6, "asset": 17, "status": 1, "borrower": 11, "returnDate": "2014-03-25T04:00:00Z"}}, {"pk": 4, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:36:51Z", "lender": 6, "asset": 10, "status": 1, "borrower": 3, "returnDate": "2014-03-31T20:36:50Z"}}, {"pk": 5, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:43:24Z", "lender": 4, "asset": 3, "status": 0, "borrower": 13, "returnDate": "2014-03-20T20:43:24Z"}}, {"pk": 6, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:43:24Z", "lender": 6, "asset": 8, "status": 3, "borrower": 13, "returnDate": "2014-04-12T20:43:24Z"}}, {"pk": 7, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:43:24Z", "lender": 4, "asset": 7, "status": 0, "borrower": 13, "returnDate": "2014-05-12T20:43:24Z"}}, {"pk": 8, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T20:43:24Z", "lender": 2, "asset": 19, "status": 1, "borrower": 13, "returnDate": "2014-06-12T20:43:24Z"}}, {"pk": 9, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T21:06:43Z", "lender": 13, "asset": 27, "status": 3, "borrower": 1, "returnDate": "2014-05-12T21:06:41Z"}}, {"pk": 10, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T21:08:52Z", "lender": 13, "asset": 28, "status": 1, "borrower": 12, "returnDate": "2014-05-12T21:08:48Z"}}, {"pk": 11, "model": "sharetools.sharecontract", "fields": {"loanDate": "2014-03-12T21:10:21Z", "lender": 13, "asset": 27, "status": 0, "borrower": 7, "returnDate": "2014-03-24T21:10:12Z"}}, {"pk": 1, "model": "messaging.message", "fields": {"subject": "Testing Tool", "msg_to": 13, "body": "Hey I was wondering if we could speed up the process on getting me that testing tool? I real need to test my tests! Thank you.", "msg_from": 7, "read": false}}, {"pk": 2, "model": "messaging.message", "fields": {"subject": "PS2 Keyboard", "msg_to": 13, "body": " That PS2 keyboard did not fit into my USB port. I put it back in your shed. Please mark it as returned, thanks!", "msg_from": 12, "read": false}}, {"pk": 1, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T19:28:31.282Z", "action_flag": 1, "content_type": 7, "object_repr": "otis", "user": 1, "change_message": ""}}, {"pk": 2, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T19:28:40.075Z", "action_flag": 1, "content_type": 4, "object_repr": "garry", "user": 1, "change_message": ""}}, {"pk": 3, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T19:28:43.903Z", "action_flag": 1, "content_type": 7, "object_repr": "garry", "user": 1, "change_message": ""}}, {"pk": 4, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T19:28:58.320Z", "action_flag": 1, "content_type": 4, "object_repr": "omegle", "user": 1, "change_message": ""}}, {"pk": 5, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T19:29:02.682Z", "action_flag": 1, "content_type": 7, "object_repr": "omegle", "user": 1, "change_message": ""}}, {"pk": 6, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T19:29:05.108Z", "action_flag": 2, "content_type": 7, "object_repr": "omegle", "user": 1, "change_message": "No fields changed."}}, {"pk": 7, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T19:29:16.194Z", "action_flag": 1, "content_type": 4, "object_repr": "larry", "user": 1, "change_message": ""}}, {"pk": 8, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T19:29:21.317Z", "action_flag": 1, "content_type": 7, "object_repr": "larry", "user": 1, "change_message": ""}}, {"pk": 9, "model": "admin.logentry", "fields": {"object_id": "5", "action_time": "2014-03-12T19:29:32.846Z", "action_flag": 1, "content_type": 4, "object_repr": "bill", "user": 1, "change_message": ""}}, {"pk": 10, "model": "admin.logentry", "fields": {"object_id": "5", "action_time": "2014-03-12T19:29:39.541Z", "action_flag": 1, "content_type": 7, "object_repr": "bill", "user": 1, "change_message": ""}}, {"pk": 11, "model": "admin.logentry", "fields": {"object_id": "6", "action_time": "2014-03-12T19:29:52.527Z", "action_flag": 1, "content_type": 4, "object_repr": "george", "user": 1, "change_message": ""}}, {"pk": 12, "model": "admin.logentry", "fields": {"object_id": "6", "action_time": "2014-03-12T19:29:56.380Z", "action_flag": 1, "content_type": 7, "object_repr": "george", "user": 1, "change_message": ""}}, {"pk": 13, "model": "admin.logentry", "fields": {"object_id": "7", "action_time": "2014-03-12T19:30:35.453Z", "action_flag": 1, "content_type": 4, "object_repr": "ladysman127", "user": 1, "change_message": ""}}, {"pk": 14, "model": "admin.logentry", "fields": {"object_id": "7", "action_time": "2014-03-12T19:30:41.149Z", "action_flag": 1, "content_type": 7, "object_repr": "ladysman127", "user": 1, "change_message": ""}}, {"pk": 15, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T19:38:29.408Z", "action_flag": 2, "content_type": 10, "object_repr": "Latters and Scaffolding", "user": 1, "change_message": "No fields changed."}}, {"pk": 16, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T19:38:33.808Z", "action_flag": 2, "content_type": 10, "object_repr": "Ladders and Scaffolding", "user": 1, "change_message": "Changed name."}}, {"pk": 17, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T19:39:23.567Z", "action_flag": 1, "content_type": 8, "object_repr": "445 Walker Valley Road, Pine Bush, United States", "user": 1, "change_message": ""}}, {"pk": 18, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T19:39:34.641Z", "action_flag": 1, "content_type": 8, "object_repr": "106 Stony Brook Road, Pine Bush, United States", "user": 1, "change_message": ""}}, {"pk": 19, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T19:39:42.616Z", "action_flag": 2, "content_type": 8, "object_repr": "445 Walker Valley Road, Pine Bush, United States", "user": 1, "change_message": "Changed zipcode."}}, {"pk": 20, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T19:40:29.285Z", "action_flag": 1, "content_type": 8, "object_repr": "Rocky Road, Rochester, United States", "user": 1, "change_message": ""}}, {"pk": 21, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T19:40:36.412Z", "action_flag": 2, "content_type": 8, "object_repr": "106 Stony Brook Road, Rochester, United States", "user": 1, "change_message": "Changed city."}}, {"pk": 22, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T19:40:51.502Z", "action_flag": 2, "content_type": 8, "object_repr": "445 Walker Valley Road, Rochester, United States", "user": 1, "change_message": "Changed city."}}, {"pk": 23, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T19:42:52.279Z", "action_flag": 1, "content_type": 8, "object_repr": "Main St, Rochester, United States", "user": 1, "change_message": ""}}, {"pk": 24, "model": "admin.logentry", "fields": {"object_id": "5", "action_time": "2014-03-12T19:43:17.156Z", "action_flag": 1, "content_type": 8, "object_repr": "Lomb Memorial Drive, Rochester, United States", "user": 1, "change_message": ""}}, {"pk": 25, "model": "admin.logentry", "fields": {"object_id": "8", "action_time": "2014-03-12T20:01:24.750Z", "action_flag": 1, "content_type": 4, "object_repr": "david", "user": 1, "change_message": ""}}, {"pk": 26, "model": "admin.logentry", "fields": {"object_id": "8", "action_time": "2014-03-12T20:01:28.274Z", "action_flag": 1, "content_type": 7, "object_repr": "david", "user": 1, "change_message": ""}}, {"pk": 27, "model": "admin.logentry", "fields": {"object_id": "9", "action_time": "2014-03-12T20:01:51.205Z", "action_flag": 1, "content_type": 4, "object_repr": "matt", "user": 1, "change_message": ""}}, {"pk": 28, "model": "admin.logentry", "fields": {"object_id": "9", "action_time": "2014-03-12T20:01:54.678Z", "action_flag": 1, "content_type": 7, "object_repr": "matt", "user": 1, "change_message": ""}}, {"pk": 29, "model": "admin.logentry", "fields": {"object_id": "10", "action_time": "2014-03-12T20:02:02.879Z", "action_flag": 1, "content_type": 4, "object_repr": "mike", "user": 1, "change_message": ""}}, {"pk": 30, "model": "admin.logentry", "fields": {"object_id": "10", "action_time": "2014-03-12T20:02:06.136Z", "action_flag": 1, "content_type": 7, "object_repr": "mike", "user": 1, "change_message": ""}}, {"pk": 31, "model": "admin.logentry", "fields": {"object_id": "11", "action_time": "2014-03-12T20:02:15.235Z", "action_flag": 1, "content_type": 4, "object_repr": "phil", "user": 1, "change_message": ""}}, {"pk": 32, "model": "admin.logentry", "fields": {"object_id": "11", "action_time": "2014-03-12T20:02:18.784Z", "action_flag": 1, "content_type": 7, "object_repr": "phil", "user": 1, "change_message": ""}}, {"pk": 33, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T20:05:36.199Z", "action_flag": 1, "content_type": 9, "object_repr": "george's shed", "user": 1, "change_message": ""}}, {"pk": 34, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T20:06:36.974Z", "action_flag": 1, "content_type": 9, "object_repr": "Larry Bird's Shed", "user": 1, "change_message": ""}}, {"pk": 35, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T20:07:16.265Z", "action_flag": 1, "content_type": 9, "object_repr": "Garry's Mod Creative Shed", "user": 1, "change_message": ""}}, {"pk": 36, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T20:07:59.823Z", "action_flag": 1, "content_type": 9, "object_repr": "Air Tools Exclusive", "user": 1, "change_message": ""}}, {"pk": 37, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T20:10:17.654Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 38, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T20:10:48.197Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 39, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T20:11:27.022Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 40, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T20:13:54.421Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 41, "model": "admin.logentry", "fields": {"object_id": "5", "action_time": "2014-03-12T20:16:53.583Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 42, "model": "admin.logentry", "fields": {"object_id": "6", "action_time": "2014-03-12T20:18:12.987Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 43, "model": "admin.logentry", "fields": {"object_id": "7", "action_time": "2014-03-12T20:22:40.430Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Air Tools & Compressors", "user": 1, "change_message": ""}}, {"pk": 44, "model": "admin.logentry", "fields": {"object_id": "8", "action_time": "2014-03-12T20:23:06.205Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 45, "model": "admin.logentry", "fields": {"object_id": "9", "action_time": "2014-03-12T20:23:38.852Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 46, "model": "admin.logentry", "fields": {"object_id": "10", "action_time": "2014-03-12T20:23:58.182Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 47, "model": "admin.logentry", "fields": {"object_id": "11", "action_time": "2014-03-12T20:24:34.843Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 48, "model": "admin.logentry", "fields": {"object_id": "12", "action_time": "2014-03-12T20:25:01.762Z", "action_flag": 1, "content_type": 11, "object_repr": "garry's Ladders and Scaffolding", "user": 1, "change_message": ""}}, {"pk": 49, "model": "admin.logentry", "fields": {"object_id": "13", "action_time": "2014-03-12T20:25:41.605Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 50, "model": "admin.logentry", "fields": {"object_id": "14", "action_time": "2014-03-12T20:26:37.942Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 51, "model": "admin.logentry", "fields": {"object_id": "15", "action_time": "2014-03-12T20:26:57.550Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Welding & Soldering", "user": 1, "change_message": ""}}, {"pk": 52, "model": "admin.logentry", "fields": {"object_id": "16", "action_time": "2014-03-12T20:27:16.294Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Welding & Soldering", "user": 1, "change_message": ""}}, {"pk": 53, "model": "admin.logentry", "fields": {"object_id": "17", "action_time": "2014-03-12T20:28:00.438Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 54, "model": "admin.logentry", "fields": {"object_id": "18", "action_time": "2014-03-12T20:28:51.311Z", "action_flag": 1, "content_type": 11, "object_repr": "george's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 55, "model": "admin.logentry", "fields": {"object_id": "19", "action_time": "2014-03-12T20:29:31.149Z", "action_flag": 1, "content_type": 11, "object_repr": "garry's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 56, "model": "admin.logentry", "fields": {"object_id": "20", "action_time": "2014-03-12T20:30:30.976Z", "action_flag": 1, "content_type": 11, "object_repr": "garry's Power Tools", "user": 1, "change_message": ""}}, {"pk": 57, "model": "admin.logentry", "fields": {"object_id": "21", "action_time": "2014-03-12T20:31:15.753Z", "action_flag": 1, "content_type": 11, "object_repr": "garry's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 58, "model": "admin.logentry", "fields": {"object_id": "22", "action_time": "2014-03-12T20:31:36.373Z", "action_flag": 1, "content_type": 11, "object_repr": "garry's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 59, "model": "admin.logentry", "fields": {"object_id": "23", "action_time": "2014-03-12T20:32:03.214Z", "action_flag": 1, "content_type": 11, "object_repr": "garry's Ladders and Scaffolding", "user": 1, "change_message": ""}}, {"pk": 60, "model": "admin.logentry", "fields": {"object_id": "24", "action_time": "2014-03-12T20:33:33.454Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 61, "model": "admin.logentry", "fields": {"object_id": "25", "action_time": "2014-03-12T20:34:05.441Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Hand Tools", "user": 1, "change_message": ""}}, {"pk": 62, "model": "admin.logentry", "fields": {"object_id": "26", "action_time": "2014-03-12T20:34:51.559Z", "action_flag": 1, "content_type": 11, "object_repr": "larry's Welding & Soldering", "user": 1, "change_message": ""}}, {"pk": 63, "model": "admin.logentry", "fields": {"object_id": "1", "action_time": "2014-03-12T20:35:33.639Z", "action_flag": 1, "content_type": 12, "object_repr": "larry lent ladysman127 a larry's Air Tools & Compressors on 2014-03-12 16:35:19-04:00", "user": 1, "change_message": ""}}, {"pk": 64, "model": "admin.logentry", "fields": {"object_id": "2", "action_time": "2014-03-12T20:35:58.872Z", "action_flag": 1, "content_type": 12, "object_repr": "larry lent mike a larry's Hand Tools on 2014-03-12 16:35:39-04:00", "user": 1, "change_message": ""}}, {"pk": 65, "model": "admin.logentry", "fields": {"object_id": "3", "action_time": "2014-03-12T20:36:22.935Z", "action_flag": 1, "content_type": 12, "object_repr": "george lent phil a george's Hand Tools on 2014-03-12 16:36:09-04:00", "user": 1, "change_message": ""}}, {"pk": 66, "model": "admin.logentry", "fields": {"object_id": "4", "action_time": "2014-03-12T20:37:18.191Z", "action_flag": 1, "content_type": 12, "object_repr": "george lent omegle a george's Hand Tools on 2014-03-12 16:36:51-04:00", "user": 1, "change_message": ""}}, {"pk": 67, "model": "admin.logentry", "fields": {"object_id": "8", "action_time": "2014-03-12T20:59:26.854Z", "action_flag": 2, "content_type": 12, "object_repr": "garry lent testuser a garry's Hand Tools on 2014-03-12 16:43:24-04:00", "user": 1, "change_message": "Changed status."}}, {"pk": 68, "model": "admin.logentry", "fields": {"object_id": "6", "action_time": "2014-03-12T20:59:33.118Z", "action_flag": 2, "content_type": 12, "object_repr": "george lent testuser a george's Hand Tools on 2014-03-12 16:43:24-04:00", "user": 1, "change_message": "Changed status."}}, {"pk": 69, "model": "admin.logentry", "fields": {"object_id": "9", "action_time": "2014-03-12T21:08:03.506Z", "action_flag": 1, "content_type": 12, "object_repr": "testuser lent otis a testuser's Power Tools on 2014-03-12 17:06:43-04:00", "user": 1, "change_message": ""}}, {"pk": 70, "model": "admin.logentry", "fields": {"object_id": "10", "action_time": "2014-03-12T21:09:09.342Z", "action_flag": 1, "content_type": 12, "object_repr": "testuser lent steve a testuser's Hand Tools on 2014-03-12 17:08:52-04:00", "user": 1, "change_message": ""}}, {"pk": 71, "model": "admin.logentry", "fields": {"object_id": "11", "action_time": "2014-03-12T21:10:51.164Z", "action_flag": 1, "content_type": 12, "object_repr": "testuser lent ladysman127 a testuser's Power Tools on 2014-03-12 17:10:21-04:00", "user": 1, "change_message": ""}}]
+[
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 1, 
+  "fields": {
+    "model": "logentry", 
+    "app_label": "admin", 
+    "name": "log entry"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 2, 
+  "fields": {
+    "model": "permission", 
+    "app_label": "auth", 
+    "name": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 3, 
+  "fields": {
+    "model": "group", 
+    "app_label": "auth", 
+    "name": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 4, 
+  "fields": {
+    "model": "user", 
+    "app_label": "auth", 
+    "name": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 5, 
+  "fields": {
+    "model": "contenttype", 
+    "app_label": "contenttypes", 
+    "name": "content type"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 6, 
+  "fields": {
+    "model": "session", 
+    "app_label": "sessions", 
+    "name": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 7, 
+  "fields": {
+    "model": "address", 
+    "app_label": "sharetools", 
+    "name": "address"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 8, 
+  "fields": {
+    "model": "location", 
+    "app_label": "sharetools", 
+    "name": "location"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 9, 
+  "fields": {
+    "model": "userprofile", 
+    "app_label": "sharetools", 
+    "name": "user profile"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 10, 
+  "fields": {
+    "model": "asset_type", 
+    "app_label": "sharetools", 
+    "name": "asset_ type"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 11, 
+  "fields": {
+    "model": "asset", 
+    "app_label": "sharetools", 
+    "name": "asset"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 12, 
+  "fields": {
+    "model": "sharecontract", 
+    "app_label": "sharetools", 
+    "name": "share contract"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 13, 
+  "fields": {
+    "model": "membership", 
+    "app_label": "sharetools", 
+    "name": "membership"
+  }
+},
+{
+  "model": "contenttypes.contenttype", 
+  "pk": 14, 
+  "fields": {
+    "model": "message", 
+    "app_label": "messaging", 
+    "name": "message"
+  }
+},
+{
+  "model": "sessions.session", 
+  "pk": "us6bihg9glaxbrfuosi2hbfux3gk5lwb", 
+  "fields": {
+    "session_data": "NWM2NzgyNzUyOWVkZDgyMDg2OWNmNjM1ZGFjZWRmOWIyYzM5ZmY1NDp7Il9hdXRoX3VzZXJfaWQiOjQsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=", 
+    "expire_date": "2014-05-08T19:09:30.189Z"
+  }
+},
+{
+  "model": "sharetools.address", 
+  "pk": 1, 
+  "fields": {
+    "state": "Massachusetts", 
+    "street": "98 Howard st.", 
+    "city": "Melrose", 
+    "country": "United States", 
+    "zipcode": "02176"
+  }
+},
+{
+  "model": "sharetools.address", 
+  "pk": 2, 
+  "fields": {
+    "state": "California", 
+    "street": "32 Fake dr", 
+    "city": "Salem", 
+    "country": "United States", 
+    "zipcode": "82318"
+  }
+},
+{
+  "model": "sharetools.asset_type", 
+  "pk": 3, 
+  "fields": {
+    "description": "A power tool is a tool that is actuated by an additional power source and mechanism other than the solely manual labour used with hand tools.", 
+    "name": "Power Tool"
+  }
+},
+{
+  "model": "sharetools.asset_type", 
+  "pk": 4, 
+  "fields": {
+    "description": "Be safe than sorry", 
+    "name": "Safety & Security"
+  }
+},
+{
+  "model": "sharetools.asset_type", 
+  "pk": 5, 
+  "fields": {
+    "description": "Keep those bushes looking McFly", 
+    "name": "Lawn & Gardening"
+  }
+},
+{
+  "model": "sharetools.asset_type", 
+  "pk": 6, 
+  "fields": {
+    "description": "If it has a plug, it might belong here", 
+    "name": "Electronics & Computers"
+  }
+},
+{
+  "model": "sharetools.asset_type", 
+  "pk": 7, 
+  "fields": {
+    "description": "Anything doesn't really fit anywhere else", 
+    "name": "Miscellaneous"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 1, 
+  "fields": {
+    "codename": "add_logentry", 
+    "content_type": 1, 
+    "name": "Can add log entry"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 2, 
+  "fields": {
+    "codename": "change_logentry", 
+    "content_type": 1, 
+    "name": "Can change log entry"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 3, 
+  "fields": {
+    "codename": "delete_logentry", 
+    "content_type": 1, 
+    "name": "Can delete log entry"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 4, 
+  "fields": {
+    "codename": "add_permission", 
+    "content_type": 2, 
+    "name": "Can add permission"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 5, 
+  "fields": {
+    "codename": "change_permission", 
+    "content_type": 2, 
+    "name": "Can change permission"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 6, 
+  "fields": {
+    "codename": "delete_permission", 
+    "content_type": 2, 
+    "name": "Can delete permission"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 7, 
+  "fields": {
+    "codename": "add_group", 
+    "content_type": 3, 
+    "name": "Can add group"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 8, 
+  "fields": {
+    "codename": "change_group", 
+    "content_type": 3, 
+    "name": "Can change group"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 9, 
+  "fields": {
+    "codename": "delete_group", 
+    "content_type": 3, 
+    "name": "Can delete group"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 10, 
+  "fields": {
+    "codename": "add_user", 
+    "content_type": 4, 
+    "name": "Can add user"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 11, 
+  "fields": {
+    "codename": "change_user", 
+    "content_type": 4, 
+    "name": "Can change user"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 12, 
+  "fields": {
+    "codename": "delete_user", 
+    "content_type": 4, 
+    "name": "Can delete user"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 13, 
+  "fields": {
+    "codename": "add_contenttype", 
+    "content_type": 5, 
+    "name": "Can add content type"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 14, 
+  "fields": {
+    "codename": "change_contenttype", 
+    "content_type": 5, 
+    "name": "Can change content type"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 15, 
+  "fields": {
+    "codename": "delete_contenttype", 
+    "content_type": 5, 
+    "name": "Can delete content type"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 16, 
+  "fields": {
+    "codename": "add_session", 
+    "content_type": 6, 
+    "name": "Can add session"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 17, 
+  "fields": {
+    "codename": "change_session", 
+    "content_type": 6, 
+    "name": "Can change session"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 18, 
+  "fields": {
+    "codename": "delete_session", 
+    "content_type": 6, 
+    "name": "Can delete session"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 19, 
+  "fields": {
+    "codename": "add_address", 
+    "content_type": 7, 
+    "name": "Can add address"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 20, 
+  "fields": {
+    "codename": "change_address", 
+    "content_type": 7, 
+    "name": "Can change address"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 21, 
+  "fields": {
+    "codename": "delete_address", 
+    "content_type": 7, 
+    "name": "Can delete address"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 22, 
+  "fields": {
+    "codename": "add_location", 
+    "content_type": 8, 
+    "name": "Can add location"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 23, 
+  "fields": {
+    "codename": "change_location", 
+    "content_type": 8, 
+    "name": "Can change location"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 24, 
+  "fields": {
+    "codename": "delete_location", 
+    "content_type": 8, 
+    "name": "Can delete location"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 25, 
+  "fields": {
+    "codename": "add_userprofile", 
+    "content_type": 9, 
+    "name": "Can add user profile"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 26, 
+  "fields": {
+    "codename": "change_userprofile", 
+    "content_type": 9, 
+    "name": "Can change user profile"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 27, 
+  "fields": {
+    "codename": "delete_userprofile", 
+    "content_type": 9, 
+    "name": "Can delete user profile"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 28, 
+  "fields": {
+    "codename": "add_asset_type", 
+    "content_type": 10, 
+    "name": "Can add asset_ type"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 29, 
+  "fields": {
+    "codename": "change_asset_type", 
+    "content_type": 10, 
+    "name": "Can change asset_ type"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 30, 
+  "fields": {
+    "codename": "delete_asset_type", 
+    "content_type": 10, 
+    "name": "Can delete asset_ type"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 31, 
+  "fields": {
+    "codename": "add_asset", 
+    "content_type": 11, 
+    "name": "Can add asset"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 32, 
+  "fields": {
+    "codename": "change_asset", 
+    "content_type": 11, 
+    "name": "Can change asset"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 33, 
+  "fields": {
+    "codename": "delete_asset", 
+    "content_type": 11, 
+    "name": "Can delete asset"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 34, 
+  "fields": {
+    "codename": "add_sharecontract", 
+    "content_type": 12, 
+    "name": "Can add share contract"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 35, 
+  "fields": {
+    "codename": "change_sharecontract", 
+    "content_type": 12, 
+    "name": "Can change share contract"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 36, 
+  "fields": {
+    "codename": "delete_sharecontract", 
+    "content_type": 12, 
+    "name": "Can delete share contract"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 37, 
+  "fields": {
+    "codename": "add_membership", 
+    "content_type": 13, 
+    "name": "Can add membership"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 38, 
+  "fields": {
+    "codename": "change_membership", 
+    "content_type": 13, 
+    "name": "Can change membership"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 39, 
+  "fields": {
+    "codename": "delete_membership", 
+    "content_type": 13, 
+    "name": "Can delete membership"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 40, 
+  "fields": {
+    "codename": "add_message", 
+    "content_type": 14, 
+    "name": "Can add message"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 41, 
+  "fields": {
+    "codename": "change_message", 
+    "content_type": 14, 
+    "name": "Can change message"
+  }
+},
+{
+  "model": "auth.permission", 
+  "pk": 42, 
+  "fields": {
+    "codename": "delete_message", 
+    "content_type": 14, 
+    "name": "Can delete message"
+  }
+},
+{
+  "model": "auth.user", 
+  "pk": 1, 
+  "fields": {
+    "first_name": "", 
+    "password": "pbkdf2_sha256$12000$Ekbg3AfK1biX$jN+PrpAAPOmwc5l/9Fa1fxXVVmBXF97O2uoKopkhthk=", 
+    "user_permissions": [], 
+    "is_staff": true, 
+    "groups": [], 
+    "date_joined": "2014-04-24T16:26:43.640Z", 
+    "is_active": true, 
+    "is_superuser": true, 
+    "last_login": "2014-04-24T19:06:02.703Z", 
+    "last_name": "", 
+    "username": "super", 
+    "email": ""
+  }
+},
+{
+  "model": "auth.user", 
+  "pk": 2, 
+  "fields": {
+    "first_name": "Tod", 
+    "password": "pbkdf2_sha256$12000$4g3AtOhYk5cf$W8FOsfgeROQ3tu97T3SuGNIJbRJOn3Qos8sFuaYxXBo=", 
+    "user_permissions": [], 
+    "is_staff": false, 
+    "groups": [], 
+    "date_joined": "2014-04-24T16:38:29.172Z", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "last_login": "2014-04-24T19:08:37.672Z", 
+    "last_name": "Burger", 
+    "username": "TodLove", 
+    "email": "tod@tod.com"
+  }
+},
+{
+  "model": "auth.user", 
+  "pk": 3, 
+  "fields": {
+    "first_name": "Stacy", 
+    "password": "pbkdf2_sha256$12000$hvNdwQovLm0A$V/lww8sY5SFoSBtrQv59zApQrRxILagmIOzaXqR+RxY=", 
+    "user_permissions": [], 
+    "is_staff": false, 
+    "groups": [], 
+    "date_joined": "2014-04-24T16:44:03.153Z", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "last_login": "2014-04-24T18:50:51.265Z", 
+    "last_name": "Leancup", 
+    "username": "TurntStacy", 
+    "email": "stacy88@yahoo.com"
+  }
+},
+{
+  "model": "auth.user", 
+  "pk": 4, 
+  "fields": {
+    "first_name": "Test", 
+    "password": "pbkdf2_sha256$12000$nJOAyBLoDJcX$wtWLAzoB9l03A02J84yzJPz+Kzfp2uTPEeo/b+Z4jy4=", 
+    "user_permissions": [], 
+    "is_staff": false, 
+    "groups": [], 
+    "date_joined": "2014-04-24T18:22:20.611Z", 
+    "is_active": true, 
+    "is_superuser": false, 
+    "last_login": "2014-04-24T19:09:30.187Z", 
+    "last_name": "User", 
+    "username": "testuser", 
+    "email": "testuser@testeruser.com"
+  }
+},
+{
+  "model": "sharetools.location", 
+  "pk": 1, 
+  "fields": {
+    "inviteOnly": false, 
+    "toolModeration": true, 
+    "address": null, 
+    "isCommunity": false, 
+    "dateCreated": "2014-04-24T16:38:29.246Z", 
+    "owner": 2, 
+    "name": "Private Shed", 
+    "isActive": true, 
+    "isPrivate": true, 
+    "description": "Your private shed.  Seems like a nice spot to put tools you may not want to share right now."
+  }
+},
+{
+  "model": "sharetools.location", 
+  "pk": 2, 
+  "fields": {
+    "inviteOnly": false, 
+    "toolModeration": true, 
+    "address": 1, 
+    "isCommunity": true, 
+    "dateCreated": "2014-04-24T16:40:25.505Z", 
+    "owner": 2, 
+    "name": "Tod's House", 
+    "isActive": true, 
+    "isPrivate": false, 
+    "description": "Yo bro's, come on down to my pad.  Its super chill and I basically just kick it 24/7.  I think Stacy might be coming over later too. Come on down brahhhz"
+  }
+},
+{
+  "model": "sharetools.location", 
+  "pk": 3, 
+  "fields": {
+    "inviteOnly": false, 
+    "toolModeration": true, 
+    "address": null, 
+    "isCommunity": false, 
+    "dateCreated": "2014-04-24T16:44:03.223Z", 
+    "owner": 3, 
+    "name": "Private Shed", 
+    "isActive": true, 
+    "isPrivate": true, 
+    "description": "Your private shed.  Seems like a nice spot to put tools you may not want to share right now."
+  }
+},
+{
+  "model": "sharetools.location", 
+  "pk": 4, 
+  "fields": {
+    "inviteOnly": false, 
+    "toolModeration": true, 
+    "address": null, 
+    "isCommunity": false, 
+    "dateCreated": "2014-04-24T18:22:20.682Z", 
+    "owner": 4, 
+    "name": "Private Shed", 
+    "isActive": true, 
+    "isPrivate": true, 
+    "description": "Your private shed.  Seems like a nice spot to put tools you may not want to share right now."
+  }
+},
+{
+  "model": "sharetools.location", 
+  "pk": 5, 
+  "fields": {
+    "inviteOnly": false, 
+    "toolModeration": true, 
+    "address": 2, 
+    "isCommunity": true, 
+    "dateCreated": "2014-04-24T18:23:35.673Z", 
+    "owner": 4, 
+    "name": "Example Shed", 
+    "isActive": true, 
+    "isPrivate": false, 
+    "description": "This is a test shed"
+  }
+},
+{
+  "model": "sharetools.userprofile", 
+  "pk": 1, 
+  "fields": {
+    "up_votes": 1, 
+    "votePercent": 50, 
+    "user": 2, 
+    "privateLocation": 1, 
+    "down_votes": 1, 
+    "zipcode": ""
+  }
+},
+{
+  "model": "sharetools.userprofile", 
+  "pk": 2, 
+  "fields": {
+    "up_votes": 1, 
+    "votePercent": 50, 
+    "user": 3, 
+    "privateLocation": 3, 
+    "down_votes": 1, 
+    "zipcode": ""
+  }
+},
+{
+  "model": "sharetools.userprofile", 
+  "pk": 3, 
+  "fields": {
+    "up_votes": 2, 
+    "votePercent": 100, 
+    "user": 4, 
+    "privateLocation": 4, 
+    "down_votes": 0, 
+    "zipcode": ""
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 1, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 2, 
+    "owner": 2, 
+    "name": "Hand Drill 3000", 
+    "type": 3, 
+    "description": "Just your top of the line Hand Drill 3000"
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 2, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 1, 
+    "owner": 2, 
+    "name": "Kindle Fire HD", 
+    "type": 6, 
+    "description": "My stupid parent's gave me this dumb Kindle Fire HD, when I specially asked for the KINDLE FIRE HDX 8.9\".  I HATE YOU MOM!!"
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 3, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 3, 
+    "owner": 3, 
+    "name": "Extreme Lawn Mower", 
+    "type": 5, 
+    "description": "A first class lawn mower that really knows how to handle grass"
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 4, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 4, 
+    "owner": 4, 
+    "name": "Saftey Glasses", 
+    "type": 4, 
+    "description": "A pair of very low quality safety glasses.  Honestly you probably should even wear these.  I know I wouldn't."
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 5, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 2, 
+    "owner": 2, 
+    "name": "6FT Broad Swoard", 
+    "type": 4, 
+    "description": "Found this puppy in my G-Ma's garage after the funeral.  Its swings like it's brand new though! Rock on! - Tod"
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 6, 
+  "fields": {
+    "isAvailable": false, 
+    "location": 2, 
+    "owner": 2, 
+    "name": "PS3 Controller", 
+    "type": 6, 
+    "description": "Yeah, you know this thing is Modded.  My boy D-Money got me the hook up."
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 7, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 5, 
+    "owner": 4, 
+    "name": "Power Hammer", 
+    "type": 3, 
+    "description": "This hammer will get the job done, when your average joe hammer just will not cut it"
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 8, 
+  "fields": {
+    "isAvailable": false, 
+    "location": 5, 
+    "owner": 4, 
+    "name": "Pencil", 
+    "type": 7, 
+    "description": "The simple and elegant #2 pencil"
+  }
+},
+{
+  "model": "sharetools.asset", 
+  "pk": 9, 
+  "fields": {
+    "isAvailable": true, 
+    "location": 5, 
+    "owner": 4, 
+    "name": "Golden Plated Pencil Protector Pouch", 
+    "type": 5, 
+    "description": "*RARE* Never before opened.  Don't know why I am sharing it"
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 1, 
+  "fields": {
+    "loanDate": "2014-04-24T17:34:02Z", 
+    "lender": 2, 
+    "comments": "Stacy is soooo chill, man...", 
+    "rated": 1, 
+    "borrower": 3, 
+    "status": 3, 
+    "returnDate": "2014-04-24T17:34:02Z", 
+    "asset": 1
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 2, 
+  "fields": {
+    "loanDate": "2014-04-24T17:42:40Z", 
+    "lender": 2, 
+    "comments": "WOW Stacy, you're awful.  There is no way I am ever inviting to my Birthday next year", 
+    "rated": 2, 
+    "borrower": 3, 
+    "status": 3, 
+    "returnDate": "2014-04-24T17:42:40Z", 
+    "asset": 1
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 3, 
+  "fields": {
+    "loanDate": "2014-04-24T18:31:05Z", 
+    "lender": 2, 
+    "comments": "Yeah testuser was great.  He came on time and even policed the sword after using it!", 
+    "rated": 1, 
+    "borrower": 4, 
+    "status": 3, 
+    "returnDate": "2014-04-24T18:31:05Z", 
+    "asset": 5
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 4, 
+  "fields": {
+    "loanDate": "2014-04-24T18:31:05Z", 
+    "lender": 2, 
+    "comments": "What can I say?  Testuser is my homeboy.  Quality sharing experience.   Next time he comes over to borrow something we're gonna have to play some fifa 2030", 
+    "rated": 1, 
+    "borrower": 4, 
+    "status": 3, 
+    "returnDate": "2014-04-24T18:31:05Z", 
+    "asset": 6
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 5, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 2, 
+    "comments": "", 
+    "rated": 0, 
+    "borrower": 4, 
+    "status": 1, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 6
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 6, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 4, 
+    "comments": "Nice guy, but bad with timing.  He showed up 4 hrs late", 
+    "rated": 1, 
+    "borrower": 2, 
+    "status": 3, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 7
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 7, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 4, 
+    "comments": "Bad Share, returned item uncleaned", 
+    "rated": 2, 
+    "borrower": 2, 
+    "status": 3, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 9
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 8, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 4, 
+    "comments": "", 
+    "rated": 0, 
+    "borrower": 2, 
+    "status": 1, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 8
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 9, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 4, 
+    "comments": "", 
+    "rated": 0, 
+    "borrower": 2, 
+    "status": 0, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 7
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 10, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 4, 
+    "comments": "", 
+    "rated": 0, 
+    "borrower": 2, 
+    "status": 0, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 9
+  }
+},
+{
+  "model": "sharetools.sharecontract", 
+  "pk": 11, 
+  "fields": {
+    "loanDate": "2014-04-24T18:56:56Z", 
+    "lender": 2, 
+    "comments": "", 
+    "rated": 0, 
+    "borrower": 4, 
+    "status": 0, 
+    "returnDate": "2014-04-24T18:56:56Z", 
+    "asset": 5
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 1, 
+  "fields": {
+    "user": 2, 
+    "role": 2, 
+    "location": 1
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 2, 
+  "fields": {
+    "user": 2, 
+    "role": 2, 
+    "location": 2
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 3, 
+  "fields": {
+    "user": 3, 
+    "role": 2, 
+    "location": 3
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 4, 
+  "fields": {
+    "user": 3, 
+    "role": 0, 
+    "location": 2
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 5, 
+  "fields": {
+    "user": 4, 
+    "role": 2, 
+    "location": 4
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 6, 
+  "fields": {
+    "user": 4, 
+    "role": 2, 
+    "location": 5
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 7, 
+  "fields": {
+    "user": 4, 
+    "role": 0, 
+    "location": 2
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 9, 
+  "fields": {
+    "user": 3, 
+    "role": 0, 
+    "location": 5
+  }
+},
+{
+  "model": "sharetools.membership", 
+  "pk": 11, 
+  "fields": {
+    "user": 2, 
+    "role": 0, 
+    "location": 5
+  }
+},
+{
+  "model": "messaging.message", 
+  "pk": 1, 
+  "fields": {
+    "msg_from": 3, 
+    "msg_to": 2, 
+    "body": "What's crack'n?", 
+    "subject": "Hey ", 
+    "read": true
+  }
+},
+{
+  "model": "messaging.message", 
+  "pk": 2, 
+  "fields": {
+    "msg_from": 2, 
+    "msg_to": 4, 
+    "body": "WELCOME TO THE TOD SHED BROOOO", 
+    "subject": "Hey New guy, I just accepted you request", 
+    "read": false
+  }
+},
+{
+  "model": "messaging.message", 
+  "pk": 3, 
+  "fields": {
+    "msg_from": 3, 
+    "msg_to": 4, 
+    "body": "I'm thinking about starting my own shed.  Would you be interested in being a Moderator?", 
+    "subject": "Hey I just heard you joined", 
+    "read": true
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 1, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T16:32:41.449Z", 
+    "object_id": "1", 
+    "user": 1, 
+    "object_repr": "Hammer", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 2, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T16:33:04.815Z", 
+    "object_id": "2", 
+    "user": 1, 
+    "object_repr": "Gun", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 3, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T16:34:03.170Z", 
+    "object_id": "3", 
+    "user": 1, 
+    "object_repr": "Power Tool", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 4, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T16:34:59.404Z", 
+    "object_id": "4", 
+    "user": 1, 
+    "object_repr": "Safety & Security", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 5, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T16:36:06.171Z", 
+    "object_id": "5", 
+    "user": 1, 
+    "object_repr": "Lawn & Gardening", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 6, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 3, 
+    "action_time": "2014-04-24T16:36:27.165Z", 
+    "object_id": "2", 
+    "user": 1, 
+    "object_repr": "Gun", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 7, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 3, 
+    "action_time": "2014-04-24T16:36:27.169Z", 
+    "object_id": "1", 
+    "user": 1, 
+    "object_repr": "Hammer", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 8, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T16:37:19.010Z", 
+    "object_id": "6", 
+    "user": 1, 
+    "object_repr": "Electronics & Computers", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 9, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 1, 
+    "action_time": "2014-04-24T18:46:50.291Z", 
+    "object_id": "7", 
+    "user": 1, 
+    "object_repr": "Miscellaneous", 
+    "content_type": 10
+  }
+},
+{
+  "model": "admin.logentry", 
+  "pk": 10, 
+  "fields": {
+    "change_message": "", 
+    "action_flag": 3, 
+    "action_time": "2014-04-24T19:06:22.563Z", 
+    "object_id": "10", 
+    "user": 1, 
+    "object_repr": "testuser is a Request in TodLove's Private Shed", 
+    "content_type": 13
+  }
+}
+]
