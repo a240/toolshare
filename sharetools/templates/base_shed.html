@@ -86,12 +86,15 @@
 				{% if isMember %}
 				<a href="{% url 'sharetools:shedAdmin' location.id %}"<button type="button" class="btn btn-default btn-block">
 				<span class="glyphicon glyphicon-pencil"></span></button> Manage this Shed
-				</a>
-				
+				</a>	
+				{% elif membership.role == membership.REQUEST %}
+				<a href="#" class="btn btn-default btn-block disabled" role="button">Request Sent</a>
 				{% else %}
-				<a href="{% url 'sharetools:index' %}"<button type="button" class="btn btn-success btn-block">
-				<span class="glyphicon glyphicon-pencil"></span></button> Request to be a Member
-				</a>				
+				<form name="requestMembership" action="{% url 'sharetools:shed' location.id %}" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="requestMembership" value="1">
+					<input type="submit" value="Request Membership" class="btn btn-success btn-block">
+				</form>
 				{% endif %}
 				<hr></hr>
 				Created by <a href="{% url 'sharetools:profile' location.owner %}">{{ location.owner.username }}</a>

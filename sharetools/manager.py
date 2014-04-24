@@ -1,5 +1,12 @@
 from sharetools.models import Membership
 
+def get_user_role(location, user):
+	try:
+		obj = Membership.objects.get(location=location, user=user)
+		return obj.role
+	except Membership.DoesNotExist:
+		return None
+
 def set_user_role(location, user, role):
 	try:
 		obj = Membership.objects.get(location=location, user=user)

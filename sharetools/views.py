@@ -16,7 +16,7 @@ from django.views.generic import TemplateView
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, Membership
 from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm, EditShedForm
-from sharetools.manager import set_user_role, is_member, is_mod
+from sharetools.manager import set_user_role, is_member, is_mod, get_user_role
 
 
 class LoginRequiredMixin(object):
@@ -215,17 +215,30 @@ class ShedView(LoginRequiredMixin, TemplateView):
 	"""
 	template_name = 'base_shed.html'
 
+	def post(self, request, shed_id):
+		shedLocation = get_object_or_404(Location, pk=shed_id)
+		if request.POST['requestMembership'] == '1':
+			if is_member(user=request.user, location=shedLocation):
+				messages.add_message(request, messages.WARNING, 'You already are a member of this shed', extra_tags='alert-success')
+				return redirect('sharetools:shed', shed_id)
+			else:
+				messages.add_message(request, messages.SUCCESS, 'Your request has been sent', extra_tags='alert-success')
+				set_user_role(user=request.user, role=Membership.REQUEST, location=shedLocation)
+				return redirect('sharetools:shed', shed_id)
+		else:	
+			return redirect('sharetools:shed', shed_id)
+
+
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
-		isMember = is_member(user=request.user, location=shedLocation)
-		isAdmin = is_mod(request.user, location=shedLocation)
-
+		role = get_user_role(location=shedLocation, user=request.user)
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
+		membership = Membership.objects.filter(user=request.user, location=shedLocation)
 		context = RequestContext(request, {
 			'assets': assets,
 			'location': shedLocation,
-			'isMember': isMember,
-			'isAdmin': isAdmin
+			'isMember': is_member(user=request.user, location=shedLocation),
+			'membership': membership
 		})
 		
 		return render(request, self.template_name, context_instance=context)
