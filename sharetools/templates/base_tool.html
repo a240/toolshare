@@ -14,6 +14,12 @@
     </div>
 </div>
 <div class="container">
+    {% if not isMember %}
+    <div class="bs-callout bs-callout-warning">
+        <h4><i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this tool's shed</h4>
+        <p>In order to borrow a tool you must be a member of the shed the tool is stored in.</p>
+    </div>
+    {% endif %}
     <div class="row panel panel-default">
         <div class="panel-heading">
             <h1> {{ asset.name }} - a {{asset.type.name}} owned by

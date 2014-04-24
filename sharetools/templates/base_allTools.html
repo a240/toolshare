@@ -52,9 +52,16 @@
                     <td>{{ asset.type }}</td>
                     <td title="{{asset.description}}">{{ asset.description|truncatechars:25 }}</td>
                     <td>{{ asset.owner.username }}</td>
-                    <td>{{ asset.isAvailable }}</td>
+                    <td><i class="
+                    {% if asset.isAvailable %}
+                    glyphicon glyphicon-ok
+                    {% else %}
+                    glyphicon glyphicon-remove
+                    {% endif %}
+                    "></i>
+                    </td>
                     <td>
-                        <a href="{% url 'tool' asset.id %}" type="button" class="btn btn-primary btn-block btn-sm">
+                        <a href="{% url 'sharetools:tool' asset.id %}" type="button" class="btn btn-primary btn-block btn-sm">
                             <span class="glyphicon glyphicon-wrench"></span>
                         </a>
                     </td>
