@@ -22,15 +22,15 @@
         {% for sc in ratings %}
         <tbody>
             <tr>
-				<td>
+		<td>
                     <a href="{% url 'sharetools:profile' sc.lender.username %}">{{sc.lender}}</a>
                 </td>
                 <td>
-					{% if sc.rated = 1 %}
-						Positive
-					{% else %}
-						Negative
-					{% endif %}
+			{% if sc.rated = 1 %}
+				Positive
+			{% else %}
+				Negative
+			{% endif %}
                 </td>
                 <td>
                     {{sc.comments}}
