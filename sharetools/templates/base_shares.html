@@ -86,7 +86,11 @@
                     <td>{{ rq.getStatus }}</td>
                     <td>
                         {% if rq.asset.isAvailable %}
-                        <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Cancel</button>
+    						{% if rq.getStatus = 'Denied' %}
+                                <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Delete</button>
+    						{% else %}
+    						    <button type="submit" name="cancel" value="{{ rq.id }}" class="btn btn-danger">Cancel</button>
+    						{% endif %}
                         {% endif %}
                     </td>
                 </tr>
