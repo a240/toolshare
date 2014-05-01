@@ -182,6 +182,10 @@ class EditProfileView(LoginRequiredMixin, TemplateView):
 
 	def post(self, request):
 		form = UserEditForm(request.POST, instance=request.user)
+		context = RequestContext(request, {
+			'user_name': request.user.username,
+			'form': form
+		})
 		if not form.is_valid():
 			return render(request, self.template_name, context_instance=context)
 		else:
