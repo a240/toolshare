@@ -92,7 +92,43 @@
     {% endfor %}
     </div>
     {% endif%}
+    <div id="content">
     {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h4><i class="fa fa-home"></i> Sheds</h4>
+                    <hr> 
+                    <ul>
+                        <li><a href="{% url 'sharetools:mySheds' %}">My Sheds</a></li>
+                        <li><a href="{% url 'sharetools:makeShed' %}">Make New Shed</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <h4><i class="fa fa-tag"></i> Shares</h4>
+                    <hr>
+                    <ul>
+                        <li><a href="{% url 'sharetools:shares' %}">My Shares</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <h4><i class="fa fa-gavel"></i> Tools</h4>
+                    <hr>
+                    <ul>
+                        <li><a href="{% url 'sharetools:myTools' %}">My Tools</a></li>
+                        <li><a href="{% url 'sharetools:newTool' %}">Make new Tool</a></li>
+                        <li><a href="{% url 'sharetools:allTool' %}">Find a tool</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+            <br>
+                <p class="text-center text-muted">Coded with <i class="fa fa-heart"></i> by Team 4040</p>
+            </div>
+        </div>
 
     {% block scripts %}
     <script src="{% static "js/jquery.min.js" %}"></script>

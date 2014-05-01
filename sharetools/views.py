@@ -154,9 +154,11 @@ class ProfileView(TemplateView):
 
 	def get(self, request, user_id, *args, **kwargs):
 		user = get_object_or_404(User, username=user_id)
+		rated_shares = ShareContract.objects.filter(borrower=user, rated__gt=0)
 		context = RequestContext(request, {
 			'userProfile': user.userprofile,
 			'avatarURL': generateGravatarUrl(user),
+			'ratings': rated_shares,
 		})
 		return render(request, self.template_name, context_instance=context)
 		
@@ -191,20 +193,6 @@ class EditProfileView(LoginRequiredMixin, TemplateView):
 			request.user.userprofile.save()
 			form.save()
 			return redirect('sharetools:myProfile')
-
-class RatingsView(LoginRequiredMixin, TemplateView):
-	"""
-	User Ratings Page
-	"""
-	template_name = 'base_ratings.html'
-	def get(self, request, name):
-		user = get_object_or_404(User,username=name)
-		rated_shares = ShareContract.objects.filter(borrower=user, rated__gt=0)
-		context = RequestContext(request, {
-			'userProfile': user.userprofile,
-			'ratings': rated_shares,
-		})
-		return render(request, self.template_name, context_instance=context)
 
 #########################################################
 #             Category: SHED Manipulation               #

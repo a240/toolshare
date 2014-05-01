@@ -11,9 +11,10 @@
     </div>
 </div>
 <div class="container">
-    <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
+    <div class="button-group"> 
+        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
+    </div>
     {% include "includes/new_message.html" %}
-    <br><br>
     {% if user_messages %}
     <div class="panel panel-default">
         <!-- Default panel contents -->

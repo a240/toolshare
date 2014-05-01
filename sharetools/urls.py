@@ -10,8 +10,7 @@ urlpatterns = patterns('sharetools.views',
 	url(r'^profile/$', views.my_profile_view, name='myProfile'),
 	url(r'^profile/edit$', views.EditProfileView.as_view(), name='editProfile'),
 	url(r'^profile/(\w+)$', views.ProfileView.as_view(), name='profile'),
-	url(r'^profile/(\w+)/ratings$', views.RatingsView.as_view(), name='ratings'),
-
+	
 	#Sheds -------------------------------------------------------------------
 	url(r'^sheds/$', views.MyShedsView.as_view(), name='mySheds'),
 	url(r'^sheds/(\d+)$', views.ShedView.as_view(), name='shed'),
