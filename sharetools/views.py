@@ -182,18 +182,15 @@ class EditProfileView(LoginRequiredMixin, TemplateView):
 
 	def post(self, request):
 		form = UserEditForm(request.POST, instance=request.user)
-		context = RequestContext(request, {
-			'user_name': request.user.username,
-			'form': form
-		})
 		if not form.is_valid():
-			return render(request, self.template_name, context_instance=context)
+			messages.add_message(request, messages.WARNING, 'Error processing form', extra_tags='alert-warning')
+			return redirect('sharetools:editProfile')
 		else:
 			request.user.userprofile.zipcode = form.cleaned_data['zipcode']
 			request.user.password = make_password(form.cleaned_data['password'], 'pbkdf2_sha256')
 			request.user.userprofile.save()
 			form.save()
-			return my_profile_view(request)
+			return redirect('sharetools:myProfile')
 
 class RatingsView(LoginRequiredMixin, TemplateView):
 	"""
