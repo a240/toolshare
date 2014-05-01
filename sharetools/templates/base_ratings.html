@@ -11,21 +11,26 @@
 <div class="container">
     {% if ratings %}
     <table class="table">
-        <col width="50%">
-        <col width="50%">
+        <col width="33%">
+        <col width="33%">
+		<col width="33%">
         <thead>
+			<th>Lender</th>
             <th>Outcome</th>
             <th>Rating</th>
         </thead>
         {% for sc in ratings %}
         <tbody>
             <tr>
+				<td>
+                    <a href="{% url 'sharetools:profile' sc.lender.username %}">{{sc.lender}}</a>
+                </td>
                 <td>
-                {% if sc.rated = 1 %}
-                    Positive
-                {% else %}
-                    Negative
-                {% endif %}
+					{% if sc.rated = 1 %}
+						Positive
+					{% else %}
+						Negative
+					{% endif %}
                 </td>
                 <td>
                     {{sc.comments}}
