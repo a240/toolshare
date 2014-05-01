@@ -23,6 +23,16 @@
                 {% if type_field == type.name %} selected="true" {% endif %}>{{type.name}}</option>
                 {% endfor %}
             </select>
+            <!--
+			<text>Within:</text>
+			<select name="within" class="form-control" form="srchForm">
+                <option value="infinite">Unlimited</option>
+				<option value="50">50 Miles</option>
+				<option value="25">25 Miles</option>
+				<option value="20">20 Miles</option>
+				<option value="5">5 Miles</option>
+            </select>
+			-->
             <button type="submit" class="btn btn-success">Search</button>
         </div>
     </form>
