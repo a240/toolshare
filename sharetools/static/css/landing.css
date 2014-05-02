@@ -78,7 +78,8 @@ img::-moz-selection {
 
 .btn-primary {
   color: #f68050;
-  border-color: #f68050; }
+  border-color: #f68050;
+}
 
 .btn-primary:hover,
 .btn-primary:focus,
@@ -87,4 +88,31 @@ img::-moz-selection {
 .open .dropdown-toggle.btn-primary {
   color: #fff;
   background-color: #f68050;
-  border-color: #f45d1f; }
+  border-color: #f45d1f;
+}
+
+.btn-default {
+  color: #cccccc;
+  border-color: #cccccc;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+  color: #fff;
+  background-color: #cccccc;
+  border-color: #b3b3b3;
+}
+
+.btn-primary {
+  color: #f68050;
+  border-color: #f68050; }
+
+#login {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 11;
+}
