@@ -88,11 +88,15 @@
 		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-body text-center">
+					<h4 class="light">Owner</h4>
 					<img class="img-circle img-profile" style="width: 200px" src="{% gravatar_url user %}">
-					<h4>{{ asset.owner.username }}</h4>
+					<h4><a href="{% url 'sharetools:profile' asset.owner %}">{{ asset.owner.username }}</a></h4>
+					<hr>
+					<p><a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">Message</a></p>
 				</div>
 			</div>
 		</div>
+		{% include "includes/new_message.html" with msg_to=userProfile.user.username %}
 	</div>
 </div>
 
