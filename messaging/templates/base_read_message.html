@@ -26,19 +26,21 @@
     {% if message %}
     <div class="row panel panel-default">
         <div class="panel-heading">
-            <a style="float: right;" type="button" class="btn btn-primary" data-toggle="modal"
-               data-target="#NewMessageModal">
-                Reply <span class="glyphicon glyphicon-share-alt"></span>
-            </a>
             <h4>Subject: {{ message.subject }}</h4>
 
             <form method="post" name="deleteMessage{{message.id}}"
                   action="{% url 'messaging:messageRead' message.id %}">
                 {% csrf_token %}
-                <button style="float: right;" type="submit" name="delete" value="{{ message.id }}"
-                        class="btn btn-danger">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
+                <div style="float: right">
+                    <a type="button" class="btn btn-primary" data-toggle="modal"
+                       data-target="#NewMessageModal">
+                        Reply <span class="glyphicon glyphicon-share-alt"></span>
+                    </a>
+                    <button type="submit" name="delete" value="{{ message.id }}"
+                            class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
             </form>
             <h4>From: {{ message.msg_from.username }}</h4>
         </div>

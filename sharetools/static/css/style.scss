@@ -1,6 +1,7 @@
 $font-stack:   Montserrat, Helvetica, Arial, sans-serif;
 $primary-color: #F68050;
 $secondary-color: #BC1E35;
+$default-white:#E0E4CC;
 
 $default-color: #ccc;
 $success-color: #5cb85c;
@@ -14,7 +15,7 @@ $danger-color: #d9534f;
 body {
 	font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	color: #000;
-	background-color: #3B3B3D;
+	background-color: #3b3b3d;
 	webkit-tap-highlight-color: rgba(255,255,255,.2);
 }
 
@@ -41,11 +42,20 @@ footer ul {
 .jumbotron {
 	color: #fff;
 	background-color: $primary-color;
+	text-align: center;
 
 	h1 {
-		text-align: center;
 		color: #fff;
+		font-weight: 500;
 	}
+}
+
+.hr-big {
+	margin: 50px 0px;
+}
+
+#quick-start {
+	color: #ddd;
 }
 
 /* 
@@ -151,7 +161,7 @@ footer ul {
 h1, h2, h3, h4, h5, h6 {
 	text-transform: uppercase;
 	font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-weight: 700;
+	font-weight: 300;
 	letter-spacing: 1px;
 }
 
@@ -175,10 +185,12 @@ a:focus {
 	background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 	background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
 }
-
+.heavy {
+	font-weight: 700;
+}
 
 .light {
-	font-weight: 400;
+	font-weight: 300;
 }
 
 .navbar {
@@ -263,6 +275,20 @@ ul.dropdown-menu {
 	width: 600px;
 	margin: 30px auto;
 	pointer-events: all;
+}
+
+/*
+	Panels
+ */
+.panel-default>.panel-heading {
+	color: $primary-color;
+}
+
+/*
+	Profile
+ */
+.img-profile {
+	border: white 5px solid;
 }
 
 /* Side notes for calling out things
