@@ -3,6 +3,12 @@
 # C extensions
 *.so
 
+# SASS caches
+sharetools/static/css/.sass-cache
+
+# Ignore swp files
+*.swp
+
 # Packages
 *.egg
 *.egg-info
@@ -34,10 +40,6 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-*.pyc
 
 # django
 db.sqlite3
-*.pyc
-bootstrapform/__pycache__/meta.cpython-33.pyc
-bootstrapform/__pycache__/__init__.cpython-33.pyc
