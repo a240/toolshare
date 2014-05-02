@@ -35,11 +35,11 @@
 							<th>Type</th>
 							<th>Description</th>
 	
-                            {% if location.isCommunity %}
+							{% if location.isCommunity %}
 							<th>Owner</th>
-                            {% endif %}
+							{% endif %}
 							<th>Available</th>
-                            <th></th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -48,11 +48,18 @@
 							<td>{{ asset.name }}</td>
 							<td>{{ asset.type }}</td>
 							<td>{{ asset.description|truncatechars:20 }}</td>
-                            {% if location.isCommunity %}
+							{% if location.isCommunity %}
 							<td>{{ asset.owner.username }}</td>
-                            {% endif %}
-							<td>{{ asset.isAvailable }}</td>
-                            <td><a type="button" class="btn btn-primary" href="{% url 'sharetools:tool' asset.id %}">View</a></td>
+							{% endif %}
+							<td><i class="
+							{% if asset.isAvailable %}
+							glyphicon glyphicon-ok
+							{% else %}
+							glyphicon glyphicon-remove
+							{% endif %}
+							"></i>
+							</td>
+							<td><a type="button" class="btn btn-primary" href="{% url 'sharetools:tool' asset.id %}">View</a></td>
 						</tr>
 					{% empty %}
 					{% endfor %}

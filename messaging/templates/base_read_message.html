@@ -9,47 +9,46 @@
 
 {% block content %}
 <div class="jumbotron">
-    <div class="container">
-        <h1>My Sheds</h1>
-    </div>
+	<div class="container">
+		<h1>My Sheds</h1>
+	</div>
 </div>
 <div class="container">
-    <div class="row">
-        <a href="{% url 'messaging:messages' %}">
-            <button type="button" class="btn btn-primary">
-                <span class="glyphicon glyphicon-arrow-left"></span>
-                Back to Inbox
-            </button>
-        </a>
-    </div>
-    <br>
-    {% if message %}
-    <div class="row panel panel-default">
-        <div class="panel-heading">
-            <h4>Subject: {{ message.subject }}</h4>
+	<div class="button-group">
+		<a href="{% url 'messaging:messages' %}">
+			<button type="button" class="btn btn-primary">
+				<span class="glyphicon glyphicon-arrow-left"></span>
+				Back to Inbox
+			</button>
+		</a>
+	</div>
+	{% if message %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Subject: {{ message.subject }}</h4>
 
-            <form method="post" name="deleteMessage{{message.id}}"
-                  action="{% url 'messaging:messageRead' message.id %}">
-                {% csrf_token %}
-                <div style="float: right">
-                    <a type="button" class="btn btn-primary" data-toggle="modal"
-                       data-target="#NewMessageModal">
-                        Reply <span class="glyphicon glyphicon-share-alt"></span>
-                    </a>
-                    <button type="submit" name="delete" value="{{ message.id }}"
-                            class="btn btn-danger">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </button>
-                </div>
-            </form>
-            <h4>From: {{ message.msg_from.username }}</h4>
-        </div>
-        <div class="panel-body">
-            <p>{{ message.body }}</p>
-        </div>
-    </div>
-    <!-- Reply Modal -->
-    {% include "includes/new_message.html" with msg_to=message.msg_from subject=message.subject %}
-    {% endif %}
+			<form method="post" name="deleteMessage{{message.id}}"
+				  action="{% url 'messaging:messageRead' message.id %}">
+				{% csrf_token %}
+				<div style="float: right">
+					<a type="button" class="btn btn-primary" data-toggle="modal"
+					   data-target="#NewMessageModal">
+						Reply <span class="glyphicon glyphicon-share-alt"></span>
+					</a>
+					<button type="submit" name="delete" value="{{ message.id }}"
+							class="btn btn-danger">
+						<span class="glyphicon glyphicon-trash"></span>
+					</button>
+				</div>
+			</form>
+			<h4>From: {{ message.msg_from.username }}</h4>
+		</div>
+		<div class="panel-body">
+			<p>{{ message.body }}</p>
+		</div>
+	</div>
+	<!-- Reply Modal -->
+	{% include "includes/new_message.html" with msg_to=message.msg_from subject=message.subject %}
+	{% endif %}
 </div>
 {% endblock %}

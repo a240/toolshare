@@ -21,19 +21,25 @@
 	</div>
 	<hr class="hr-big">
 	<div id="quick-start" class="row">
-		<div class="col-md-3 text-center">
-			<i class="fa fa-home fa-5x"></i>
-			<p>Sheds</p>
+		<div id="quick-start-sheds" class="col-md-3 text-center">
+			<a href="{% url 'sharetools:mySheds' %}">
+				<i class="fa fa-home fa-5x"></i>
+				<p>Sheds</p>
+			</a>
 		</div>
-		<div class="col-md-3 text-center">
-			<i class="fa fa-tag fa-5x"></i>
-			<p>Shares</p>
+		<div id="quick-start-shares" class="col-md-3 text-center">
+			<a href="{% url 'sharetools:shares' %}">
+				<i class="fa fa-tag fa-5x"></i>
+				<p>Shares</p>
+			</a>
 		</div>
-		<div class="col-md-3 text-center">
-			<i class="fa fa-gavel fa-5x"></i>
-			<p>Tools</p>
+		<div id="quick-start-tools" class="col-md-3 text-center">
+			<a href="{% url 'sharetools:myTools' %}">
+				<i class="fa fa-gavel fa-5x"></i>
+				<p>Tools</p>
+			</a>
 		</div>
-		<div class="col-md-3 text-center">
+		<div id="quick-start-profile" class="col-md-3 text-center">
 			<a href="{% url 'sharetools:myProfile' %}">
 				<i class="fa fa-user fa-5x"></i>
 				<p>Profile</p>

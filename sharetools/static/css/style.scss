@@ -1,13 +1,19 @@
 $font-stack:   Montserrat, Helvetica, Arial, sans-serif;
-$primary-color: #F68050;
-$secondary-color: #BC1E35;
-$default-white:#E0E4CC;
 
-$default-color: #ccc;
-$success-color: #5cb85c;
-$info-color: #5bc0de;
-$warning-color: #f0ad4e;
-$danger-color: #d9534f;
+$primary-color:		#F68050;
+$secondary-color:	#BC1E35;
+$default-white:		#E0E4CC;
+
+$default-color:		#ccc;
+$success-color:		#5CB85C;
+$info-color:		#5bc0de;
+$warning-color:		#F0AD4E;
+$danger-color:		#d9534f;
+
+$sheds-color:		#F68050;
+$shares-color:		#00A0B0;
+$tools-color:		#6A4A3C;
+$profile-color:		#00A0B0;
 
 /*
  * Base Structure
@@ -55,9 +61,42 @@ footer ul {
 }
 
 #quick-start {
-	color: #ddd;
+	a {
+		color: #ddd;
+	}
 }
 
+#quick-start-sheds {
+	a:hover,
+	a:focus,
+	a:active {
+		color:$sheds-color;
+	}
+}
+
+#quick-start-shares {
+	a:hover,
+	a:focus,
+	a:active {
+		color:$shares-color;
+	}
+}
+
+#quick-start-tools {
+	a:hover,
+	a:focus,
+	a:active {
+		color:$tools-color;
+	}
+}
+
+#quick-start-profile {
+	a:hover,
+	a:focus,
+	a:active {
+		color:$profile-color;
+	}
+}
 /* 
  *	Buttons
  */

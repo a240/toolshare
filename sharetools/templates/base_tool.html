@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load sharetools_extras %}
 
 {% block title %}TS - Tool{% endblock %}
 
@@ -9,81 +10,90 @@
 
 {% block content %}
 <div class="jumbotron">
-    <div class="container">
-        <h1>Tool Overview</h1>
-    </div>
+	<div class="container">
+		<h1>Tool Overview</h1>
+	</div>
 </div>
 <div class="container">
-    {% if not isMember %}
-    <div class="bs-callout bs-callout-warning">
-        <h4><i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this tool's shed</h4>
-        <p>In order to borrow a tool you must be a member of the shed the tool is stored in.</p>
-    </div>
-    {% endif %}
-    <div class="row panel panel-default">
-        <div class="panel-heading">
-            <h1> {{ asset.name }} - a {{asset.type.name}} owned by
-                <a href="{% url 'sharetools:profile' asset.owner.username %}">
-                    {{ asset.owner }}
-                </a>
-            </h1></div>
+	{% if not isMember %}
+	<div class="bs-callout bs-callout-warning">
+		<h4><i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this tool's shed</h4>
+		<p>In order to borrow a tool you must be a member of the shed the tool is stored in.</p>
+	</div>
+	{% endif %}
+	<div class="row">
+		<div class="col-md-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h1>{{ asset.name }}</h1>
+				</div>
 
-        <ul class="list-group">
+				<ul class="list-group">
 
-            <li class="list-group-item">
-                <h4>Availability:</h4>
-                {% if shared %}
+					<li class="list-group-item">
+						<h4>Availability:</h4>
+						{% if shared %}
 
-                <font color="red">Currently borrowed by
+						<font color="red">Currently borrowed by
 
-                    <a href="{% url 'sharetools:profile' shared.borrower.username %}">
-                        {{shared.borrower.username}}
-                    </a>
+							<a href="{% url 'sharetools:profile' shared.borrower.username %}">
+								{{shared.borrower.username}}
+							</a>
 
-                    until {{shared.returnDate}}
-                </font>
+							until {{shared.returnDate}}
+						</font>
 
-                {% else %}
+						{% else %}
 
-                <font color="green">This {{asset.type}} tool is available now
-                </font>
+						<font color="green">This {{asset.type}} tool is available now
+						</font>
 
-                {% endif %}
-            </li>
-            <li class="list-group-item"><h4>Type:</h4><b>{{ asset.type.name }}</b> - {{asset.type.description}}</li>
-            <li class="list-group-item"><h4>Description:</h4>{{ asset.description }}</li>
-            <li class="list-group-item"><h4>Location:</h4>{{ asset.location }}</li>
+						{% endif %}
+					</li>
+					<li class="list-group-item"><h4>Type:</h4><b>{{ asset.type.name }}</b> - {{asset.type.description}}</li>
+					<li class="list-group-item"><h4>Description:</h4>{{ asset.description }}</li>
+					<li class="list-group-item"><h4>Location:</h4>{{ asset.location }}</li>
 
-        </ul>
-        <form method="post" name="toolDelete{{ asset.id }}" action="{% url 'sharetools:tool' asset.id %}">
-            {% csrf_token %}
-            <div class="panel-footer">
-                <div class="btn-group">
+				</ul>
+				<form method="post" name="toolDelete{{ asset.id }}" action="{% url 'sharetools:tool' asset.id %}">
+					{% csrf_token %}
+					<div class="panel-footer">
+						<div class="btn-group">
 
-                    <a href="{% url 'sharetools:shed' asset.location.id %}">
-                        <button type="button" class="btn btn-primary">Visit Shed</button>
-                    </a>
+							<a href="{% url 'sharetools:shed' asset.location.id %}">
+								<button type="button" class="btn btn-primary">Visit Shed</button>
+							</a>
 
-                    {% if asset.owner == user %}
+							{% if asset.owner == user %}
 
-                    <a>
-                        <button type="submit" name="delete" value="{{ asset.id }}" class="btn btn-danger">Delete Tool
-                        </button>
-                    </a>
-                    {% else %}
+							<a>
+								<button type="submit" name="delete" value="{{ asset.id }}" class="btn btn-danger">Delete Tool
+								</button>
+							</a>
+							{% else %}
 
-                    {% if not shared %}
-                    <a href="{% url 'sharetools:makeShareContract' asset.id %}">
-                        <button type="button" class="btn btn-primary">Borrow</button>
-                    </a>
-                    {% endif %}
+							{% if not shared %}
+							<a href="{% url 'sharetools:makeShareContract' asset.id %}">
+								<button type="button" class="btn btn-primary">Borrow</button>
+							</a>
+							{% endif %}
 
-                    {% endif %}
+							{% endif %}
 
-                </div>
-            </div>
-        </form>
-    </div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body text-center">
+					<img class="img-circle img-profile" style="width: 200px" src="{% gravatar_url user %}">
+					<h4>{{ asset.owner.username }}</h4>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 

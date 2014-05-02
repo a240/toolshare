@@ -34,8 +34,28 @@ footer ul {
 .hr-big {
   margin: 50px 0px; }
 
-#quick-start {
+#quick-start a {
   color: #ddd; }
+
+#quick-start-sheds a:hover,
+#quick-start-sheds a:focus,
+#quick-start-sheds a:active {
+  color: #f68050; }
+
+#quick-start-shares a:hover,
+#quick-start-shares a:focus,
+#quick-start-shares a:active {
+  color: #00a0b0; }
+
+#quick-start-tools a:hover,
+#quick-start-tools a:focus,
+#quick-start-tools a:active {
+  color: #6a4a3c; }
+
+#quick-start-profile a:hover,
+#quick-start-profile a:focus,
+#quick-start-profile a:active {
+  color: #00a0b0; }
 
 /* 
  *	Buttons
