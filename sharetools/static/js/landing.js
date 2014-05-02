@@ -1,7 +1,7 @@
 //Google Map Skin - Get more at http://snazzymaps.com/
 var myOptions = {
-    zoom: 15,
-    center: new google.maps.LatLng(53.385873, -1.471471),
+    zoom: 5,
+    center: new google.maps.LatLng(15, 20),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     disableDefaultUI: true,
     styles: [{
