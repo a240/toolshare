@@ -101,9 +101,15 @@ class UserEditForm(forms.ModelForm):
 
 class MakeToolForm(forms.ModelForm):
 
+	
 	class Meta:
 		model = Asset
 		fields = ('name','description','type','location')
+		
+		widgets = {
+		'description': forms.Textarea(),
+
+	}
 		
 	def __init__(self, *args, **kwargs):
 		self._user=kwargs.pop('user')
@@ -127,6 +133,7 @@ class MakeShareForm(forms.ModelForm):
 	class Meta:
 		model = ShareContract
 		fields = ('loanDate','returnDate')
+
 		
 	def __init__(self, *args, **kwargs):
 		self._borrower=kwargs.pop('user')

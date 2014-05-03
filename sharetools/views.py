@@ -431,6 +431,9 @@ class MakeShareView(LoginRequiredMixin, TemplateView):
 				extra_tags='alert-success')
 			form.save()
 			return redirect('sharetools:shares')
+		messages.add_message(request, messages.SUCCESS, 'Please enter a valid date.',
+			extra_tags='alert-warning')	
+		return redirect('sharetools:makeShareContract', tool_id)
 
 
 def shares_view(request):
