@@ -14,10 +14,15 @@
 	</div>
 </div>
 <div class="container">
-	{% if not isMember %}
+	{% if not isMember and not inviteOnly %}
 	<div class="bs-callout bs-callout-info">
 		<h4><i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this shed</h4>
 		<p>If you would like to be, you can request to become a member in the side bar.</p>
+	</div>
+	{% elif not isMember and inviteOnly %}
+	<div class="bs-callout bs-callout-info">
+		<h4><i class="glyphicon glyphicon-exclamation-sign"></i> You are not a member of this shed</h4>
+		<p>This shed is not currently looking for new members to share with.</p>
 	</div>
 	{% endif %}
 	<div class="col-lg-8">
@@ -98,7 +103,8 @@
 					{% elif membership.role = membership.REQUEST %}
 					<a href="#" class="btn btn-default btn-block disabled" role="button">Request Sent</a>
 					{% endif %}
-				{% else %}
+				{% elif not location.inviteOnly and not membership %}
+		
 				<form name="requestMembership" action="{% url 'sharetools:shed' location.id %}" method="post">
 					{% csrf_token %}
 					<input type="hidden" name="requestMembership" value="1">

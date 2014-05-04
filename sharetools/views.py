@@ -38,7 +38,7 @@ class IndexView(TemplateView):
 			return render(request, 'landing.html', {})
 
 		assets = Asset.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
-		locations = Location.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
+		locations = Location.objects.exclude(owner=request.user, isPrivate=True)[:self.NUMBER_OF_RECENT_ITEMS]
 		context = RequestContext(request, {
 			'assets': assets,
 			'locations': locations,
@@ -244,8 +244,7 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
-		members = Membership.objects.filter(location=shedLocation).order_by('role')
-		members.exclude(role=Membership.REQUEST)
+		members = Membership.objects.filter(location=shedLocation).order_by('role').exclude(role=Membership.REQUEST)
 		requests = Membership.objects.filter(role=Membership.REQUEST)
 		isAdmin = True
 		try:
@@ -390,6 +389,11 @@ def shed_delete_view(request, shed_id):
 	else:
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
 	return redirect('mySheds')
+	
+def	approve_membership_view(request, member_id):
+	member = get_object_or_404(Membership, pk=member_id)
+	set_user_role(member.location, member.user, Membership.MEMBER)
+	return redirect('sharetools:shedAdmin',member.location.id)
 
 #########################################################
 #            Category: SHARE Manipulation               #

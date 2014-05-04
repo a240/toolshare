@@ -59,7 +59,7 @@ class AddMemberForm(forms.ModelForm):
 		self._location=kwargs.pop('location')
 		super(AddMemberForm,self).__init__(*args,**kwargs)
 		users = set()
-		for member in Membership.objects.filter(location=self._location,role=Membership.REQUEST):
+		for member in Membership.objects.filter(location=self._location):
 			users.add(member.user.id)
 		self.fields['user'].queryset = User.objects.filter(id__in = users)
 			
@@ -78,10 +78,8 @@ class EditShedForm(forms.ModelForm):
 		fields = (
 			'name',
 			'description',
-			'address',
 			'isActive',
 			'inviteOnly',
-			'toolModeration',
 		)
 		widgets = {
 			'description': forms.Textarea(),

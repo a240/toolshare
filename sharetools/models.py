@@ -121,6 +121,7 @@ class Membership(models.Model):
 	role = models.IntegerField(choices=ROLE_CHOICES, default=MEMBER)
 	user = models.ForeignKey(User)
 
+
 	def role_toString(self):
 		return self.ROLE_CHOICES[self.role][1]
 		
