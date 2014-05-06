@@ -6,40 +6,36 @@
 
 {% block content %}
 <div class="jumbotron">
-    <div class="container">
-        <h1>My Messages</h1>
-    </div>
+	<div class="container">
+		<h1>My Messages</h1>
+	</div>
 </div>
 <div class="container">
-    <div class="button-group"> 
-        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
-    </div>
-    {% include "includes/new_message.html" %}
-    {% if user_messages %}
-    <div class="panel panel-default">
-        <!-- Default panel contents -->
-        <div class="panel-heading" align="center">Messages</div>
+	<div class="button-group"> 
+		<a type="button" class="btn btn-primary" data-toggle="modal" data-target="#NewMessageModal">New Message</a>
+	</div>
+	{% include "includes/new_message.html" %}
+	<div class="panel panel-default">
+		<!-- Default panel contents -->
+		<div class="panel-heading" align="center">Messages</div>
 
-        <!-- List -->
-        <ul class="list-group">
-            {% for msg in user_messages %}
-            <a href="{% url 'messaging:messageRead' msg.id %}" style="display:block">
-                <li class="list-group-item">
-                    {% if not msg.read %}
-                    <span class="badge" style="float:right;">Unread</span>
-                    <b>
-                        {% endif %}
-                        {{ msg.subject }}
-                        {% if not msg.read %}
-                    </b>
-                    {% endif %}
-
-
-                </li>
-            </a>
-            {% endfor %}
-        </ul>
-    </div>
+		<!-- List -->
+		<ul class="list-group">
+			{% for msg in user_messages %}
+			<a href="{% url 'messaging:messageRead' msg.id %}" style="display:block">
+				<li class="list-group-item">
+					{% if not msg.read %}
+					<span class="badge" style="float:right;">Unread</span>
+					{% endif %}
+					{{ msg.subject }}
+				</li>
+			</a>
+			{% empty %}
+			<li class="list-group-item">
+				<h3 class="text-center text-muted">Empty</h3>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
 </div>
-{% endif %}
 {% endblock %}
