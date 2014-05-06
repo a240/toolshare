@@ -245,7 +245,7 @@ class ShedModView(LoginRequiredMixin, TemplateView):
 	def get(self, request, shed_id):	
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		members = Membership.objects.filter(location=shedLocation).order_by('role').exclude(role=Membership.REQUEST)
-		requests = Membership.objects.filter(role=Membership.REQUEST)
+		requests = Membership.objects.filter(location=shedLocation, role=Membership.REQUEST)
 		isAdmin = True
 		try:
 			member = Membership.objects.get(location=shedLocation, user=request.user)
