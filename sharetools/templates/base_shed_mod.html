@@ -7,89 +7,93 @@
 {% block styles}
 
 {% block content %}
-<div class="page-header">
-  <h1 class="text-center"><small>Admin Panel</small></h1>
-  <h1 class="text-center"><a href="{% url 'sharetools:shed' location.id %}">{{location.name}}</a></h1> 
+<div class="jumbotron">
+	<div class="container">
+		<h1>Admin Panel</h1>
+	</div>
 </div>
 <div class="container">
-<div class = "col-md-8 ">
-	<h3 class="text-center"><small>Members</small></h3>
-	<table class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Role</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for member in members %}	
-			{% if member.role == member.MEMBER %}
-			<tr class="active">
-			{% elif member.role == member.MODERATOR %}
-			<tr class="success">
-			{% elif member.role == member.ADMIN %}
-			<tr class="info">
-			{% else %}
-			<tr class="danger">
-			{% endif %}
-			<td>{{member.user}}</td>
-			<td>{{member.role_toString}}</td>
-		</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-	
+	<h4 class="text-center"><a href="{% url 'sharetools:shed' location.id %}">{{location.name}}</a></h4>
+	<hr>
+	<div class = "col-md-8 ">
+		<h3 class="text-center"><small>Members</small></h3>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Role</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for member in members %}	
+				{% if member.role == member.MEMBER %}
+				<tr class="active">
+				{% elif member.role == member.MODERATOR %}
+				<tr class="success">
+				{% elif member.role == member.ADMIN %}
+				<tr class="info">
+				{% else %}
+				<tr class="danger">
+				{% endif %}
+					<td>{{member.user}}</td>
+					<td>{{member.role_toString}}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		
 		<h3 class="text-center"><small>Requests</small></h3>
-	<table class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% for request in requests %}	
-			<td>{{request.user}}</td>
-			<td>  <div id = "buttons" style = "float:right;">
-				  <a href="{% url 'sharetools:approveMem' request.id %}">
-				  <button type="button" class="btn btn-success">Approve</button>
-				  </a>
-				  <button type="button" class="btn btn-danger">Deny</button>
-				  
-				  </div>
-				</td>
-		{% endfor %}
-		</tbody>
-	</table>
-</div>
-<div id="admin bar" style="float:right;">
-	<div class="panel panel-default">
-		<form action="{% url 'sharetools:shedAdmin' location.id %}" method="post">
-		{% csrf_token %}
-			<div class="panel-heading">
-				<h3 class="panel-title">Modify Member Roles</h3>
-			</div>
-			<div class="panel-body">
-				{{ memberForm | bootstrap }}
-			</div>
-			<div class="panel-footer">
-				<input type="submit" value="Update" class="btn btn-primary btn-block btn-sm">
-			</div>
-		</form>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for request in requests %}	
+				<tr>
+					<td>{{request.user}}</td>
+					<td> 
+						<div class="btn-group" style="float:right;">
+							<a class="btn btn-success" href="{% url 'sharetools:approveMem' request.id %}">Approve</a>
+							<button type="button" class="btn btn-danger">Deny</button> 
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
 	</div>
-	
-	<div class="panel panel-default">
-		<form action="{% url 'sharetools:shedAdmin' location.id%}" method="post">{% csrf_token %}
-			<div class="panel-heading">
-				<h3 class="panel-title">Edit Location</h3>
-			</div>
-			<div class="panel-body">
-					{{ editForm | bootstrap }}
-			</div>	
-			<div class="panel-footer">
-				<input type="submit" value="Update" class="btn btn-primary btn-block btn-sm">
-			</div>
-		</form>
+	<div id="admin-bar" style="float:right;">
+		<div class="panel panel-default">
+			<form action="{% url 'sharetools:shedAdmin' location.id %}" method="post">
+			{% csrf_token %}
+				<div class="panel-heading">
+					<h3 class="panel-title">Modify Member Roles</h3>
+				</div>
+				<div class="panel-body">
+					{{ memberForm | bootstrap }}
+				</div>
+				<div class="panel-footer">
+					<input type="submit" value="Update" class="btn btn-primary btn-block btn-sm">
+				</div>
+			</form>
+		</div>
+		
+		<div class="panel panel-default">
+			<form action="{% url 'sharetools:shedAdmin' location.id%}" method="post">{% csrf_token %}
+				<div class="panel-heading">
+					<h3 class="panel-title">Edit Location</h3>
+				</div>
+				<div class="panel-body">
+						{{ editForm | bootstrap }}
+				</div>	
+				<div class="panel-footer">
+					<input type="submit" value="Update" class="btn btn-primary btn-block btn-sm">
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
 {% endblock %}

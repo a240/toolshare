@@ -1,18 +1,15 @@
 {% load staticfiles %}
-
 {% load message_extras %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>{% block title %}Tool Share{% endblock %}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% block description %}description text{% endblock %}">
     <meta name="author" content="toolshare inc.">
     <link rel="shortcut icon" href="{% static "favicon.ico" %}">
-</head>
-    <title>{% block title %}Tool Share{% endblock %}</title>
 
     {% block css %}
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -129,6 +126,7 @@
                 <p class="text-center text-muted">Coded with <i class="fa fa-heart"></i> by Team 4040</p>
             </div>
         </div>
+    </footer>
 
     {% block scripts %}
     <script src="{% static "js/jquery.min.js" %}"></script>
