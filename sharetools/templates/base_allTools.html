@@ -56,7 +56,7 @@
                 </thead>
                 <tbody>
                 {% for asset in assets %}
-                {% if not available_only_field or available_only_field and asset.isAvailable|length > 2 %}
+                {% if not available_only_field or available_only_field and asset.isAvailable %}
                 <tr>
                     <td>{{ asset.name }}</td>
                     <td>{{ asset.type }}</td>
