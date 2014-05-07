@@ -65,11 +65,16 @@
 							</a>
 
 							{% if asset.owner == user %}
-
+							<a href="{% url 'sharetools:toolEdit' asset.id %}">
+								<button type="button" class="btn btn-info">Edit Tool
+								</button>
+							</a>
+							
 							<a>
 								<button type="submit" name="delete" value="{{ asset.id }}" class="btn btn-danger">Delete Tool
 								</button>
 							</a>
+							
 							{% else %}
 
 							{% if not shared %}

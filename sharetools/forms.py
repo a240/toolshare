@@ -99,7 +99,6 @@ class UserEditForm(forms.ModelForm):
 
 class MakeToolForm(forms.ModelForm):
 
-	
 	class Meta:
 		model = Asset
 		fields = ('name','description','type','location')
@@ -124,6 +123,16 @@ class MakeToolForm(forms.ModelForm):
 			self.save_m2m()
 		return inst
 		
+class EditToolForm(forms.ModelForm):
+
+	class Meta:
+		model = Asset
+		fields = ('name', 'description', 'type')
+		widgets = {
+		'description': forms.Textarea(),
+		}	
+		
+
 class MakeShareForm(forms.ModelForm):
 	loanDate = forms.DateTimeField(initial=datetime.datetime.today())
 	returnDate = forms.DateTimeField(initial=datetime.datetime.today())

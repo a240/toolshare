@@ -17,13 +17,14 @@ urlpatterns = patterns('sharetools.views',
 	url(r'^sheds/create$', views.shed_create_view, name='makeShed'),
 	url(r'^sheds/delete/(\d+)+$', views.shed_delete_view, name='shedDeletion'),
 	url(r'^sheds/(\d+)/admin$', views.ShedModView.as_view(), name='shedAdmin'),
+	url(r'^sheds/(\d+)/move$', views.tool_move_view, name='moveTool'),
 	url(r'^sheds/(\d+)/admin/approve', views.approve_membership_view, name='approveMem'),
 	
 	#Tools -------------------------------------------------------------------
 	url(r'^tools/$', views.my_tools_view, name='myTools'),
 	url(r'^tools/new$', views.make_tool_view,name="newTool"),
 	url(r'^tools/all$', views.all_tools_view,name="allTool"),
-	url(r'^tools/edit/(\d+)$',views.tool_edit_view,name='toolEdit'),
+	url(r'^tools/(\d+)/edit/$',views.tool_edit_view,name='toolEdit'),
 	url(r'^tools/(\d+)$', views.ToolView.as_view(), name='tool'),
 	
 	#Shares ----------------------------------------------------------

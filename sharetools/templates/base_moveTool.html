@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load bootstrap %}
+
+{% block title %}TS - Add New Tool{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>Move Tools to {{shed.name}}</h1>
+	</div>
+</div>
+
+<div class="container">
+{% if NoTools %}
+	<div class="bs-callout bs-callout-info">
+		<h4><i class="glyphicon glyphicon-exclamation-sign"></i> You have no more tools to share</h4>
+		<a href="{% url 'sharetools:newTool' %}">
+		<p>Click here to new add a tool</p>
+		</a>
+		
+	</div>
+{% else %}
+<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+<div class="row">
+<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Description</th>
+				<th>Add to Shed?</th>
+			</tr>
+		</thead>
+	<form action="{% url 'sharetools:moveTool' shed.id%}" method="post">
+		{% csrf_token %}
+		{% for asset in assets %}
+		<tr>
+		<td>{{asset.name}}</td>
+		<td>{{ asset.description|truncatechars:20 }}</td>
+		<td><input type="checkbox" name="moving" id="option{{asset.id}}" value={{asset.id}}></td>
+		</tr>
+		{% endfor %}
+		<div>
+</table>
+			<input type="submit" value="Move" class="btn btn-primary btn-block btn-sm">
+		
+		</div>
+	</form>
+{% endif %}
+	
+	
+	
+  </div>
+ </div>
+</div>
+{% endblock %}

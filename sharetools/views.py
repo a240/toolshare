@@ -15,7 +15,7 @@ from django.contrib.auth.hashers import make_password
 from django.views.generic import TemplateView
 
 from sharetools.models import Asset, Location, UserProfile, User, ShareContract, Asset_Type, Address, Membership
-from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm, EditShedForm
+from sharetools.forms import UserForm, UserEditForm, MakeToolForm, ShedForm, AddressForm, MakeShareForm, AssetSearchForm,  AddMemberForm, EditShedForm, EditToolForm
 from sharetools.manager import set_user_role, is_member, is_mod, get_user_role
 
 
@@ -222,6 +222,7 @@ class ShedView(LoginRequiredMixin, TemplateView):
 		shedLocation = get_object_or_404(Location, pk=shed_id)
 		role = get_user_role(location=shedLocation, user=request.user)
 		assets = Asset.objects.filter(location=shedLocation).order_by('type')
+		user_assets = Asset.objects.filter(owner=request.user, isAvailable=True)
 		try:
 			membership = Membership.objects.get(location=shedLocation, user=request.user)
 		except Membership.DoesNotExist:
@@ -231,7 +232,8 @@ class ShedView(LoginRequiredMixin, TemplateView):
 			'location': shedLocation,
 			'isMember': is_member(user=request.user, location=shedLocation),
 			'isMod': is_mod(user=request.user, location=shedLocation),
-			'membership': membership
+			'membership': membership,
+			'userAssets':user_assets
 		})
 		
 		return render(request, self.template_name, context_instance=context)
@@ -398,7 +400,7 @@ def	approve_membership_view(request, member_id):
 #########################################################
 #            Category: SHARE Manipulation               #
 #########################################################
-
+	
 
 class MakeShareView(LoginRequiredMixin, TemplateView):
 	"""
@@ -603,10 +605,55 @@ class ToolView(LoginRequiredMixin, TemplateView):
 		return redirect('sharetools:myTools')
 
 
-#tool_edit_view
-#Allows a user to change their tools shed location
-#Planned: R2
+"""
+Allows a user to change their tools shed location
+"""
 def tool_edit_view(request, tool_id):
 	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse('sharetools:login'))
+	tool = get_object_or_404(Asset, pk=tool_id)
+	if not (tool.owner.id == request.user.id):
 		return redirect('sharetools:index')
-	return (HttpResponse('Tool edit ' + tool_id))
+	
+	if request.method == 'POST':
+		form = EditToolForm(request.POST, instance=tool)
+		if form.is_valid():
+			messages.add_message(request, messages.SUCCESS, 'Tool Updated Successfully.', extra_tags='alert-success')
+			form.save()
+			return redirect('sharetools:tool', tool_id)
+
+	else:
+		form = EditToolForm(instance=tool)
+
+	return render(request, 'base_editTool.html', {
+	'form': form,
+	'tool': tool,
+	})
+
+def tool_move_view(request, shed_id):
+	shed = get_object_or_404(Location, pk=shed_id)
+	assets = Asset.objects.filter(owner=request.user, isAvailable=True).exclude(location=shed).order_by('type')
+	NoTools=False
+	if len(assets) == 0:
+		NoTools=True
+	if request.method == 'POST':
+		tools = request.POST.getlist('moving')
+		for num in tools:
+			asset = get_object_or_404(Asset, pk=int(num))
+			asset.location = shed
+			asset.save()
+		messages.add_message(request, messages.SUCCESS, 'Tool(s) successfully moved to ' + str(shed.name), extra_tags='alert-success')
+		return redirect('sharetools:shed',shed_id)
+		
+	
+	return render(request, 'base_moveTool.html', {
+	'assets': assets,
+	'shed': shed,
+	'NoTools':NoTools
+	})
+	#make sheds appear in the thing
+
+		
+
+	
+

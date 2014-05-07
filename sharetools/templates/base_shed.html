@@ -96,10 +96,14 @@
 			</div>
 			<div class="panel-footer">
 				{% if membership %}
+					<a href="{% url 'sharetools:moveTool' location.id %}"<button type="button" class="btn btn-primary btn-block">
+					<span class="glyphicon glyphicon-plus"></span></button> Add a Tool
+					</a>
 					{% if membership.role == membership.ADMIN %}
 					<a href="{% url 'sharetools:shedAdmin' location.id %}"<button type="button" class="btn btn-default btn-block">
 					<span class="glyphicon glyphicon-pencil"></span></button> Manage this Shed
 					</a>
+					
 					{% elif membership.role = membership.REQUEST %}
 					<a href="#" class="btn btn-default btn-block disabled" role="button">Request Sent</a>
 					{% endif %}
