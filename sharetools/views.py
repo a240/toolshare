@@ -35,7 +35,11 @@ class IndexView(TemplateView):
 
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
-			return render(request, 'landing.html', {})
+			context = RequestContext(request, {
+				'shareCount': ShareContract.objects.count(),
+				'shedCount': Location.objects.count(),
+			})
+			return render(request, 'landing.html', context)
 
 		assets = Asset.objects.exclude(owner=request.user)[:self.NUMBER_OF_RECENT_ITEMS]
 		locations = Location.objects.exclude(owner=request.user, isPrivate=True)[:self.NUMBER_OF_RECENT_ITEMS]

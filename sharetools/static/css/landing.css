@@ -68,6 +68,51 @@ img::-moz-selection {
     font-weight: 700;
 }
 
+.landing-footer {
+    position: fixed;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9;
+}
+
+.landing-footer-inner {
+    height: 210px;
+}
+
+.stat {
+    text-align: center;
+    display: inline-block;
+    color: #fff;
+    font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding: 10px 28px 20px 28px;
+}
+
+.number {
+    font-weight: bold;
+    font-size: 32px;
+    color: #fff;
+    margin: 0 0 5px;
+    line-height: 1;
+}
+
+.description {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1;
+    font-family: 'Helvetica Neue', HelveticaNeue, Helvetica, Arial, sans-serif;
+}
+
+.landing-footer-stats {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-left: 5px;
+    white-space: nowrap;
+    text-align: center;
+}
+
 .light {
     font-weight: 300;   
 }
