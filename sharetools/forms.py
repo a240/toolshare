@@ -78,7 +78,6 @@ class EditShedForm(forms.ModelForm):
 		fields = (
 			'name',
 			'description',
-			'isActive',
 			'inviteOnly',
 		)
 		widgets = {
