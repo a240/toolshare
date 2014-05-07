@@ -11,13 +11,16 @@
 	<div id="map"></div>
 <div class="container">
 	<div id="search">
-		<h3 class="text-center text-muted">Search</h3>
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Type a tool, shed, or user">
-    		<span class="input-group-btn">
-    	    	<button class="btn btn-success" type="button">Search</button>
-    	  	</span>
-		</div>
+		<form name="search" method="post">
+			{% csrf_token %}
+			<h3 class="text-center text-muted">Search</h3>
+			<div class="input-group">
+				<input type="text" name="srchinput" class="form-control" placeholder="Type a tool" required>
+				<span class="input-group-btn">
+					<button class="btn btn-success" type="button submit">Search</button>
+				</span>
+			</div>
+		</form>
 	</div>
 	<hr class="hr-big">
 	<div id="quick-start" class="row">
@@ -73,6 +76,11 @@
 			</ul>
 		</div>
 	</div>
+	{% if stats %}
+	<div name="stats">
+		
+	</div>
+	{% endif %}
 </div>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensor=false"></script>
 {% endblock %}
