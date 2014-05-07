@@ -24,6 +24,7 @@ urlpatterns = patterns('sharetools.views',
 	url(r'^tools/$', views.my_tools_view, name='myTools'),
 	url(r'^tools/new$', views.make_tool_view,name="newTool"),
 	url(r'^tools/all$', views.all_tools_view,name="allTool"),
+	url(r'^tools/all/(\w+)$', views.all_tools_view,name="allTool"),
 	url(r'^tools/(\d+)/edit/$',views.tool_edit_view,name='toolEdit'),
 	url(r'^tools/(\d+)$', views.ToolView.as_view(), name='tool'),
 	
