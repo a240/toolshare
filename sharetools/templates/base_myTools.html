@@ -21,7 +21,6 @@
 					<tr>
 						<th>Name</th>
 						<th>Type</th>
-						<th>Description</th>
 						<th>Availability</th>
                         <th>View</th>
 					</tr>
@@ -29,9 +28,11 @@
 				<tbody>
 				{% for asset in assets %}
 					<tr>
-						<td>{{ asset.name }}</td>
+						<td>
+							<b>{{ asset.name }}</b>
+							<p>{{ asset.description|truncatechars:40 }}</p>
+						</td>
 						<td>{{ asset.type }}</td>
-						<td>{{ asset.description|truncatechars:20 }}</td>
 	                    <td><i class="
 	                    {% if asset.isAvailable %}
 	                    glyphicon glyphicon-ok

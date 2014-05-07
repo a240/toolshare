@@ -241,6 +241,9 @@ ul.dropdown-menu {
   margin: 30px auto;
   pointer-events: all; }
 
+.table > tbody > tr > td {
+  vertical-align: middle; }
+
 /*
 	Panels
  */
