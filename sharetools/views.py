@@ -49,7 +49,10 @@ class IndexView(TemplateView):
 		})
 		return render(request, self.template_name, context_instance=context)
 
-
+	def post(self, request, *args, **kargs):
+		term = request.POST.get('srchinput');
+		request.method = request.GET
+		return redirect('sharetools:allTool',term)
 
 #########################################################
 #          Category: USER PROFILE Manipulation          #
@@ -524,29 +527,32 @@ def my_tools_view(request):
 	return HttpResponse(template.render(context))
 
 
-def all_tools_view(request):
+def all_tools_view(request, *args):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('sharetools:login'))
 
-	args = {}
+	arg = {}
 	assets = Asset.objects.exclude(owner=request.user).order_by('type')
 	if request.method == "POST":
 		form = AssetSearchForm(data=request.POST)
 		if form.is_valid():
 			asset_type = form.cleaned_data['type']
 			name = form.cleaned_data['name']
-			args['query'] = name
-			args['type_field'] = asset_type
+			arg['query'] = name
+			arg['type_field'] = asset_type
 			avail_only = form.cleaned_data['available_only']
 			assets = assets.filter(name__contains=name)
 			if asset_type != 'all':
 				assets = assets.filter(type__name=asset_type)
 			if avail_only:
-				args['available_only_field'] = True
+				arg['available_only_field'] = True
+	elif args[0]!="" and args[0]!=None:
+		arg['query']=args[0]
+		assets = assets.filter(name__contains=args[0])
 	template = loader.get_template('base_allTools.html')
-	args['assets'] = assets
-	args['asset_types'] = Asset_Type.objects.all()
-	context = RequestContext(request, args)
+	arg['assets'] = assets
+	arg['asset_types'] = Asset_Type.objects.all()
+	context = RequestContext(request, arg)
 	return HttpResponse(template.render(context))
 
 
