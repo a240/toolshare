@@ -60,26 +60,21 @@
 					<div class="panel-footer">
 						<div class="btn-group">
 
-							<a href="{% url 'sharetools:shed' asset.location.id %}">
-								<button type="button" class="btn btn-primary">Visit Shed</button>
-							</a>
+							<a type="button" class="btn btn-primary" href="{% url 'sharetools:shed' asset.location.id %}">Visit Shed</a>
 
 							{% if asset.owner == user %}
-							<a href="{% url 'sharetools:toolEdit' asset.id %}">
-								<button type="button" class="btn btn-info">Edit Tool
-								</button>
+							<a href="{% url 'sharetools:toolEdit' asset.id %}" type="button" class="btn btn-info">
+								Edit Tool
 							</a>
 							
-							<a>
-								<button type="submit" name="delete" value="{{ asset.id }}" class="btn btn-danger">Delete Tool
-								</button>
-							</a>
+							<button type="submit" name="delete" value="{{ asset.id }}" class="btn btn-danger">Delete Tool
+							</button>
 							
 							{% else %}
 
-							{% if not shared %}
-							<a href="{% url 'sharetools:makeShareContract' asset.id %}">
-								<button type="button" class="btn btn-primary">Borrow</button>
+							{% if not shared and isMember %}
+							<a href="{% url 'sharetools:makeShareContract' asset.id %}" type="button" class="btn btn-primary">
+								Borrow
 							</a>
 							{% endif %}
 

@@ -56,8 +56,8 @@
 					<td>{{request.user}}</td>
 					<td> 
 						<div class="btn-group" style="float:right;">
-							<a class="btn btn-success" href="{% url 'sharetools:approveMem' request.id %}">Approve</a>
-							<button type="button" class="btn btn-danger">Deny</button> 
+							<a class="btn btn-success" href="{% url 'sharetools:approveMem' request.id 1 %}">Approve</a>
+							<a class="btn btn-danger" href="{% url 'sharetools:approveMem' request.id 0 %}">Deny</a>
 						</div>
 					</td>
 				</tr>

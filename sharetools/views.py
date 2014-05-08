@@ -399,10 +399,16 @@ def shed_delete_view(request, shed_id):
 		messages.add_message(request, messages.WARNING, 'You do not have that permission.', extra_tags='alert-warning')
 	return redirect('mySheds')
 	
-def	approve_membership_view(request, member_id):
+def	approve_membership_view(request, member_id, approval):
+		
 	member = get_object_or_404(Membership, pk=member_id)
-	set_user_role(member.location, member.user, Membership.MEMBER)
-	return redirect('sharetools:shedAdmin',member.location.id)
+	locid = member.location.id
+	if int(approval) == 0:
+		member.delete()
+	else:
+		set_user_role(member.location, member.user, Membership.MEMBER)
+	return redirect('sharetools:shedAdmin',locid)
+	
 
 #########################################################
 #            Category: SHARE Manipulation               #
