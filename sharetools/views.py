@@ -546,7 +546,7 @@ def all_tools_view(request, *args):
 				assets = assets.filter(type__name=asset_type)
 			if avail_only:
 				arg['available_only_field'] = True
-	elif args[0]!="" and args[0]!=None:
+	elif len(args) > 0 and args[0]!="" and args[0]!=None:
 		arg['query']=args[0]
 		assets = assets.filter(name__contains=args[0])
 	template = loader.get_template('base_allTools.html')
