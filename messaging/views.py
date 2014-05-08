@@ -8,7 +8,7 @@ from messaging.forms import MessageForm
 
 def messages_view(request):
 	if not request.user.is_authenticated():
-		return redirect('login')
+		return redirect('sharetools:login')
 	if request.method == 'POST':
 		form = MessageForm(data=request.POST)
 		if form.is_valid():
@@ -42,7 +42,7 @@ def messages_view(request):
 
 def message_delete_view(request, message_id):
 	if not request.user.is_authenticated():
-		return redirect('login')
+		return redirect('sharetools:login')
 	msg = Message.objects.get(id=message_id)
 	if msg.msg_to == request.user:
 		msg.delete()
